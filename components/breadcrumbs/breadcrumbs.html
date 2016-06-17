@@ -1,0 +1,17 @@
+<div *ngIf="!isOnRootView" class="col-md-12 col-xs-12 col-sm-12 ">
+  <ul class="breadcrumbs">
+    <li><a [routerLink]="['Root']"
+           angulartics2On="click"
+           angularticsEvent="go to Home">Home</a></li>
+    <li *ngFor="let url of urls; let last = last" [ngClass]="{'active': last}">
+      <i  *ngIf="url != 'tag'" class="fa fa-angle-double-right"></i>
+      <a *ngIf="!last" [ngClass]="{'hide': (url === 'tag')}"
+         [routerLink]="[routesGatewayService.getRouteName(url)]"
+         angulartics2On="click"
+         angularticsEvent="{{friendlyName(url)}}">{{friendlyName(url)}}</a>
+      <span *ngIf="last">{{friendlyName(url)}}</span>
+    </li>
+
+  </ul>
+
+</div>

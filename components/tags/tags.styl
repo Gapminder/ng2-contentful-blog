@@ -1,0 +1,49 @@
+.wrap-tags
+  border-top 1px solid #eff2f6
+
+  .list-tags
+    margin 10px 0
+    float left
+    padding 0
+    list-style none
+
+    li
+      border 1px solid #eff2f6
+      border-radius 3px
+      padding 3px
+      color #767d86
+      font-size 14px
+      float left
+      margin-right 5px
+
+.dynamic-wrap-img
+  border-radius 3px
+  overflow hidden
+  border 1px solid #dce3ec
+  position relative
+  display block
+  img
+    height 240px
+    width 100%
+  .play
+    width 50px
+    height 50px
+    opacity 0.7
+    border-radius 50%
+    border 1px solid #374551
+    position absolute
+    top 40%
+    left 43%
+    z-index 2
+    background #f2fafc
+    .fa-play
+      color #374551
+      font-size 24px
+      top 12px
+      left 17px
+      position absolute
+  &:hover
+    .post-title
+      color #ffc300
+    .play
+      opacity 1

@@ -1,0 +1,13 @@
+{
+  "ambientDependencies": {
+    "es6-shim": "github:DefinitelyTyped/DefinitelyTyped/es6-shim/es6-shim.d.ts#7de6c3dd94feaeb21f20054b9f30d5dabc5efabd",
+    "require": "registry:dt/require#2.1.20+20160316155526",
+    "source-map": "registry:dt/source-map#0.0.0+20160317120654",
+    "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526",
+    "webpack": "registry:dt/webpack#1.12.9+20160321060707",
+    "marked": "github:DefinitelyTyped/DefinitelyTyped/marked/marked.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c"
+  },
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160416211519"
+  }
+}

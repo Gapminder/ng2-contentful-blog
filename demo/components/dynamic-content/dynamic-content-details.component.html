@@ -1,0 +1,44 @@
+<div class="col-md-8 dynamic-details" *ngIf="content">
+  <h1>
+    {{ content.title }}
+  </h1>
+  <p class="date-info margin-top-0">{{ content.createdAt | gmToDate | date }}</p>
+  <div class="entry-content" *ngIf="content.entries">
+    <gm-entries-view [entries]="content.entries"></gm-entries-view>
+  </div>
+
+  <!-- TAGS -->
+  <gm-tags *ngIf="content.tags" [listTags]="content.tags"></gm-tags>
+
+  <div class="dynamic-list row">
+
+    <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35" *ngFor="let child of childrenList">
+      <a *ngIf="child.fields.thumbnail"
+         [routerLink]="[routesGatewayService.getRouteName(urlPath + '/'+ child.fields.slug)]"
+         angulartics2On="click"
+         angularticsEvent="{{child.fields.title}}"
+         class="dynamic-wrap-img">
+        <!--<span class="play"><i class="fa fa-play"></i></span>-->
+        <img [gmContentfulSrcId]="child.fields.thumbnail.sys.id"
+             alt="{{child.fields.title}}">
+      </a>
+      <div class="date-info">{{child.fields.createdAt | gmToDate | date}}</div>
+
+      <a [routerLink]="[routesGatewayService.getRouteName(urlPath + '/'+ child.fields.slug)]"
+         angulartics2On="click"
+         angularticsEvent="{{child.fields.title}}"
+         class="post-title">
+        {{child.fields.title}}
+      </a>
+
+      <p class="post-p">{{child.fields.description}}</p>
+    </div>
+
+
+  </div>
+
+  <!--<gm-line-social></gm-line-social>-->
+</div>
+<div class="col-md-4 pull-right margin-top-35" *ngIf="content">
+  <!--<gm-sidebar [relatedItems]="content.relatedEntries"></gm-sidebar>-->
+</div>

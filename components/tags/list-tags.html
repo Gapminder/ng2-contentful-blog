@@ -1,0 +1,11 @@
+<div class="wrap-tags">
+  <ul class="list-tags" >
+    <li *ngFor="let tag of listTags">
+      <a  [routerLink]="['TagComponent', {tag: tag.fields.slug}]"
+          angulartics2On="click"
+          angularticsEvent="{{tag.fields.name}}">
+        {{tag.fields.name}}
+      </a>
+    </li>
+  </ul>
+</div>

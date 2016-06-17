@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-8 margin-top-35">
+    <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35"
+         *ngFor="let item of listNodePage">
+      <a *ngIf="item.fields.thumbnail && item.fields.url" [routerLink]="[item.fields.url]"
+         angulartics2On="click"
+         angularticsEvent="{{item.fields.title}}"
+         class="dynamic-wrap-img">
+        <!--<span class="play"><i class="fa fa-play"></i></span>-->
+        <img [gmContentfulSrcId]="item.fields.thumbnail.sys.id"
+             alt="{{item.fields.title}}">
+      </a>
+      <div class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
+
+      <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+         angulartics2On="click"
+         angularticsEvent="{{item.fields.title}}"
+         class="post-title">
+        {{item.fields.title}}
+      </a>
+      <p class="post-p">{{item.fields.description}}</p>
+
+    </div>
+  </div>
+
+</div>

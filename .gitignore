@@ -1,0 +1,31 @@
+/aws.json
+#webstorm
+.idea
+#node.js
+node_modules
+npm-debug.log
+
+# builded files
+dist
+build
+
+# ts generated
+demo/**/*.js
+demo/**/*.js.map
+
+#ts typings
+typings
+
+# ignore incline compiling
+/demo/**/*.css
+/demo/**/*.js
+/demo/**/*.js.map
+/demo/**/*.d.ts
+/components/**/*.css
+/components/**/*.js
+/components/**/*.js.map
+/components/**/*.d.ts
+ng2-gapminder.js
+ng2-gapminder.d.ts
+ng2-gapminder.js.map
+/logs

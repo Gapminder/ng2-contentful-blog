@@ -1,0 +1,14 @@
+ROOT COMPONENT
+<!--
+<hr>
+gm-breadcrumbs
+<gm-breadcrumbs></gm-breadcrumbs>
+
+-->
+
+<hr>
+<p>date</p>
+DATE : {{date | gmToDate | date}}
+<hr>
+<p>gmMarkdown</p>
+<div class="block-entry" [innerHTML]="markdown | gmMarkdown"></div>
