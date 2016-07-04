@@ -6,7 +6,6 @@ import {HTTP_PROVIDERS} from '@angular/http';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, Router} from '@angular/router-deprecated';
 import {Ng2ContentfulConfig} from 'ng2-contentful/src/index';
-import {ContentfulService} from 'ng2-contentful/src';
 import {Angulartics2} from 'angulartics2/index';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/src/providers/angulartics2-google-analytics';
 import 'rxjs/add/operator/map';
@@ -21,13 +20,12 @@ import {
   GAPMINDER_PROVIDERS
 } from '../ng2-gapminder';
 import {RootDemoComponent} from './components/root/root-demo';
-import {MainMenuComponent} from './components/mainMenu/main-menu';
 import {appInjector} from '../components/contentfulService/app-injector.tool';
 import {DynamicContentDetailsComponent} from './components/dynamic-content/dynamic-content-details.component';
-import {ContentfulConfig} from './app.constans';
 
+const ContentfulConfig = require('./constIdContentType.json');
 declare var CONTENTFUL_ACCESS_TOKEN: string;
-declare var CONTENTFUL_SPACE_ID: string;
+declare var CONTENTFUL_SPACE_ID: string    ;
 declare var CONTENTFUL_HOST: string;
 
 // contentful config
@@ -45,12 +43,11 @@ Ng2ContentfulConfig.config = {
   ],
   template: `
      <div class='container'>
-        <!--<main-menu></main-menu>-->
         <gm-breadcrumbs></gm-breadcrumbs>
         <router-outlet></router-outlet>
       </div>
     `,
-  directives: [...ROUTER_DIRECTIVES, MainMenuComponent, BreadcrumbsComponent]
+  directives: [...ROUTER_DIRECTIVES, BreadcrumbsComponent]
 })
 @RouteConfig([
   {path: '/', name: 'Root', component: RootDemoComponent, useAsDefault: true},
@@ -70,13 +67,11 @@ export class DemoComponent implements OnInit {
                      @Inject(Angulartics2GoogleAnalytics) angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
                      @Inject(BreadcrumbsService) breadcrumbsService: BreadcrumbsService,
                      @Inject(RoutesGatewayService) routesGatewayService: RoutesGatewayService) {
-
     this.angulartics2 = angulartics2;
     this.angulartics2GoogleAnalytics = angulartics2GoogleAnalytics;
     this.breadcrumbsService = breadcrumbsService;
     this.routesGatewayService = routesGatewayService;
     this.router = router;
-
   }
 
   public ngOnInit(): any {
@@ -95,7 +90,6 @@ bootstrap(DemoComponent, [
   provide(LocationStrategy, {useClass: HashLocationStrategy}),
   Angulartics2,
   Angulartics2GoogleAnalytics,
-  ContentfulService,
   GAPMINDER_PROVIDERS,
   provide('ComponentUseDefault', {useValue: DynamicContentDetailsComponent}),
   provide('RootComponent', {useValue: DemoComponent}),

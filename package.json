@@ -36,6 +36,7 @@
     "gulp-size": "2.1.0",
     "gulp-stylus": "2.5.0",
     "gulp-tslint": "5.0.0",
+    "json-loader": "0.5.4",
     "lodash": "4.6.1",
     "marked": "0.3.5",
     "ng2-contentful": "valor-software/ng2-contentful#feat-upgrade-package-version",
