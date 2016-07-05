@@ -1,0 +1,164 @@
+a
+  color #374551
+  font-size 18px
+
+header
+  min-height 67px
+
+  .logo
+    height auto
+    max-width 185px;
+    float left
+    margin 20px 30px 0 0
+
+.navbar
+  border-bottom 1px solid #edf0f5
+  background-color #fff
+  min-height 67px
+
+.nav>li>a:focus,
+.nav>li>a:hover
+  background  #ffc300 !important
+
+.nav > li:focus > a,
+.nav > li:hover > a,
+.router-link-active
+  background #ffc300
+  color #fff !important
+  border-radius 2px
+
+.navbar-nav > li
+  padding 20px 10px
+
+.navbar-nav > li > a
+  padding 3px 5px
+  color #374551
+
+.navbar-nav
+  li:hover
+    .dropdown-menu
+      display block
+
+  .dropdown-menu
+    background #ffffff
+    box-shadow 0 0 7px #dadbde
+    border 1px solid #eff2f6
+    border-radius 2px
+    box-sizing border-box
+    min-width 360px
+    top 98%
+    display none
+
+    &.diff
+      padding-left 10px
+
+    &.diff:after
+      left 30%
+
+    &:after
+      content ""
+      position absolute
+      width 0
+      height 0
+      margin-left -0.5em
+      top 1px
+      left 50%
+      box-sizing border-box
+      border 6px solid black
+      border-color transparent transparent #fff #fff
+      transform-origin 0 0
+      transform rotate(135deg)
+      box-shadow -2px 2px 2px 0 #eff2f6
+
+    &.fix-width
+      width 710px
+      left -300px
+
+  .dropdown-item
+    padding-left 80px
+    position relative
+    margin 33px 0
+
+    &:hover
+      background none
+
+    .frame-img
+      position absolute
+      top -6px
+      //top 10px
+      left 10px
+      display block
+      max-width 60px
+
+    span
+      color #767d86
+      display block
+      font-size 16px
+      white-space normal
+.dropdown-menu
+  &.mobile
+    position relative
+    width 100%
+    border none
+    box-shadow none
+
+  &:hover
+    background #ffc300
+  .frame-img
+    position relative
+    top: -3px
+    max-width 30px
+  .dropdown-item:hover,
+  .dropdown-item
+    color #374551 !important
+    background none
+
+.menu-mobile
+  cursor pointer
+  right 0
+  top 0
+  transition-duration 0.5s
+  width 40px
+  height 50px
+  position absolute
+  z-index 9
+  margin 0 10px
+
+  &:hover
+    cursor pointer
+
+  .icon
+    transition-duration 0.2s
+    position absolute
+    width 30px
+    height 3px
+    background-color #ffca34
+    top 24px
+    &:before,
+    &:after
+      transition-duration 0.5s
+      background-color #ffca34
+      position absolute
+      content ""
+      width 30px
+      height 3px
+    &:before
+      top -7px
+
+    &:after
+      top 7px
+
+  &.open
+    .icon
+      background-color transparent
+      &:before,
+      &:after
+        top 0
+
+      &:before
+        transform rotate(-45deg)
+        -webkit-transform rotate(-45deg)
+      &:after
+        transform rotate(45deg)
+        -webkit-transform rotate(45deg)
+

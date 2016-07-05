@@ -4,6 +4,8 @@ import {ContenfulContent} from './components/contentfulService/contentful-conten
 import {RoutesGatewayService} from './components/routesGateway/routes-gateway.service';
 import {ContentfulService} from 'ng2-contentful/src';
 
+export {HeaderMenuComponent} from './components/menu/header/header.component';
+export {FooterMenuComponent} from './components/menu/footer/footer.component';
 export {BreadcrumbsService, BreadcrumbsEvent} from './components/breadcrumbs/breadcrumbs.service';
 export {BreadcrumbsComponent} from './components/breadcrumbs/breadcrumbs.component';
 export {DynamicRouteConfigurator} from './components/routesGateway/dynamic-route-configurator.service';
@@ -28,7 +30,6 @@ export {
   ContentfulTagPage
 } from './components/contentfulService/aliases.structures';
 export {ContentfulService} from 'ng2-contentful/src';
-
 
 export const GAPMINDER_PROVIDERS: any[] = [
   {provide: BreadcrumbsService, useClass: BreadcrumbsService},

@@ -11,6 +11,8 @@ import {Angulartics2GoogleAnalytics} from 'angulartics2/src/providers/angulartic
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {
+  HeaderMenuComponent,
+  FooterMenuComponent,
   RoutesGatewayService,
   BreadcrumbsService,
   BreadcrumbsComponent,
@@ -42,12 +44,24 @@ Ng2ContentfulConfig.config = {
     require('./main.styl') as string
   ],
   template: `
+    <header>
+      <div class="navbar navbar-fixed-top">
+        <div class="container">
+          <div class="row">
+             <gm-header-menu></gm-header-menu>
+            </div>
+          </div>
+        </div>
+    </header>
      <div class='container'>
         <gm-breadcrumbs></gm-breadcrumbs>
         <router-outlet></router-outlet>
       </div>
+     <div class='container'>
+      <gm-footer-menu></gm-footer-menu>
+    </div>
     `,
-  directives: [...ROUTER_DIRECTIVES, BreadcrumbsComponent]
+  directives: [...ROUTER_DIRECTIVES, HeaderMenuComponent, FooterMenuComponent, BreadcrumbsComponent]
 })
 @RouteConfig([
   {path: '/', name: 'Root', component: RootDemoComponent, useAsDefault: true},
