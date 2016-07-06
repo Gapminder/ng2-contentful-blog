@@ -10,7 +10,7 @@ import {ContentfulMenu} from '../../contentfulService/aliases.structures';
 @Component({
   selector: 'gm-header-menu',
   template: require('./header.html') as string,
-  styles: [require('./header.styl') as string],
+  styles: [require('./header.css') as string],
   directives: [CollapseDirective, DROPDOWN_DIRECTIVES, RouterLink, Angulartics2On]
 })
 export class HeaderMenuComponent implements OnInit {

@@ -11,7 +11,7 @@ import {ContentfulMenu} from '../../contentfulService/aliases.structures';
   selector: 'gm-footer-menu',
   template: require('./footer.html') as string,
   directives: [RouterLink, Angulartics2On],
-  styles: [require('./footer.styl') as string],
+  styles: [require('./footer.css') as string],
   pipes: [AsyncPipe]
 })
 export class FooterMenuComponent implements OnInit {

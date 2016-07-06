@@ -43,7 +43,7 @@ const config = {
       '@angular/platform-browser-dynamic',
       'lodash'
     ],
-    'angular2-gapminder-demo': ['./demo/app.ts']
+    'angular2-contentful-blog-demo': ['./demo/app.ts']
     // 'app': ['./demo/app.ts']
   },
 
@@ -93,7 +93,7 @@ const config = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'ng2-gapminder',
+      title: 'ng2-contentful-blog',
       template: 'demo/index.ejs',
       inject: 'body'
     }),

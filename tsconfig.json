@@ -18,7 +18,7 @@
     "node_modules"
   ],
   "files": [
-    "typings/browser.d.ts",
-    "ng2-gapminder.ts"
+    "typings/index.d.ts",
+    "index.ts"
   ]
 }

@@ -1,13 +1,14 @@
 import {Injectable, Inject} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {transformResponse} from './response.tools';
-import {ContentfulService, ContentfulRequest, SearchItem} from 'ng2-contentful/src';
+import {ContentfulService, ContentfulRequest, SearchItem} from 'ng2-contentful/src/index';
 import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {
   ContentfulNodePagesResponse,
   ContentfulNodePage,
-  ContentfulMenu, ContentfulTagPage
+  ContentfulMenu,
+  ContentfulTagPage
 } from './aliases.structures';
 
 /**
@@ -24,7 +25,7 @@ export class ContenfulContent {
   private contentfulService: ContentfulService;
   private contentfulConstantId: any;
 
-  public constructor(contentfulService: ContentfulService,
+  public constructor(@Inject(ContentfulService) contentfulService: ContentfulService,
                      @Inject('ContentfulConstantId') contentfulConstantId: any) {
     this.contentfulService = contentfulService;
     this.contentfulConstantId = contentfulConstantId;

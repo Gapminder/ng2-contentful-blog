@@ -20,7 +20,7 @@ import {
   ContentfulImageDirective,
   TagComponent,
   GAPMINDER_PROVIDERS
-} from '../ng2-gapminder';
+} from '../index';
 import {RootDemoComponent} from './components/root/root-demo';
 import {appInjector} from '../components/contentfulService/app-injector.tool';
 import {DynamicContentDetailsComponent} from './components/dynamic-content/dynamic-content-details.component';

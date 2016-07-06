@@ -25,7 +25,7 @@ typings
 /components/**/*.js
 /components/**/*.js.map
 /components/**/*.d.ts
-ng2-gapminder.js
-ng2-gapminder.d.ts
-ng2-gapminder.js.map
+index.js
+index.d.ts
+index.js.map
 /logs

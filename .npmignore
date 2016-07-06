@@ -1,27 +1,22 @@
-.idea
-gulp-tasks
+.idea/
+build/
+demo/
+typings/
 logs
-
-# typings
-typings
-
-# testing
-karma.conf.js
-test.bundle.js
-coverage
-
-# demo build
-demo
-build
-webpack.config.js
 
 #stylus
 **/*.styl
 
-#typescript sources
+webpack.config.js
+
 *.ts
 *.js.map
 !*.d.ts
-/components/**/*.ts
-!/components/**/*.d.ts
 
+components/**/*.ts
+!components/**/*.d.ts
+!components/**/*.js.map
+
+!components/**/*.css
+!components/**/*.js
+!index.js
