@@ -24,11 +24,11 @@ Module for creating a blog using [Contentful](https://www.contentful.com/)
 
 ## ng2-contentful-blog components diagram 
 
-![ng2-contentful-blog](./img_contentful/ng2-contentful-blog.png)
+![ng2-contentful-blog](img_contentful/ng2-contentful-blog.png)
 
 
 ## Content model that should exist on Contentful
-![contentful-diagram](./img_contentful/contentful-diagram.png)
+![contentful-diagram](img_contentful/contentful-diagram.png)
 
 
 ### `Menu` - includes fields:
@@ -189,7 +189,7 @@ Module for creating a blog using [Contentful](https://www.contentful.com/)
 ## Basic usage `NodePage`
 Go to `contentful` choose `content` then choose `Add entry` and fill in `NodePage`, for example:
 
-![content](./img_contentful/createContent.jpg)
+![content](img_contentful/createContent.jpg)
 
 #### Create first page - Page test
   - `title`: Page test
@@ -209,7 +209,7 @@ Go to `contentful` choose `content` then choose `Add entry` and fill in `NodePag
 ## Basic usage `Menu`
 Go to `contentful` choose `content` then choose `Add entry` and fill in `Menu`, for example:
 
-![content](./img_contentful/createMenu.jpg)
+![content](img_contentful/createMenu.jpg)
 
 #### Create first menu item 
   - `name`: Menu item
@@ -241,7 +241,7 @@ Go to `contentful` choose `content` then choose `Add entry` and fill in `Menu`, 
      ```
      
   - `constIdContentType.json` update all id (keys) according to your `content model` => `JSON preview`, for example 
-    ![jsonPreview](./img_contentful/jsonPreview.jpg)
+    ![jsonPreview](img_contentful/jsonPreview.jpg)
     
      Get value from `sys.id` which is `***YOUR ID***` and put into `constIdContentType.json`:
     

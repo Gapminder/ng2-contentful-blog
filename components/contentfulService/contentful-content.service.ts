@@ -1,7 +1,7 @@
 import {Injectable, Inject} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {transformResponse} from './response.tools';
-import {ContentfulService, ContentfulRequest, SearchItem} from 'ng2-contentful/src/index';
+import {ContentfulService, ContentfulRequest, SearchItem} from 'ng2-contentful';
 import {Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {

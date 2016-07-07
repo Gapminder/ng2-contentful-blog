@@ -1,4 +1,4 @@
-import {ContentfulService} from 'ng2-contentful/src';
+import {ContentfulService} from 'ng2-contentful';
 import {HeaderMenuComponent} from './components/menu/header/header.component';
 import {FooterMenuComponent} from './components/menu/footer/footer.component';
 import {BreadcrumbsService, BreadcrumbsEvent} from './components/breadcrumbs/breadcrumbs.service';

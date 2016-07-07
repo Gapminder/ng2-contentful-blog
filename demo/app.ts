@@ -5,7 +5,7 @@ import {
 import {HTTP_PROVIDERS} from '@angular/http';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, Router} from '@angular/router-deprecated';
-import {Ng2ContentfulConfig} from 'ng2-contentful/src/index';
+import {Ng2ContentfulConfig} from 'ng2-contentful';
 import {Angulartics2} from 'angulartics2/index';
 import {Angulartics2GoogleAnalytics} from 'angulartics2/src/providers/angulartics2-google-analytics';
 import 'rxjs/add/operator/map';

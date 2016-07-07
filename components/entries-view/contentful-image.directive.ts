@@ -1,5 +1,5 @@
 import {Directive, Input, OnInit, ElementRef} from '@angular/core';
-import {ContentfulService} from 'ng2-contentful/src';
+import {ContentfulService} from 'ng2-contentful';
 import {URLSearchParams, Response} from '@angular/http';
 
 @Directive({
