@@ -1,0 +1,44 @@
+<div class="row profile" *ngFor="let profile of profiles">
+  <div class="col-md-4 margin-top-35">
+    <img [gmContentfulSrcId]="profile.fields.avatar.sys.id"
+         alt="{{profile.fields.title}}">
+    <p>Contributions</p>
+    <div *ngFor="let contribution of profile.fields.contributions">
+      {{contribution.fields.description }}
+    </div>
+  </div>
+  <div class="col-md-8 margin-top-35">
+    <p class="profile-name">{{profile.fields.firstName}} {{profile.fields.lastName}}</p>
+    <p>{{profile.fields.title}}</p>
+    <p>{{profile.fields.location}}</p>
+
+    <ul class="social-info">
+      <li><a href="mailto:{{profile.fields.email}}">
+        <i class="fa fa-envelope-square" aria-hidden="true"></i>
+      </a></li>
+      <li><a href="{{profile.fields.google}}">
+        <i class="fa fa-google-plus-square" aria-hidden="true"></i>
+      </a></li>
+      <li><a href="{{profile.fields.facebook}}">
+        <i class="fa fa-facebook-square" aria-hidden="true"></i>
+      </a></li>
+      <li><a href="{{profile.fields.linkedin}}">
+        <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+      </a></li>
+      <li><a href="{{profile.fields.twitter}}">
+        <i class="fa fa-twitter-square" aria-hidden="true"></i>
+      </a></li>
+    </ul>
+
+    <p class="head">About Me</p>
+    <p>{{profile.fields.aboutMe}}</p>
+
+    <p class="head">My Links</p>
+    <div *ngIf="profile.fields.myLinks">
+      <p *ngFor="let link of profile.fields.myLinks">
+        {{link.fields.content}}
+      </p>
+    </div>
+  </div>
+
+</div>

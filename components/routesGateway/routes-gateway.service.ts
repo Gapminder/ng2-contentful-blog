@@ -54,18 +54,18 @@ export class RoutesGatewayService {
     return routeConfig ? routeConfig.configs : undefined;
   }
 
-  public getSlugParent(id: string, cb: any): any {
+  public getArticleParentSlug(id: string, onSlugFound: any): any {
     this.contentfulContentService
       .getParentOf(id)
       .subscribe(
         (res: any) => {
           let slug = res[0].fields.slug;
           if (!res[0].fields.parent) {
-            return cb(slug);
+            return onSlugFound(slug);
           }
           let parentId = res[0].fields.parent.sys.id;
-          this.getSlugParent(parentId, (parentUrl: string) => {
-            return cb(parentUrl + '/' + slug);
+          this.getArticleParentSlug(parentId, (parentUrl: string) => {
+            return onSlugFound(parentUrl + '/' + slug);
           });
         });
   }

@@ -24,8 +24,9 @@ import {
 import {RootDemoComponent} from './components/root/root-demo';
 import {appInjector} from '../components/contentfulService/app-injector.tool';
 import {DynamicContentDetailsComponent} from './components/dynamic-content/dynamic-content-details.component';
+import {ProfileComponent} from '../components/profile/profile.component';
 
-const ContentfulConfig = require('./constIdContentType.json');
+const ContentfulConfig = require('./contentTypeIds.json');
 declare var CONTENTFUL_ACCESS_TOKEN: string;
 declare var CONTENTFUL_SPACE_ID: string    ;
 declare var CONTENTFUL_HOST: string;
@@ -66,6 +67,7 @@ Ng2ContentfulConfig.config = {
 @RouteConfig([
   {path: '/', name: 'Root', component: RootDemoComponent, useAsDefault: true},
   {path: '/tag/:tag', component: TagComponent, name: 'TagComponent'},
+  {path: '/profile/:userName', component: ProfileComponent, name: 'ProfileComponent'},
   {path: '/**', component: RoutesGatewayComponent}
 
 ])
@@ -107,7 +109,7 @@ bootstrap(DemoComponent, [
   GAPMINDER_PROVIDERS,
   provide('ComponentUseDefault', {useValue: DynamicContentDetailsComponent}),
   provide('RootComponent', {useValue: DemoComponent}),
-  provide('ContentfulConstantId', {useValue: ContentfulConfig}),
+  provide('ContentfulTypeIds', {useValue: ContentfulConfig}),
   provide(PLATFORM_DIRECTIVES, {
     useValue: ContentfulImageDirective, multi: true
   })

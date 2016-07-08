@@ -1,4 +1,4 @@
-import {Component, Input, Inject} from '@angular/core';
+import {Component, Input, Inject, OnInit} from '@angular/core';
 import {SafeResourceUrl, DomSanitizationService} from '@angular/platform-browser';
 
 @Component({
@@ -16,13 +16,14 @@ import {SafeResourceUrl, DomSanitizationService} from '@angular/platform-browser
     </div>
   `
 })
-// TODO: Substitute VideoEntryComponent with EmbeddedEntryComponent (later is more generic and allows to embed various types of content)
-export class VideoEntryComponent {
+
+export class VideoEntryComponent implements OnInit {
+  // TODO: Substitute VideoEntryComponent with EmbeddedEntryComponent (later is more generic and allows to embed various types of content)
+  protected url: SafeResourceUrl;
+
   /* tslint:disable:no-unused-variable */
   @Input() private entry: any;
   /* tslint:enable:no-unused-variable */
-
-  protected url: SafeResourceUrl;
 
   private sanitationService: DomSanitizationService;
 

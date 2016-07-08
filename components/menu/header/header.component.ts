@@ -16,13 +16,14 @@ import {ContentfulMenu} from '../../contentfulService/aliases.structures';
 export class HeaderMenuComponent implements OnInit {
   private collapsed: boolean = true;
   private menu: Menu[];
-  private menuType: string = 'header';
   private contentfulContentService: ContenfulContent;
   private routesGatewayService: RoutesGatewayService;
+  private contentfulTypeIds: any;
 
   public constructor(@Inject(ContenfulContent) contentfulContentService: ContenfulContent,
+                     @Inject('ContentfulTypeIds') contentfulTypeIds: any,
                      @Inject(RoutesGatewayService) routesGatewayService: RoutesGatewayService) {
-
+    this.contentfulTypeIds = contentfulTypeIds;
     this.contentfulContentService = contentfulContentService;
     this.routesGatewayService = routesGatewayService;
 
@@ -30,7 +31,7 @@ export class HeaderMenuComponent implements OnInit {
 
   public ngOnInit(): void {
     this.contentfulContentService
-      .getMenu(this.menuType)
+      .getMenu(this.contentfulTypeIds.HEADER_TYPE_ID)
       .subscribe((response: ContentfulMenu[]) => {
         this.menu = response[0].fields.entries;
         for (let item of this.menu) {

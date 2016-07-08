@@ -18,6 +18,8 @@ import {MarkdownPipe} from './components/pipes/markdown.pipe';
 import {ToDatePipe} from './components/pipes/to-date.pipe';
 import {appInjector} from './components/contentfulService/app-injector.tool';
 import {NodePageContent, Menu, TagPage} from './components/contentfulService/content-type.structures';
+import {ProfileComponent} from './components/profile/profile.component';
+import {ContributorsComponent} from './components/contributors/contributors.component';
 
 import {
   ContentfulMenu,
@@ -46,6 +48,8 @@ export {ToDatePipe};
 export {appInjector};
 export {NodePageContent, Menu, TagPage};
 export {ContentfulService};
+export {ContributorsComponent};
+export {ProfileComponent};
 export {
   ContentfulMenu,
   ContentfulNodePagesResponse,

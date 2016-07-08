@@ -240,10 +240,10 @@ Go to `contentful` choose `content` then choose `Add entry` and fill in `Menu`, 
      };
      ```
      
-  - `constIdContentType.json` update all id (keys) according to your `content model` => `JSON preview`, for example 
+  - `contentTypeIds.json` update all id (keys) according to your `content model` => `JSON preview`, for example 
     ![jsonPreview](img_contentful/jsonPreview.jpg)
     
-     Get value from `sys.id` which is `***YOUR ID***` and put into `constIdContentType.json`:
+     Get value from `sys.id` which is `***YOUR ID***` and put into `contentTypeIds.json`:
     
      ```json
      {
