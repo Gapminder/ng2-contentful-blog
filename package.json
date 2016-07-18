@@ -12,8 +12,7 @@
     "build": "./node_modules/.bin/webpack --progress --color",
     "tslint": "node_modules/.bin/gulp tslint"
   },
-  "author": "valor-software",
-  "license": "MIT",
+  "author": "Valor Software",
   "main": "index.js",
   "dependencies": {
     "@angular/common": "2.0.0-rc.4",
