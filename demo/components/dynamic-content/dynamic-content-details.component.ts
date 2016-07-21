@@ -9,12 +9,13 @@ import {RoutesGatewayService} from '../../../components/routesGateway/routes-gat
 import {EntriesViewComponent} from '../../../components/entries-view/entries-view.component';
 import {TagsComponent} from '../../../components/tags/list-tags.component';
 import {Angulartics2On} from 'angulartics2/index';
+import {ContributorsComponent} from '../../../components/contributors/contributors.component';
 // import {LineSocialComponent} from '../line-social/line-social.component';
 
 @Component({
   selector: 'gm-dynamic-page',
   template: require('./dynamic-content-details.component.html') as string,
-  directives: [EntriesViewComponent, RouterLink, TagsComponent, Angulartics2On],
+  directives: [EntriesViewComponent, RouterLink, TagsComponent, ContributorsComponent, Angulartics2On],
   styles: [require('./dynamic-content-details.component.styl') as string],
   pipes: [ToDatePipe]
 })
@@ -23,6 +24,7 @@ export class DynamicContentDetailsComponent implements OnActivate, CanReuse {
   private childrenList: ContentfulNodePage[];
   private urlPath: string;
   private contentSlug: string;
+  private articleSysId: string;
   private router: Router;
   private contentfulContentService: ContenfulContent;
   private routesGatewayService: RoutesGatewayService;
@@ -48,10 +50,11 @@ export class DynamicContentDetailsComponent implements OnActivate, CanReuse {
           if (!content) {
             this.router.navigate(['Root']);
           }
+          this.articleSysId = content[0].sys.id;
           this.content = content[0].fields;
           this.breadcrumbsService.breadcrumbs$.next({url: next.urlPath, name: this.content.title});
           this.contentfulContentService
-            .getChildrenOf(content[0].sys.id)
+            .getChildrenOfArticle(content[0].sys.id)
             .subscribe(
               (children: ContentfulNodePage[]) => {
                 this.childrenList = children;

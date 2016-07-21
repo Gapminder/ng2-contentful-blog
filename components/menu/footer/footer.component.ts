@@ -15,25 +15,27 @@ import {ContentfulMenu} from '../../contentfulService/aliases.structures';
   pipes: [AsyncPipe]
 })
 export class FooterMenuComponent implements OnInit {
-  private menuType: string = 'footerMenu';
-  private menu: Menu[];
+  private menus: Menu[];
   private contentfulContentService: ContenfulContent;
   private routesGatewayService: RoutesGatewayService;
+  private contentfulTypeIds: any;
 
   public constructor(@Inject(ContenfulContent) contentfulContentService: ContenfulContent,
+                     @Inject('ContentfulTypeIds') contentfulTypeIds: any,
                      @Inject(RoutesGatewayService) routesGatewayService: RoutesGatewayService) {
     this.contentfulContentService = contentfulContentService;
     this.routesGatewayService = routesGatewayService;
+    this.contentfulTypeIds = contentfulTypeIds;
   }
 
   public ngOnInit(): void {
     this.contentfulContentService
-      .getMenu(this.menuType)
+      .getMenu(this.contentfulTypeIds.FOOTER_TYPE_ID)
       .subscribe((response: ContentfulMenu[]) => {
-        this.menu = response[0].fields.entries;
-        for (let item of this.menu) {
-          if (item.fields.entryPoint) {
-            this.routesGatewayService.addRoute(item.fields.entryPoint.fields.slug, {name: item.fields.entryPoint.fields.title});
+        this.menus = response[0].fields.entries;
+        for (let menu of this.menus) {
+          if (menu.fields.entryPoint) {
+            this.routesGatewayService.addRoute(menu.fields.entryPoint.fields.slug, {name: menu.fields.entryPoint.fields.title});
           }
         }
       });

@@ -1,4 +1,4 @@
-import {Component, Input, Inject} from '@angular/core';
+import {Component, Input, Inject, OnInit} from '@angular/core';
 import {SafeResourceUrl, DomSanitizationService} from '@angular/platform-browser';
 
 @Component({
@@ -16,12 +16,12 @@ import {SafeResourceUrl, DomSanitizationService} from '@angular/platform-browser
     </div>
   `
 })
-export class EmbeddedEntryComponent {
+export class EmbeddedEntryComponent implements OnInit {
+  protected url: SafeResourceUrl;
+
   /* tslint:disable:no-unused-variable */
   @Input() private entry: any;
   /* tslint:enable:no-unused-variable */
-
-  protected url: SafeResourceUrl;
 
   private sanitationService: DomSanitizationService;
 

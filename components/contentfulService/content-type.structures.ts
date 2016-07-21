@@ -1,13 +1,13 @@
 export interface NodePageContent {
   parent?: any;
   title: string;
-  type: string;
   slug: string;
   description?: string;
-  relatedEntries?: NodePageContent[];
+  related?: NodePageContent[];
   thumbnail: any; // will be changed to sys structure
   createdAt: string;
-  url?: string;
+  url?: string; // for TagComponent
+  tags?: string[];
 }
 
 export interface VideoContent {
@@ -18,7 +18,7 @@ export interface VideoContent {
 }
 
 export interface HtmlContent {
-  name: string;
+  title: string;
   content: string;
 }
 
@@ -28,13 +28,41 @@ export interface ImageContent {
 
 export interface Menu {
   fields: any;
-  entries: Menu[];
-  name: string;
-  submenus: Menu[];
-  entryPoint: Menu[];
+  entries: any;
+  title: string;
+  submenus: Submenu[];
+  entryPoint: NodePageContent[];
+}
+
+export interface Submenu {
+  title: string;
+  entries: NodePageContent[];
+  thumbnail: any;
 }
 
 export interface TagPage {
-  name: string;
+  title: string;
   slug: string;
+}
+
+export interface ProfilePage {
+  userName: string;
+  firstName: string;
+  lastName: string;
+  avatar?: any;
+  title: string;
+  location: string;
+  email: string;
+  facebook?: string;
+  twitter?: string;
+  linkedin?: string;
+  google?: string;
+  aboutMe: string;
+  contributions: ContributionPage[];
+  myLinks: any;
+}
+
+export interface ContributionPage {
+  description: string;
+  article: NodePageContent[];
 }

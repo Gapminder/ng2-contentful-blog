@@ -8,8 +8,7 @@
   </div>
 
   <!-- TAGS -->
-  <gm-tags *ngIf="content.tags" [listTags]="content.tags"></gm-tags>
-
+  <gm-tags *ngIf="content.tags" [tagList]="content.tags"></gm-tags>
   <div class="dynamic-list row">
 
     <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35" *ngFor="let child of childrenList">
@@ -40,5 +39,7 @@
   <!--<gm-line-social></gm-line-social>-->
 </div>
 <div class="col-md-4 pull-right margin-top-35" *ngIf="content">
+  <gm-contributors [articleSysId]="articleSysId"></gm-contributors>
+
   <!--<gm-sidebar [relatedItems]="content.relatedEntries"></gm-sidebar>-->
 </div>

@@ -17,17 +17,17 @@ import {EmbeddedEntryComponent} from './embedded-entry.component';
 export class EntriesViewComponent implements OnInit {
   @Input()
   private entries: any[];
-  private contentfulConstantId: any;
+  private contentfulTypeIds: any;
 
-  public constructor(@Inject('ContentfulConstantId') contentfulConstantId: any) {
-    this.contentfulConstantId = contentfulConstantId;
+  public constructor(@Inject('ContentfulTypeIds') contentfulTypeIds: any) {
+    this.contentfulTypeIds = contentfulTypeIds;
   }
 
   public ngOnInit(): void {
     for (let entry of this.entries) {
-      entry.isVideo = this.resolveType(entry, this.contentfulConstantId.VIDEO_CONTENT_ID);
-      entry.isEmbedded = this.resolveType(entry, this.contentfulConstantId.EMBEDDED_CONTENT_ID);
-      entry.isHtml = this.resolveType(entry, this.contentfulConstantId.HTML_CONTENT_ID);
+      entry.isVideo = this.resolveType(entry, this.contentfulTypeIds.VIDEO_TYPE_ID);
+      entry.isEmbedded = this.resolveType(entry, this.contentfulTypeIds.EMBEDDED_TYPE_ID);
+      entry.isHtml = this.resolveType(entry, this.contentfulTypeIds.HTML_TYPE_ID);
     }
     return;
   }

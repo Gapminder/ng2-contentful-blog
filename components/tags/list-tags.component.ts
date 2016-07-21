@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {RouterLink} from '@angular/router-deprecated';
 import {Angulartics2On} from 'angulartics2/index';
+import {ContentfulTagPage} from '../contentfulService/aliases.structures';
 
 @Component({
   selector: 'gm-tags',
@@ -10,7 +11,7 @@ import {Angulartics2On} from 'angulartics2/index';
 })
 export class TagsComponent {
   /* tslint:disable:no-unused-variable */
-  @Input() private listTags: string[] = [];
+  @Input() private tagList: ContentfulTagPage[] = [];
   /* tslint:enable:no-unused-variable */
 
 }

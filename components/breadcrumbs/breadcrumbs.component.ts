@@ -1,9 +1,9 @@
-import {Component, OnInit, Inject, Type} from '@angular/core';
-import {RouterLink, Router, RouteDefinition, Instruction} from '@angular/router-deprecated';
-import {BreadcrumbsService} from './breadcrumbs.service';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
-import {RoutesGatewayService} from '../routesGateway/routes-gateway.service';
-import {Angulartics2On} from 'angulartics2/index';
+import { Component, OnInit, Inject, Type } from '@angular/core';
+import { RouterLink, Router, RouteDefinition, Instruction } from '@angular/router-deprecated';
+import { BreadcrumbsService } from './breadcrumbs.service';
+import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { RoutesGatewayService } from '../routesGateway/routes-gateway.service';
+import { Angulartics2On } from 'angulartics2/index';
 
 @Component({
   selector: 'gm-breadcrumbs',
@@ -20,6 +20,7 @@ export class BreadcrumbsComponent implements OnInit {
   private routesGatewayService: RoutesGatewayService;
   private routeDefinition: RouteDefinition[];
   private isOnRootView: boolean;
+  private hideItem: boolean;
   private urls: string[] = [];
   private breadcrumbFragmentName: string;
 
@@ -56,6 +57,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   public friendlyName(url: string): string {
     if (this.routeDefinition && url) {
+      this.hideItem = false;
       let route: RouteDefinition;
       for (let item of this.routeDefinition) {
         route = item;
@@ -63,6 +65,9 @@ export class BreadcrumbsComponent implements OnInit {
           return route.data ? route.data.name : route.path;
         }
       }
+    }
+    if (url === 'profile' || url === 'tag') {
+      this.hideItem = true;
     }
     return this.breadcrumbFragmentName;
   }

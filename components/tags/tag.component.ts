@@ -38,19 +38,19 @@ export class TagComponent implements OnActivate {
   public routerOnActivate(next: ComponentInstruction): void {
     this.tag = (next.params as TagRouteParams).tag;
     this.contentfulContentService
-      .getTagPage(this.tag).subscribe((contentTag: ContentfulTagPage[]) => {
-      this.breadcrumbsService.breadcrumbs$.next({url: next.urlPath, name: contentTag[0].fields.name});
+      .getTagsBySlug(this.tag).subscribe((contentTag: ContentfulTagPage[]) => {
+      this.breadcrumbsService.breadcrumbs$.next({url: next.urlPath, name: contentTag[0].fields.title});
       if (_.isEmpty(contentTag)) {
         this.router.navigate(['Root']);
       } else {
         this.tagId = contentTag[0].sys.id;
         this.contentfulContentService
-          .getTag(this.tagId)
+          .getArticlesByTag(this.tagId)
           .subscribe(
             (res: ContentfulNodePage[]) => {
               this.listNodePage = res;
               for (let item of this.listNodePage) {
-                this.routesGatewayService.getSlugParent(item.sys.id, (url: string) => {
+                this.routesGatewayService.getArticleParentSlug(item.sys.id, (url: string) => {
                   item.fields.url = this.routesGatewayService.addRoute(url, {name: item.fields.title});
                 });
               }
