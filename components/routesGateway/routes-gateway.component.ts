@@ -23,10 +23,10 @@ function checkRoute(next: ComponentInstruction): boolean {
   const firstPath: string = _.first(paths);
   const lastPath: string = _.last(paths);
 
-  parentOf(lastPath, paths, new Map<string, string>());
+  parentOf(lastPath, paths.length - 1, paths, new Map<string, string>());
   return false;
 
-  function parentOf(lastSlug: string, slugs: string[], titles: Map<string, string>): void {
+  function parentOf(lastSlug: string, lastSlugIndex: number, slugs: string[], titles: Map<string, string>): void {
     if (!slugs.length) {
       registerRoutes(collectAllPossiblePaths(slugs), titles);
       return;
@@ -40,21 +40,18 @@ function checkRoute(next: ComponentInstruction): boolean {
             let nodePageContent: NodePageContent = _.first(contentfulNodePage).fields;
             titles.set(nodePageContent.slug, nodePageContent.title);
             if (nodePageContent.parent) {
+              if (nodePageContent.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
+                slugs[lastSlugIndex - 1] = nodePageContent.parent.fields.slug;
+              }
               if (nodePageContent.slug === firstPath) {
                 router.navigate(['Root']);
                 return;
               }
-              return parentOf(nodePageContent.parent.fields.slug, slugs, titles);
-
-            } else if (!nodePageContent.parent && nodePageContent.slug === firstPath) {
-              registerRoutes(collectAllPossiblePaths(slugs), titles);
-              return;
-
-            } else {
-              router.navigate(['Root']);
-              return;
+              return parentOf(nodePageContent.parent.fields.slug, lastSlugIndex - 1, slugs, titles);
             }
 
+            registerRoutes(collectAllPossiblePaths(slugs), titles);
+            return;
           }
           if (_.isEmpty(contentfulNodePage) || _.first(contentfulNodePage).fields.slug !== slugs.pop()) {
             router.navigate(['Root']);
