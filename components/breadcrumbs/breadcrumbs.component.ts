@@ -1,50 +1,41 @@
-import { Component, OnInit, Inject, Type } from '@angular/core';
-import { RouterLink, Router, RouteDefinition, Instruction } from '@angular/router-deprecated';
-import { BreadcrumbsService } from './breadcrumbs.service';
+import { Component, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router, Route } from '@angular/router';
+import { BreadcrumbsService, BreadcrumbsEvent } from './breadcrumbs.service';
 import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { RoutesGatewayService } from '../routesGateway/routes-gateway.service';
-import { Angulartics2On } from 'angulartics2/index';
+import { Angulartics2On } from 'angulartics2';
+import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-breadcrumbs',
   template: require('./breadcrumbs.html') as string,
   styles: [require('./breadcrumbs.css') as string],
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, RouterLink, Angulartics2On]
+  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
 })
 export class BreadcrumbsComponent implements OnInit {
   public type: string = 'Breadcrumbs Component';
 
   private router: Router;
-  private rootComponent: Type;
   private breadcrumbsService: BreadcrumbsService;
-  private routesGatewayService: RoutesGatewayService;
-  private routeDefinition: RouteDefinition[];
   private isOnRootView: boolean;
-  private hideItem: boolean;
+  private hideItem: boolean = false;
   private urls: string[] = [];
   private breadcrumbFragmentName: string;
+  private routesManager: RoutesManagerService;
 
-  public constructor(@Inject(Router) router: Router,
-                     @Inject('RootComponent') rootComponent: Type,
-                     @Inject(BreadcrumbsService)  breadcrumbsService: BreadcrumbsService,
-                     @Inject(RoutesGatewayService)  routesGatewayService: RoutesGatewayService) {
+  public constructor(router: Router,
+                     breadcrumbsService: BreadcrumbsService,
+                     routesManager: RoutesManagerService) {
     this.router = router;
-    this.rootComponent = rootComponent;
     this.breadcrumbsService = breadcrumbsService;
-    this.routesGatewayService = routesGatewayService;
-    this.routeDefinition = this.routesGatewayService.getRouteDefinitions(this.rootComponent);
+    this.routesManager = routesManager;
   }
 
   public ngOnInit(): any {
-
-    this.breadcrumbsService.breadcrumbs$.subscribe((res: any)=> {
-      this.router.recognize(res.url).then((instruction: Instruction) => {
-        this.urls = [];
-        this.breadcrumbFragmentName = res.name;
-        this.generateBreadcrumbTrail(res.url);
-        // this.isOnRootView = instruction.component.componentType === RootComponent;
-        this.isOnRootView = instruction.component.routeName === 'Root';
-      });
+    this.breadcrumbsService.breadcrumbs$.subscribe((res: BreadcrumbsEvent)=> {
+      this.urls = [];
+      this.breadcrumbFragmentName = res.name;
+      this.generateBreadcrumbTrail(res.url);
+      this.isOnRootView = res.url === '/' || res.url === '';
     });
   }
 
@@ -56,20 +47,19 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   public friendlyName(url: string): string {
-    if (this.routeDefinition && url) {
-      this.hideItem = false;
-      let route: RouteDefinition;
-      for (let item of this.routeDefinition) {
-        route = item;
-        if (url === route.path) {
-          return route.data ? route.data.name : route.path;
-        }
-      }
-    }
     if (url === 'profile' || url === 'tag') {
       this.hideItem = true;
     }
-    return this.breadcrumbFragmentName;
+
+    const route: Route = this.routesManager.findRouteByPath(url);
+    return route ? this.getRouteName(route) : this.breadcrumbFragmentName;
   }
 
+  private getRouteName(route: Route): string {
+    return route.data ? (route.data as RouteData).name : route.path;
+  }
+}
+
+interface RouteData {
+  name?: string;
 }

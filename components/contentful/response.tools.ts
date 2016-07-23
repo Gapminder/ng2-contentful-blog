@@ -1,5 +1,5 @@
-import {ContentfulCommon} from 'ng2-contentful';
-import {ContentfulNodePagesResponse} from './aliases.structures';
+import { ContentfulCommon } from 'ng2-contentful';
+import { ContentfulNodePagesResponse } from './aliases.structures';
 
 // this will be the part of ng2-contentful tools
 /**

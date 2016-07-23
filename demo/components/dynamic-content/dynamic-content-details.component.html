@@ -13,7 +13,7 @@
 
     <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35" *ngFor="let child of childrenList">
       <a *ngIf="child.fields.thumbnail"
-         [routerLink]="[routesGatewayService.getRouteName(urlPath + '/'+ child.fields.slug)]"
+         [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
          angulartics2On="click"
          angularticsEvent="{{child.fields.title}}"
          class="dynamic-wrap-img">
@@ -23,7 +23,7 @@
       </a>
       <div class="date-info">{{child.fields.createdAt | gmToDate | date}}</div>
 
-      <a [routerLink]="[routesGatewayService.getRouteName(urlPath + '/'+ child.fields.slug)]"
+      <a [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
          angulartics2On="click"
          angularticsEvent="{{child.fields.title}}"
          class="post-title">

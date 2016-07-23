@@ -1,30 +1,32 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {RouterLink} from '@angular/router-deprecated';
-import {AsyncPipe} from '@angular/common';
-import {Angulartics2On} from 'angulartics2/index';
-import {ContenfulContent} from '../../contentfulService/contentful-content.service';
-import {RoutesGatewayService} from '../../routesGateway/routes-gateway.service';
-import {Menu} from '../../contentfulService/content-type.structures';
-import {ContentfulMenu} from '../../contentfulService/aliases.structures';
+import { Component, OnInit, Inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Angulartics2On } from 'angulartics2';
+import { ContenfulContent } from '../../contentful/contentful-content.service';
+import { Menu } from '../../contentful/content-type.structures';
+import { ContentfulMenu } from '../../contentful/aliases.structures';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-footer-menu',
   template: require('./footer.html') as string,
-  directives: [RouterLink, Angulartics2On],
+  directives: [ROUTER_DIRECTIVES, Angulartics2On],
   styles: [require('./footer.css') as string],
   pipes: [AsyncPipe]
 })
 export class FooterMenuComponent implements OnInit {
   private menus: Menu[];
   private contentfulContentService: ContenfulContent;
-  private routesGatewayService: RoutesGatewayService;
+  private routesManager: RoutesManagerService;
   private contentfulTypeIds: any;
 
-  public constructor(@Inject(ContenfulContent) contentfulContentService: ContenfulContent,
+  public constructor(contentfulContentService: ContenfulContent,
                      @Inject('ContentfulTypeIds') contentfulTypeIds: any,
-                     @Inject(RoutesGatewayService) routesGatewayService: RoutesGatewayService) {
+                     routesManager: RoutesManagerService) {
     this.contentfulContentService = contentfulContentService;
-    this.routesGatewayService = routesGatewayService;
+    this.routesManager = routesManager;
     this.contentfulTypeIds = contentfulTypeIds;
   }
 
@@ -35,7 +37,7 @@ export class FooterMenuComponent implements OnInit {
         this.menus = response[0].fields.entries;
         for (let menu of this.menus) {
           if (menu.fields.entryPoint) {
-            this.routesGatewayService.addRoute(menu.fields.entryPoint.fields.slug, {name: menu.fields.entryPoint.fields.title});
+            this.routesManager.addRoute(menu.fields.entryPoint.fields.slug, {name: menu.fields.entryPoint.fields.title});
           }
         }
       });

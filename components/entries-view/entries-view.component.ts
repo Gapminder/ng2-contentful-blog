@@ -1,7 +1,7 @@
-import {Component, Input, OnInit, Inject} from '@angular/core';
-import {VideoEntryComponent} from './video-entry.component';
-import {HtmlEntryComponent} from './html-entry.component';
-import {EmbeddedEntryComponent} from './embedded-entry.component';
+import { Component, Input, OnInit, Inject } from '@angular/core';
+import { VideoEntryComponent } from './video-entry.component';
+import { HtmlEntryComponent } from './html-entry.component';
+import { EmbeddedEntryComponent } from './embedded-entry.component';
 
 @Component({
   selector: 'gm-entries-view',

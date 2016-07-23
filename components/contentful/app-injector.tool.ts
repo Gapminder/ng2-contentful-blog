@@ -1,5 +1,5 @@
 
-import {Injector} from '@angular/core';
+import { Injector } from '@angular/core';
 
 let appInjectorRef: Injector;
 export const appInjector = (injector?: Injector):Injector => {

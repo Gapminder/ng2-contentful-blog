@@ -1,5 +1,5 @@
-import {Component, Input, Inject, OnInit} from '@angular/core';
-import {SafeResourceUrl, DomSanitizationService} from '@angular/platform-browser';
+import { Component, Input, OnInit } from '@angular/core';
+import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
 
 @Component({
   selector: 'gm-video-entry',
@@ -27,7 +27,7 @@ export class VideoEntryComponent implements OnInit {
 
   private sanitationService: DomSanitizationService;
 
-  public constructor(@Inject(DomSanitizationService) sanitationService: DomSanitizationService) {
+  public constructor(sanitationService: DomSanitizationService) {
     this.sanitationService = sanitationService;
   }
 

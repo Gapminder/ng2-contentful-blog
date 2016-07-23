@@ -12,7 +12,7 @@
         (click)="isCollapsed = !isCollapsed; true">
       <li dropdown *ngFor="let item of menu">
         <a *ngIf="item.fields.entryPoint && !item.fields.submenus"
-           [routerLink]="[routesGatewayService.getRouteName(item.fields.entryPoint.fields.slug)]"
+           [routerLink]="[routesManager.getRouteName(item.fields.entryPoint.fields.slug)]"
            angulartics2On="click"
            angularticsEvent="{{item.fields.title}}">
           {{item.fields.title}}
@@ -23,7 +23,7 @@
         <ul class="dropdown-menu mobile" role="menu" aria-labelledby="simple-dropdown"
             *ngIf="item.fields.submenus">
           <li *ngFor="let submenu of item.fields.submenus">
-            <a [routerLink]="[routesGatewayService.getRouteName(submenu.fields.entryPoint.fields.slug)]"
+            <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
                angulartics2On="click"
                angularticsEvent="{{submenu.fields.title}}"
                class="dropdown-item">
@@ -46,7 +46,7 @@
     <ul class="nav navbar-nav">
       <li *ngFor="let item of menu">
         <a *ngIf="item.fields.entryPoint && !item.fields.submenus"
-           [routerLink]="[routesGatewayService.getRouteName(item.fields.entryPoint.fields.slug)]"
+           [routerLink]="[routesManager.getRouteName(item.fields.entryPoint.fields.slug)]"
            angulartics2On="click"
            angularticsEvent="{{item.fields.title}}">
           {{item.fields.title}}
@@ -58,7 +58,7 @@
         <ul class="dropdown-menu diff" role="menu"
             *ngIf="item.fields.submenus">
           <li *ngFor="let submenu of item.fields.submenus">
-            <a [routerLink]="[routesGatewayService.getRouteName(submenu.fields.entryPoint.fields.slug)]"
+            <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
                angulartics2On="click"
                angularticsEvent="{{submenu.fields.title}}"
                class="dropdown-item">
