@@ -49,6 +49,7 @@ export {NodePageContent, Menu, TagPage};
 export {ContentfulService};
 export {ContributorsComponent};
 export {ProfileComponent};
+export {RoutesGatewayGuard};
 export {
   ContentfulMenu,
   ContentfulNodePagesResponse,

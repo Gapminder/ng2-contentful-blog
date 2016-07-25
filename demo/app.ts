@@ -18,12 +18,12 @@ import {
 } from '../index';
 import { appInjector } from '../components/contentful/app-injector.tool';
 import { DynamicContentDetailsComponent } from './components/dynamic-content/dynamic-content-details.component';
-import { APP_ROUTER_PROVIDER } from '../components/routes-gateway/routes-manager.service';
+import { APP_ROUTER_PROVIDER, appRoutes } from './routes';
 import { HeaderMenuComponent } from '../components/menu/header/header.component';
 
 const ContentfulConfig = require('./contentTypeIds.json');
 declare var CONTENTFUL_ACCESS_TOKEN: string;
-declare var CONTENTFUL_SPACE_ID: string    ;
+declare var CONTENTFUL_SPACE_ID: string;
 declare var CONTENTFUL_HOST: string;
 
 Ng2ContentfulConfig.config = {
@@ -77,8 +77,8 @@ export class DemoComponent implements OnInit {
   public ngOnInit(): any {
     this.router.events.filter((value: any) => value instanceof NavigationStart && value.url === '/')
       .subscribe((value: NavigationStart) => {
-      this.breadcrumbsService.breadcrumbs$.next({url: value.url, name: 'Home'});
-    });
+        this.breadcrumbsService.breadcrumbs$.next({url: value.url, name: 'Home', show: false});
+      });
   }
 }
 
@@ -89,6 +89,7 @@ bootstrap(DemoComponent, [
   APP_ROUTER_PROVIDER,
   GAPMINDER_PROVIDERS,
   {provide: APP_BASE_HREF, useValue: '/'},
+  {provide: 'Routes', useValue: appRoutes},
   {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},
   {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
   {provide: PLATFORM_DIRECTIVES, useValue: ContentfulImageDirective, multi: true}

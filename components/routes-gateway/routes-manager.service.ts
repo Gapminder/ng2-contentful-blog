@@ -1,12 +1,8 @@
 import { Injectable, Inject, Type } from '@angular/core';
-import { Router, Route, provideRouter, RouterConfig } from '@angular/router';
-import { RootDemoComponent } from '../../demo/components/root/root-demo';
-import { TagComponent } from '../tags/tag.component';
-import { ProfileComponent } from '../profile/profile.component';
-import { RoutesGatewayComponent } from './routes-gateway.component';
+import { Router, Route, RouterConfig } from '@angular/router';
 import * as _ from 'lodash';
-import { RoutesGatewayGuard } from './routes-gateway.guard';
 
+/*
 const appRoutes: RouterConfig = [
   {path: '', component: RootDemoComponent},
   {path: 'tag/:tag', component: TagComponent},
@@ -15,16 +11,20 @@ const appRoutes: RouterConfig = [
 ];
 
 export const APP_ROUTER_PROVIDER = provideRouter(appRoutes);
+*/
 
 @Injectable()
 export class RoutesManagerService {
   private router: Router;
   private pathToName: Map<string, string>;
   private defaultArticleComponent: Type;
+  private routes: RouterConfig;
 
   public constructor(router: Router,
-                     @Inject('DefaultArticleComponent') defaultArticleComponent: Type) {
+                     @Inject('DefaultArticleComponent') defaultArticleComponent: Type,
+                     @Inject('Routes') routes: RouterConfig) {
     this.router = router;
+    this.routes = routes;
     this.pathToName = new Map<string, string>();
     this.defaultArticleComponent = defaultArticleComponent;
   }
@@ -51,13 +51,13 @@ export class RoutesManagerService {
   }
 
   public findRouteByPath(path: string): Route {
-    return _.find(appRoutes, (route: any) => {
+    return _.find(this.routes, (route: any) => {
       return route.path === path;
     });
   }
 
   private _addRoute(route: Route): void {
-    appRoutes.unshift(route);
-    this.router.resetConfig(appRoutes);
+    this.routes.unshift(route);
+    this.router.resetConfig(this.routes);
   }
 }

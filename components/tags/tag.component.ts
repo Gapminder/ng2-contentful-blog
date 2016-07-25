@@ -45,7 +45,7 @@ export class TagComponent implements OnInit {
 
       this.contentfulContentService.getTagsBySlug(this.tag)
         .subscribe((contentTag: ContentfulTagPage[]) => {
-          this.breadcrumbsService.breadcrumbs$.next({url: this.tag, name: contentTag[0].fields.title});
+          this.breadcrumbsService.breadcrumbs$.next({url: this.tag, name: contentTag[0].fields.title, show: false});
           if (_.isEmpty(contentTag)) {
             this.router.navigate(['/']);
           } else {

@@ -1,4 +1,4 @@
-<div *ngIf="collapsed">
+<div *ngIf="menus && menus.length">
   <div class="navbar-header hidden-md-up">
     <div class="navbar-toggle navbar-toggler pull-right menu-mobile" (click)="isCollapsed = !isCollapsed"
          [ngClass]="isCollapsed ? 'open' : '' ">
@@ -10,19 +10,19 @@
   <nav class="visible-xs hidden-md-up">
     <ul class="nav nav-pills nav-stacked scrollable-menu" [collapse]="!isCollapsed"
         (click)="isCollapsed = !isCollapsed; true">
-      <li dropdown *ngFor="let item of menu">
-        <a *ngIf="item.fields.entryPoint && !item.fields.submenus"
-           [routerLink]="[routesManager.getRouteName(item.fields.entryPoint.fields.slug)]"
+      <li dropdown *ngFor="let menu of menus">
+        <a *ngIf="menu.fields.entryPoint && !menu.fields.submenus"
+           [routerLink]="[routesManager.getRouteName(menu.fields.entryPoint.fields.slug)]"
            angulartics2On="click"
-           angularticsEvent="{{item.fields.title}}">
-          {{item.fields.title}}
+           angularticsEvent="{{menu.fields.title}}">
+          {{menu.fields.title}}
         </a>
-        <a *ngIf="item.fields.submenus && item.fields.entryPoint || item.fields.submenus" dropdownToggle>
-          {{ item.fields.title }}
+        <a *ngIf="(menu.fields.submenus && menu.fields.entryPoint) || menu.fields.submenus" dropdownToggle>
+          {{ menu.fields.title }}
         </a>
         <ul class="dropdown-menu mobile" role="menu" aria-labelledby="simple-dropdown"
-            *ngIf="item.fields.submenus">
-          <li *ngFor="let submenu of item.fields.submenus">
+            *ngIf="menu.fields.submenus">
+          <li *ngFor="let submenu of menu.fields.submenus">
             <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
                angulartics2On="click"
                angularticsEvent="{{submenu.fields.title}}"
@@ -32,7 +32,7 @@
                 [gmContentfulSrcId]="submenu.fields.thumbnail.sys.id"
                 class="frame-img">
               {{submenu.fields.title}}
-              <span>{{item.fields.description}}</span>
+              <span>{{menu.fields.description}}</span>
             </a>
           </li>
 
@@ -44,20 +44,20 @@
 
   <nav class="hidden-xs hidden-xs-down">
     <ul class="nav navbar-nav">
-      <li *ngFor="let item of menu">
-        <a *ngIf="item.fields.entryPoint && !item.fields.submenus"
-           [routerLink]="[routesManager.getRouteName(item.fields.entryPoint.fields.slug)]"
+      <li *ngFor="let menu of menus">
+        <a *ngIf="menu.fields.entryPoint && !menu.fields.submenus"
+           [routerLink]="[routesManager.getRouteName(menu.fields.entryPoint.fields.slug)]"
            angulartics2On="click"
-           angularticsEvent="{{item.fields.title}}">
-          {{item.fields.title}}
+           angularticsEvent="{{menu.fields.title}}">
+          {{menu.fields.title}}
         </a>
 
-        <a *ngIf="item.fields.submenus && item.fields.entryPoint || item.fields.submenus">
-          {{ item.fields.title }}
+        <a *ngIf="(menu.fields.submenus && menu.fields.entryPoint) || menu.fields.submenus">
+          {{ menu.fields.title }}
         </a>
         <ul class="dropdown-menu diff" role="menu"
-            *ngIf="item.fields.submenus">
-          <li *ngFor="let submenu of item.fields.submenus">
+            *ngIf="menu.fields.submenus">
+          <li *ngFor="let submenu of menu.fields.submenus">
             <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
                angulartics2On="click"
                angularticsEvent="{{submenu.fields.title}}"
@@ -67,7 +67,7 @@
                 [gmContentfulSrcId]="submenu.fields.thumbnail.sys.id"
                 class="frame-img">
               {{submenu.fields.title}}
-              <span>{{item.fields.description}}</span>
+              <span>{{menu.fields.description}}</span>
             </a>
           </li>
         </ul>

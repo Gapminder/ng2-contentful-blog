@@ -6,6 +6,7 @@ import { ContenfulContent } from '../../contentful/contentful-content.service';
 import { Menu } from '../../contentful/content-type.structures';
 import { ContentfulMenu } from '../../contentful/aliases.structures';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-header-menu',
@@ -15,7 +16,7 @@ import { RoutesManagerService } from '../../routes-gateway/routes-manager.servic
 })
 export class HeaderMenuComponent implements OnInit {
   private collapsed: boolean = true;
-  private menu: Menu[];
+  private menus: Menu[];
   private contentfulContentService: ContenfulContent;
   private routesManager: RoutesManagerService;
   private contentfulTypeIds: any;
@@ -31,22 +32,21 @@ export class HeaderMenuComponent implements OnInit {
   public ngOnInit(): void {
     this.contentfulContentService
       .getMenu(this.contentfulTypeIds.HEADER_TYPE_ID)
-      .subscribe((response: ContentfulMenu[]) => {
-        this.menu = response[0].fields.entries;
-        for (let item of this.menu) {
-          if (item.fields.entryPoint && !item.fields.submenus) {
-            this.routesManager.addRoute(item.fields.entryPoint.fields.slug, {name: item.fields.entryPoint.fields.title});
-          }
-          if (item.fields.submenus && item.fields.entryPoint || item.fields.submenus) {
-            for (let submenu of item.fields.submenus) {
-              this.routesManager.addRoute(submenu.fields.entryPoint.fields.slug, {name: submenu.fields.entryPoint.fields.title});
+      .subscribe((menus: ContentfulMenu[]) => {
+        if (!_.isEmpty(menus)) {
+          this.menus = menus[0].fields.entries;
+          for (let item of this.menus) {
+            if (item.fields.entryPoint && !item.fields.submenus) {
+              this.routesManager.addRoute(item.fields.entryPoint.fields.slug, {name: item.fields.entryPoint.fields.title});
+            }
+            if (item.fields.submenus && item.fields.entryPoint || item.fields.submenus) {
+              for (let submenu of item.fields.submenus) {
+                this.routesManager.addRoute(submenu.fields.entryPoint.fields.slug, {name: submenu.fields.entryPoint.fields.title});
+              }
             }
           }
         }
       });
   }
 
-  public toggle(collapsed: boolean): void {
-    this.collapsed = collapsed;
-  }
 }
