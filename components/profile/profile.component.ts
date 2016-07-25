@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
         this.username = (params as ProfileRouteParams).userName;
         this.contentfulContentService
           .getProfilesByUsername(this.username).subscribe((profiles: ContentfulProfilePage[]) => {
-          this.breadcrumbsService.breadcrumbs$.next({url: this.username, name: profiles[0].fields.userName});
+          this.breadcrumbsService.breadcrumbs$.next({url: this.username, name: profiles[0].fields.userName, show: false});
           if (_.isEmpty(profiles)) {
             this.router.navigate(['Root']);
           } else {

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router, Route } from '@angular/router';
 import { BreadcrumbsService, BreadcrumbsEvent } from './breadcrumbs.service';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
+import { CORE_DIRECTIVES } from '@angular/common';
 import { Angulartics2On } from 'angulartics2';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
@@ -9,15 +9,14 @@ import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
   selector: 'gm-breadcrumbs',
   template: require('./breadcrumbs.html') as string,
   styles: [require('./breadcrumbs.css') as string],
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
+  directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
 })
 export class BreadcrumbsComponent implements OnInit {
   public type: string = 'Breadcrumbs Component';
 
   private router: Router;
   private breadcrumbsService: BreadcrumbsService;
-  private isOnRootView: boolean;
-  private hideItem: boolean = false;
+  private showBreadcrumbs: boolean = true;
   private urls: string[] = [];
   private breadcrumbFragmentName: string;
   private routesManager: RoutesManagerService;
@@ -35,7 +34,7 @@ export class BreadcrumbsComponent implements OnInit {
       this.urls = [];
       this.breadcrumbFragmentName = res.name;
       this.generateBreadcrumbTrail(res.url);
-      this.isOnRootView = res.url === '/' || res.url === '';
+      this.showBreadcrumbs = res.show !== false;
     });
   }
 
@@ -47,10 +46,6 @@ export class BreadcrumbsComponent implements OnInit {
   }
 
   public friendlyName(url: string): string {
-    if (url === 'profile' || url === 'tag') {
-      this.hideItem = true;
-    }
-
     const route: Route = this.routesManager.findRouteByPath(url);
     return route ? this.getRouteName(route) : this.breadcrumbFragmentName;
   }

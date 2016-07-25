@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-8 margin-top-35">
+  <div class="col-md-8 margin-top-35" *ngIf="listNodePage && listNodePage.length">
     <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35"
          *ngFor="let item of listNodePage">
       <a *ngIf="item.fields.thumbnail && item.fields.url" [routerLink]="[item.fields.url]"

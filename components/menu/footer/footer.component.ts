@@ -8,6 +8,7 @@ import { ContentfulMenu } from '../../contentful/aliases.structures';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-footer-menu',
@@ -33,11 +34,13 @@ export class FooterMenuComponent implements OnInit {
   public ngOnInit(): void {
     this.contentfulContentService
       .getMenu(this.contentfulTypeIds.FOOTER_TYPE_ID)
-      .subscribe((response: ContentfulMenu[]) => {
-        this.menus = response[0].fields.entries;
-        for (let menu of this.menus) {
-          if (menu.fields.entryPoint) {
-            this.routesManager.addRoute(menu.fields.entryPoint.fields.slug, {name: menu.fields.entryPoint.fields.title});
+      .subscribe((menus: ContentfulMenu[]) => {
+        if (!_.isEmpty(menus)) {
+          this.menus = menus[0].fields.entries;
+          for (let menu of this.menus) {
+            if (menu.fields.entryPoint) {
+              this.routesManager.addRoute(menu.fields.entryPoint.fields.slug, {name: menu.fields.entryPoint.fields.title});
+            }
           }
         }
       });

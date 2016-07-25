@@ -1,4 +1,4 @@
-<ul class="menu-footer">
+<ul class="menu-footer" *ngIf="menus && menus.length">
   <li *ngFor="let menu of menus">
     <a [routerLink]="[routesManager.getRouteName(menu.fields.entryPoint.fields.slug)]"
        angulartics2On="click"

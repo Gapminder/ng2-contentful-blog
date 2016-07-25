@@ -9,5 +9,6 @@ export class BreadcrumbsService {
 export interface BreadcrumbsEvent {
   name: string;
   url: string;
+  show?: boolean;
 }
 
