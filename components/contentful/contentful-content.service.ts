@@ -1,14 +1,16 @@
-import {Injectable, Inject} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {transformResponse} from './response.tools';
-import {ContentfulService, ContentfulRequest, SearchItem} from 'ng2-contentful';
-import {Response} from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { transformResponse } from './response.tools';
+import { ContentfulService, ContentfulRequest, SearchItem } from 'ng2-contentful';
+import { Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import {
   ContentfulNodePagesResponse,
   ContentfulNodePage,
   ContentfulMenu,
-  ContentfulTagPage, ContentfulProfilePage, ContentfulContributionPage
+  ContentfulTagPage,
+  ContentfulProfilePage,
+  ContentfulContributionPage
 } from './aliases.structures';
 
 /**
@@ -25,7 +27,7 @@ export class ContenfulContent {
   private contentfulService: ContentfulService;
   private contentfulTypeIds: any;
 
-  public constructor(@Inject(ContentfulService) contentfulService: ContentfulService,
+  public constructor(contentfulService: ContentfulService,
                      @Inject('ContentfulTypeIds') contentfulTypeIds: any) {
     this.contentfulService = contentfulService;
     this.contentfulTypeIds = contentfulTypeIds;
@@ -166,6 +168,20 @@ export class ContenfulContent {
       .include(4)
       .commit()
       .map((response: Response) => transformResponse<ContentfulMenu>(response.json(), 3));
+  }
+
+  public getArticleParentSlug(id: string, onSlugFound: (path: string) => void): void {
+    this.getParentOf(id).subscribe(
+      (res: any) => {
+        const slug = res[0].fields.slug;
+        if (!res[0].fields.parent) {
+          return onSlugFound(slug);
+        }
+        let parentId = res[0].fields.parent.sys.id;
+        this.getArticleParentSlug(parentId, (parentUrl: string) => {
+          return onSlugFound(`${parentUrl}/${slug}`);
+        });
+      });
   }
 
   private getRawNodePageBySlug(slug: string): Observable<ContentfulNodePagesResponse> {

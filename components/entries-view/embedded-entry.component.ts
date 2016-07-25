@@ -1,5 +1,5 @@
-import {Component, Input, Inject, OnInit} from '@angular/core';
-import {SafeResourceUrl, DomSanitizationService} from '@angular/platform-browser';
+import { Component, Input, OnInit } from '@angular/core';
+import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
 
 @Component({
   selector: 'gm-embedded-entry',
@@ -25,7 +25,7 @@ export class EmbeddedEntryComponent implements OnInit {
 
   private sanitationService: DomSanitizationService;
 
-  public constructor(@Inject(DomSanitizationService) sanitationService: DomSanitizationService) {
+  public constructor(sanitationService: DomSanitizationService) {
     this.sanitationService = sanitationService;
   }
 

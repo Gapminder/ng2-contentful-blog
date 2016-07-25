@@ -1,6 +1,6 @@
 <ul class="menu-footer">
   <li *ngFor="let menu of menus">
-    <a [routerLink]="[routesGatewayService.getRouteName(menu.fields.entryPoint.fields.slug)]"
+    <a [routerLink]="[routesManager.getRouteName(menu.fields.entryPoint.fields.slug)]"
        angulartics2On="click"
        angularticsEvent="{{ menu.fields.title }}">
       {{ menu.fields.title }}

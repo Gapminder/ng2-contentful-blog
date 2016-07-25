@@ -1,4 +1,4 @@
-import {ContentfulIterableResponse, ContentfulCommon} from 'ng2-contentful';
+import { ContentfulIterableResponse, ContentfulCommon } from 'ng2-contentful';
 import { NodePageContent, Menu, TagPage, ProfilePage, ContributionPage } from './content-type.structures';
 
 export interface ContentfulNodePagesResponse extends ContentfulIterableResponse<ContentfulCommon<NodePageContent>> {}

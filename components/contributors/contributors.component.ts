@@ -1,18 +1,18 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { RouterLink } from '@angular/router-deprecated';
-import { Angulartics2On } from 'angulartics2/index';
+import { Component, OnInit, Input } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+import { Angulartics2On } from 'angulartics2';
 import * as _ from 'lodash';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
 import { AsyncPipe } from '@angular/common';
-import { ContenfulContent } from '../contentfulService/contentful-content.service';
-import { ContentfulProfilePage, ContentfulContributionPage } from '../contentfulService/aliases.structures';
+import { ContenfulContent } from '../contentful/contentful-content.service';
+import { ContentfulProfilePage, ContentfulContributionPage } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-contributors',
   template: require('./contributors.html') as string,
-  directives: [RouterLink, Angulartics2On],
+  directives: [ROUTER_DIRECTIVES, Angulartics2On],
   styles: [require('./contributors.css') as string],
   pipes: [AsyncPipe]
 })
@@ -22,7 +22,7 @@ export class ContributorsComponent implements OnInit {
   private profiles: ContentfulProfilePage[];
   private contentfulContentService: ContenfulContent;
 
-  public constructor(@Inject(ContenfulContent) contentfulContentService: ContenfulContent) {
+  public constructor(contentfulContentService: ContenfulContent) {
     this.contentfulContentService = contentfulContentService;
   }
 
