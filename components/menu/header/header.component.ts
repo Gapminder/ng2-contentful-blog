@@ -15,7 +15,6 @@ import * as _ from 'lodash';
   directives: [CollapseDirective, DROPDOWN_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
 })
 export class HeaderMenuComponent implements OnInit {
-  private collapsed: boolean = true;
   private menus: Menu[];
   private contentfulContentService: ContenfulContent;
   private routesManager: RoutesManagerService;
