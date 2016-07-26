@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild, ElementRef, AfterViewInit, Rendere
 import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
 
 @Component({
-  selector: 'gm-embedded-entry',
+  selector: 'gm-vizabi-entry',
   styles: [require('./video-entry.css')],
   template: `
     <div class="video-wrapper">
@@ -18,7 +18,7 @@ import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-brows
     </div>
   `
 })
-export class EmbeddedEntryComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VizabiEntryComponent implements OnInit, AfterViewInit, OnDestroy {
   protected url: SafeResourceUrl;
   @ViewChild('iframe') private iframeElementRef: ElementRef;
   @ViewChild('loader') private loaderElementRef: ElementRef;
@@ -26,15 +26,12 @@ export class EmbeddedEntryComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private sanitationService: DomSanitizationService;
   private renderer: Renderer;
-  private elementRef: ElementRef;
   private listenLoad: any;
 
   public constructor(sanitationService: DomSanitizationService,
-                     renderer: Renderer,
-                     elementRef: ElementRef) {
+                     renderer: Renderer) {
     this.sanitationService = sanitationService;
     this.renderer = renderer;
-    this.elementRef = elementRef;
   }
 
   public ngAfterViewInit(): any {
@@ -58,8 +55,10 @@ export class EmbeddedEntryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public ngOnInit(): void {
-    if (this.entry.fields.link) {
-      this.url = this.sanitationService.bypassSecurityTrustResourceUrl(this.entry.fields.link);
+    if (this.entry.fields.state) {
+      // TODO: remove bubbles
+      const staticState: string = 'http://www.gapminder.org/tools/bubbles?embedded=true';
+      this.url = this.sanitationService.bypassSecurityTrustResourceUrl(staticState + this.entry.fields.state);
     }
   }
 
