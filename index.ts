@@ -10,6 +10,7 @@ import {ContentfulImageDirective} from './components/entries-view/contentful-ima
 import {EmbeddedEntryComponent} from './components/entries-view/embedded-entry.component';
 import {HtmlEntryComponent} from './components/entries-view/html-entry.component';
 import {EntriesViewComponent} from './components/entries-view/entries-view.component';
+import {VizabiEntryComponent} from './components/entries-view/vizabi-entry.component';
 import {VideoEntryComponent} from './components/entries-view/video-entry.component';
 import {TagsComponent} from './components/tags/list-tags.component';
 import {TagComponent} from './components/tags/tag.component';
@@ -37,6 +38,7 @@ export {RoutesGatewayComponent};
 export {ContenfulContent};
 export {ContentfulImageDirective};
 export {EmbeddedEntryComponent};
+export {VizabiEntryComponent};
 export {HtmlEntryComponent};
 export {EntriesViewComponent};
 export {VideoEntryComponent};
