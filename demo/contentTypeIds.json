@@ -7,5 +7,6 @@
   "PROFILE_TYPE_ID": "profile",
   "CONTRIBUTION_TYPE_ID": "contribution",
   "HEADER_TYPE_ID": "header",
-  "FOOTER_TYPE_ID": "footer"
+  "FOOTER_TYPE_ID": "footer",
+  "VIZABI_TYPE_ID": "vizabi"
 }

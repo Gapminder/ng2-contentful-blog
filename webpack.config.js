@@ -34,8 +34,9 @@ const config = {
       'es6-shim',
       'es6-promise',
       'zone.js',
-      'es7-reflect-metadata',
+      'reflect-metadata',
       '@angular/common',
+      '@angular/router',
       '@angular/core',
       '@angular/http',
       '@angular/compiler',
@@ -44,7 +45,6 @@ const config = {
       'lodash'
     ],
     'angular2-contentful-blog-demo': ['./demo/app.ts']
-    // 'app': ['./demo/app.ts']
   },
 
   output: {
@@ -76,10 +76,6 @@ const config = {
         test: /\.ts$/,
         loader: 'ts'
       },
-      // {
-      //   test: /\.css$/,
-      //   loader: 'style!css!stylus?resolve url'
-      // },
       {
         test: /\.(styl|css)$/,
         loader: 'to-string!css!stylus?resolve url'
@@ -115,7 +111,6 @@ const config = {
     colors: true,
     historyApiFallback: true,
     contentBase: dest,
-    //publicPath: dest,
     outputPath: dest,
     watchOptions: {aggregateTimeout: 300, poll: 1000},
     host: 'localhost',

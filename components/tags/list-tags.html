@@ -1,7 +1,7 @@
 <div class="wrap-tags">
   <ul class="list-tags" >
     <li *ngFor="let tag of tagList">
-      <a  [routerLink]="['TagComponent', {tag: tag.fields.slug}]"
+      <a  [routerLink]="['/tag', tag.fields.slug]"
           angulartics2On="click"
           angularticsEvent="{{tag.fields.title}}">
         {{tag.fields.title}}
