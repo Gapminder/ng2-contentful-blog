@@ -57,7 +57,7 @@ export class VizabiEntryComponent implements OnInit, AfterViewInit, OnDestroy {
   public ngOnInit(): void {
     if (this.entry.fields.state) {
       // TODO: remove bubbles
-      const staticState: string = 'http://www.gapminder.org/tools/bubbles?embedded=true';
+      const staticState: string = '//www.gapminder.org/tools/bubbles?embedded=true';
       this.url = this.sanitationService.bypassSecurityTrustResourceUrl(staticState + this.entry.fields.state);
     }
   }
