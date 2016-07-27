@@ -1,6 +1,6 @@
 {
   "name": "ng2-contentful-blog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "flow.install:typings": "./node_modules/.bin/typings install",
     "flow.compile": "npm run flow.install:typings && npm run flow.compile:ts && npm run flow.compile:stylus",
