@@ -55,7 +55,7 @@ export class TagComponent implements OnInit {
                 this.listNodePage = res;
                 for (let item of this.listNodePage) {
                   this.contentfulContentService.getArticleParentSlug(item.sys.id, (url: string) => {
-                    item.fields.url = this.routesManager.addRoute(url, {name: item.fields.title});
+                    item.fields.url = this.routesManager.addRoute({path: url, data: {name: item.fields.title}});
                   });
                 }
               });

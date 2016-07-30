@@ -52,8 +52,10 @@ Ng2ContentfulConfig.config = {
         <gm-breadcrumbs></gm-breadcrumbs>
         <router-outlet></router-outlet>
       </div>
-     <div class='container'>
-      <gm-footer-menu></gm-footer-menu>
+     <div class="footer">
+      <div class='container'>
+        <gm-footer-menu></gm-footer-menu>
+      </div>
     </div>
     `,
   directives: [ROUTER_DIRECTIVES, HeaderMenuComponent, FooterMenuComponent, BreadcrumbsComponent]

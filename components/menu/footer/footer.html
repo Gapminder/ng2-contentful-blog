@@ -1,9 +1,27 @@
-<ul class="menu-footer" *ngIf="menus && menus.length">
+<ul class="menu-footer indent">
   <li *ngFor="let menu of menus">
-    <a [routerLink]="[routesManager.getRouteName(menu.fields.entryPoint.fields.slug)]"
+    <a *ngIf="menu.entryPoint && !menu.submenus"
+       [routerLink]="[routesManager.getRouteName(menu.entryPoint.fields.slug)]"
        angulartics2On="click"
-       angularticsEvent="{{ menu.fields.title }}">
-      {{ menu.fields.title }}
+       angularticsEvent="{{menu.title}}">
+      {{menu.title}}
     </a>
   </li>
 </ul>
+
+<div class="pull-left" *ngFor="let menu of menus">
+  <div class="menu-footer" *ngIf="(menu.submenus && menu.entryPoint) || menu.submenus">
+    <p class="head-submenu">
+      {{ menu.title }}
+    </p>
+    <ul class="indent" *ngIf="menu.submenus">
+      <li *ngFor="let submenu of menu.submenus">
+        <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
+           angulartics2On="click"
+           angularticsEvent="{{submenu.fields.title}}">
+          {{submenu.fields.title}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

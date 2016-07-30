@@ -20,6 +20,7 @@ import {appInjector} from './components/contentful/app-injector.tool';
 import {NodePageContent, Menu, TagPage} from './components/contentful/content-type.structures';
 import {ProfileComponent} from './components/profile/profile.component';
 import {ContributorsComponent} from './components/contributors/contributors.component';
+import {MenuService} from './components/menu/menu.service';
 
 import {
   ContentfulMenu,
@@ -52,6 +53,7 @@ export {ContentfulService};
 export {ContributorsComponent};
 export {ProfileComponent};
 export {RoutesGatewayGuard};
+export {MenuService};
 export {
   ContentfulMenu,
   ContentfulNodePagesResponse,
@@ -64,5 +66,6 @@ export const GAPMINDER_PROVIDERS: any[] = [
   {provide: RoutesManagerService, useClass: RoutesManagerService},
   {provide: ContenfulContent, useClass: ContenfulContent},
   {provide: ContentfulService, useClass: ContentfulService},
-  {provide: RoutesGatewayGuard, useClass: RoutesGatewayGuard}
+  {provide: RoutesGatewayGuard, useClass: RoutesGatewayGuard},
+  {provide: MenuService, useClass: MenuService}
 ];
