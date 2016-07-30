@@ -39,8 +39,9 @@ Ng2ContentfulConfig.config = {
     require('./main.styl') as string
   ],
   template: `
+   <div class="page-wrap">
     <header>
-      <div class="navbar navbar-fixed-top">
+      <div id="goTo" class="navbar navbar-fixed-top">
         <div class="container">
           <div class="row">
              <gm-header-menu></gm-header-menu>
@@ -57,6 +58,7 @@ Ng2ContentfulConfig.config = {
         <gm-footer-menu></gm-footer-menu>
       </div>
     </div>
+</div>
     `,
   directives: [ROUTER_DIRECTIVES, HeaderMenuComponent, FooterMenuComponent, BreadcrumbsComponent]
 })
