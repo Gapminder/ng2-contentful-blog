@@ -5,6 +5,8 @@ import {
   ContentfulSubmenu
 } from '../contentful/aliases.structures';
 import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/from';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { Menu } from '../contentful/content-type.structures';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';

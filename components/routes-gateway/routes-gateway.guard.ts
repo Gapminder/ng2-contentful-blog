@@ -5,7 +5,7 @@ import { ContentfulNodePage } from '../contentful/aliases.structures';
 import { NodePageContent } from '../contentful/content-type.structures';
 import { RoutesManagerService } from './routes-manager.service';
 import * as _ from 'lodash';
-import { appInjector } from '../contentful/app-injector.tool';
+// import { appInjector } from '../contentful/app-injector.tool';
 
 @Injectable()
 export class RoutesGatewayGuard implements CanActivate {
@@ -14,11 +14,13 @@ export class RoutesGatewayGuard implements CanActivate {
   private contentfulContent: ContenfulContent;
 
   public constructor(router: Router,
+                     routesManager: RoutesManagerService,
                      contentfulContent: ContenfulContent) {
     this.router = router;
     this.contentfulContent = contentfulContent;
     // FIXME: Using appInjector because of some kind of cyclic dependency in which RoutesManagerService is involved
-    this.routesManager = appInjector().get(RoutesManagerService);
+    // this.routesManager = appInjector().get(RoutesManagerService);
+    this.routesManager = routesManager;
   }
 
   public canActivate(route: ActivatedRouteSnapshot): boolean {
