@@ -61,7 +61,7 @@ export class DynamicContentDetailsComponent implements OnInit {
                 this.childrenList = children;
                 for (let item of children) {
                   if (item.fields) {
-                    this.routesManager.addRoute(`${this.urlPath}/${item.fields.slug}`, {name: item.fields.title});
+                    this.routesManager.addRoute({path: `${this.urlPath}/${item.fields.slug}`,data: {name: item.fields.title}});
                   }
                 }
               });

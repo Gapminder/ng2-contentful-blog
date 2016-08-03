@@ -68,7 +68,7 @@ export class RoutesGatewayGuard implements CanActivate {
     _.forEach(allPossiblePaths, (path: string) => {
 
       let currentTitle = path.split('/').pop();
-      this.routesManager.addRoute(path, {name: titles.get(currentTitle)});
+      this.routesManager.addRoute({path, data: {name: titles.get(currentTitle)}});
     });
     const lastPossiblePath = _.last(allPossiblePaths);
     const name = this.routesManager.getRouteName(lastPossiblePath);
