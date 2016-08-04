@@ -10,11 +10,12 @@ import { TagsComponent } from '../../../components/tags/list-tags.component';
 import { Angulartics2On } from 'angulartics2';
 import { ContributorsComponent } from '../../../components/contributors/contributors.component';
 import { RoutesManagerService } from '../../../components/routes-gateway/routes-manager.service';
+import { ShareFooterLineComponent } from '../../../components/share-btn/share-line-footer.component';
 
 @Component({
   selector: 'gm-dynamic-page',
   template: require('./dynamic-content-details.component.html') as string,
-  directives: [EntriesViewComponent, ROUTER_DIRECTIVES, TagsComponent, ContributorsComponent, Angulartics2On],
+  directives: [EntriesViewComponent, ROUTER_DIRECTIVES, ShareFooterLineComponent, TagsComponent, ContributorsComponent, Angulartics2On],
   styles: [require('./dynamic-content-details.component.styl') as string],
   pipes: [ToDatePipe]
 })
@@ -29,6 +30,9 @@ export class DynamicContentDetailsComponent implements OnInit {
   private contentfulContentService: ContenfulContent;
   private routesManager: RoutesManagerService;
   private breadcrumbsService: BreadcrumbsService;
+  /* tslint:disable:no-unused-variable */
+  private logoId: string = '2zHwKKRhnqe4GiOs6842QM';
+  /* tslint:enable:no-unused-variable */
 
   public constructor(router: Router,
                      activatedRoute: ActivatedRoute,
@@ -61,7 +65,10 @@ export class DynamicContentDetailsComponent implements OnInit {
                 this.childrenList = children;
                 for (let item of children) {
                   if (item.fields) {
-                    this.routesManager.addRoute(`${this.urlPath}/${item.fields.slug}`, {name: item.fields.title});
+                    this.routesManager.addRoute({
+                      path: `${this.urlPath}/${item.fields.slug}`,
+                      data: {name: item.fields.title}
+                    });
                   }
                 }
               });

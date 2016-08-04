@@ -2,13 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Angulartics2On } from 'angulartics2';
-import { ContenfulContent } from '../../contentful/contentful-content.service';
 import { Menu } from '../../contentful/content-type.structures';
-import { ContentfulMenu } from '../../contentful/aliases.structures';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
+import { MenuService } from '../menu.service';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
-import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-footer-menu',
@@ -19,30 +15,25 @@ import * as _ from 'lodash';
 })
 export class FooterMenuComponent implements OnInit {
   private menus: Menu[];
-  private contentfulContentService: ContenfulContent;
-  private routesManager: RoutesManagerService;
   private contentfulTypeIds: any;
+  private tagSlug: string = 'gapminder-org';
+  private menuService: MenuService;
+  private routesManager: RoutesManagerService;
 
-  public constructor(contentfulContentService: ContenfulContent,
+  public constructor(menuService: MenuService,
                      @Inject('ContentfulTypeIds') contentfulTypeIds: any,
                      routesManager: RoutesManagerService) {
-    this.contentfulContentService = contentfulContentService;
-    this.routesManager = routesManager;
     this.contentfulTypeIds = contentfulTypeIds;
+    this.menuService = menuService;
+    this.routesManager = routesManager;
   }
 
   public ngOnInit(): void {
-    this.contentfulContentService
-      .getMenu(this.contentfulTypeIds.FOOTER_TYPE_ID)
-      .subscribe((menus: ContentfulMenu[]) => {
-        if (!_.isEmpty(menus)) {
-          this.menus = menus[0].fields.entries;
-          for (let menu of this.menus) {
-            if (menu.fields.entryPoint) {
-              this.routesManager.addRoute(menu.fields.entryPoint.fields.slug, {name: menu.fields.entryPoint.fields.title});
-            }
-          }
-        }
+    this.menuService
+      .getMenus(this.contentfulTypeIds.FOOTER_TYPE_ID, this.tagSlug)
+      .subscribe((menus: Menu[]) => {
+        this.menuService.addRoutes(menus);
+        this.menus = menus;
       });
   }
 }

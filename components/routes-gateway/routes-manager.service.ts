@@ -2,17 +2,6 @@ import { Injectable, Inject, Type } from '@angular/core';
 import { Router, Route, RouterConfig } from '@angular/router';
 import * as _ from 'lodash';
 
-/*
-const appRoutes: RouterConfig = [
-  {path: '', component: RootDemoComponent},
-  {path: 'tag/:tag', component: TagComponent},
-  {path: 'profile/:userName', component: ProfileComponent},
-  {path: '**', component: RoutesGatewayComponent, canActivate: [RoutesGatewayGuard]}
-];
-
-export const APP_ROUTER_PROVIDER = provideRouter(appRoutes);
-*/
-
 @Injectable()
 export class RoutesManagerService {
   private router: Router;
@@ -30,20 +19,33 @@ export class RoutesManagerService {
   }
 
   public getRouteName(path: string): string {
-    return this.pathToName.get(path);
+    const registeredPath = this.pathToName.get(path);
+    // fakePath is added to support angular2 universal server rendering
+    // for some reason routes are requested from pathToName before they were actually registered
+    // on the server. So fakePath it is path that would exist as if route was added 
+    const fakePath = `/${path}`;
+    return registeredPath ? registeredPath : fakePath;
   }
 
-  public addRoute(path: string, data?: any): string {
-    if (!this.containsRoute(path)) {
-      this._addRoute({
-        path: path,
-        component: this.defaultArticleComponent,
-        data: data
-      });
+  public addRoute(route: RawRoute): string {
+    this.addRoutes([route]);
+    return this.getRouteName(route.path);
+  }
 
-      this.pathToName.set(path, `/${path}`);
-    }
-    return this.getRouteName(path);
+  public addRoutes(routes: RawRoute[]): void {
+    const newRoutes: Route[] = _.chain(routes)
+      .filter((route: RawRoute) => !this.containsRoute(route.path))
+      .map((route: RawRoute) => {
+        this.addPath(route.path);
+        return {
+          path: route.path,
+          component: this.defaultArticleComponent,
+          data: route.data
+        };
+      })
+      .value();
+
+    this._addRoutes(newRoutes);
   }
 
   public containsRoute(path: string): boolean {
@@ -56,8 +58,17 @@ export class RoutesManagerService {
     });
   }
 
-  private _addRoute(route: Route): void {
-    this.routes.unshift(route);
+  private _addRoutes(routes: Route[]): void {
+    this.routes.unshift(... routes);
     this.router.resetConfig(this.routes);
   }
+
+  private addPath(path: string): void {
+    this.pathToName.set(path, `/${path}`);
+  }
+}
+
+export interface RawRoute {
+  path: string;
+  data?: any;
 }

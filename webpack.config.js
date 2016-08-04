@@ -10,48 +10,10 @@ const contentfulConfig = JSON.parse(
   fs.readFileSync('demo/contentful.json') //eslint-disable-line no-sync
 );
 
-const dest = 'build';
-const absDest = root(dest);
-
-const config = {
-
-  devtool: 'sourcemap',
-  context: __dirname,  displayErrorDetails: true,
-  stats: {
-    colors: true,
-    reasons: true
-  },
-
-
+var commonConfig = {
+  devtool: 'source-map',
   resolve: {
-    cache: false,
-    root: __dirname,
     extensions: ['', '.ts', '.js', '.json', '.styl', '.css', 'html']
-  },
-
-  entry: {
-    vendor: [
-      'es6-shim',
-      'es6-promise',
-      'zone.js',
-      'reflect-metadata',
-      '@angular/common',
-      '@angular/router',
-      '@angular/core',
-      '@angular/http',
-      '@angular/compiler',
-      '@angular/platform-browser',
-      '@angular/platform-browser-dynamic',
-      'lodash'
-    ],
-    'angular2-contentful-blog-demo': ['./demo/app.ts']
-  },
-
-  output: {
-    path: absDest,
-    filename: '[name].js',
-    sourceMapFilename: '[name].js.map',
-    chunkFilename: '[id].chunk.js'
   },
   module: {
     loaders: [
@@ -74,7 +36,7 @@ const config = {
       { test: /\.json$/, loader: 'json' },
       {
         test: /\.ts$/,
-        loader: 'ts'
+        loaders: ['ts-loader', 'angular2-template-loader']
       },
       {
         test: /\.(styl|css)$/,
@@ -86,40 +48,94 @@ const config = {
       }
     ]
   },
-
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(true),
     new HtmlWebpackPlugin({
       title: 'ng2-contentful-blog',
       template: 'demo/index.ejs',
-      inject: 'body'
+      inject: false
     }),
-    new CleanWebpackPlugin(['build'], {
+    new CleanWebpackPlugin(['dist'], {
       root: __dirname,
       verbose: true
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'common'
     }),
     new webpack.DefinePlugin({
       CONTENTFUL_ACCESS_TOKEN: JSON.stringify(contentfulConfig.accessToken),
       CONTENTFUL_SPACE_ID: JSON.stringify(contentfulConfig.spaceId),
       CONTENTFUL_HOST: JSON.stringify(contentfulConfig.host)
     })
-  ],
+  ]
+};
+
+var clientConfig = {
+  target: 'web',
+  entry: './demo/client',
+  output: {
+    path: root('dist/client')
+  },
+  node: {
+    global: true,
+    __dirname: true,
+    __filename: true,
+    process: true,
+    Buffer: false
+  }
+};
+
+
+var serverConfig = {
+  target: 'node',
+  entry: './demo/server', // use the entry file of the node server if everything is ts rather than es5
+  output: {
+    path: root('dist/server'),
+    libraryTarget: 'commonjs2'
+  },
+  externals: checkNodeImport,
+  node: {
+    global: true,
+    __dirname: true,
+    __filename: true,
+    process: true,
+    Buffer: true
+  }
+};
+
+// Default config
+var defaultConfig = {
+  context: __dirname,
+  resolve: {
+    root: root('/demo')
+  },
+  output: {
+    publicPath: '/',
+    // publicPath: path.resolve(__dirname),
+    filename: 'index.js'
+  },
   devServer: {
-    inline: true,
-    colors: true,
     historyApiFallback: true,
-    contentBase: dest,
-    outputPath: dest,
-    watchOptions: {aggregateTimeout: 300, poll: 1000},
     host: 'localhost',
     port: 8080
   }
 };
 
-module.exports = config;
+var webpackMerge = require('webpack-merge');
+module.exports = [
+  // Server
+  webpackMerge({}, defaultConfig, commonConfig, serverConfig),
 
-function root(partialPath) {
-  return path.join(__dirname, partialPath);
+  // Client
+  webpackMerge({}, defaultConfig, commonConfig, clientConfig),
+];
+
+// Helpers
+function checkNodeImport(context, request, cb) {
+  if (!path.isAbsolute(request) && request.charAt(0) !== '.') {
+    cb(null, 'commonjs ' + request); return;
+  }
+  cb();
+}
+
+function root(args) {
+  args = Array.prototype.slice.call(arguments, 0);
+  return path.join.apply(path, [__dirname].concat(args));
 }

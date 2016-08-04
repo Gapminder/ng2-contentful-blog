@@ -1,20 +1,35 @@
 .wrap-tags
-  border-top 1px solid #eff2f6
-
-  .list-tags
-    margin 10px 0
+  .tag
+    font-size 18px
+    color: #767d86
     float left
+    line-height 20px
+    margin-right 10px
     padding 0
-    list-style none
 
-    li
-      border 1px solid #eff2f6
-      border-radius 3px
-      padding 3px
-      color #767d86
-      font-size 14px
-      float left
-      margin-right 5px
+.list-tags
+  padding 0
+  list-style none
+  float left
+  width 85%
+  li
+    border 1px solid #eff2f6
+    border-radius 12px
+    margin-right 5px
+    padding 0 20px
+    float left
+    position relative
+    &:before
+      content "• "
+      position absolute
+      top -8px
+      left 5px
+      color #b04514
+      font-size 25px
+    a
+      font-size 15px
+      color #394753
+      line-height 20px
 
 .dynamic-item
   float none

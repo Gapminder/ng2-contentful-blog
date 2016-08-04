@@ -1,0 +1,12 @@
+<div class="navbar-fixed-bottom share-line">
+  <a class="mini-logo" [routerLink]="['/']">
+    <img [gmContentfulSrcId]="logoId">
+ </a>
+  <div class="container">
+    <gm-share></gm-share>
+
+    <button (click)="scrollTop($event)" class="scroll-top">Back to Top
+      <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>

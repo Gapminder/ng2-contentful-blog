@@ -56,7 +56,7 @@ export class ContenfulContent {
       .map((response: Response) => response.json().items);
   }
 
-  public getLatestArticlesByTag(tagSysId: string, limit:number): Observable<ContentfulNodePage[]> {
+  public getLatestArticlesByTag(tagSysId: string, limit: number): Observable<ContentfulNodePage[]> {
     return this.contentfulService
       .create()
       .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
@@ -161,10 +161,22 @@ export class ContenfulContent {
       .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json(), 2));
   }
 
-  public getMenu(typeMenu: string): Observable<ContentfulMenu[]> {
+  public getMenuByTag(menuType: string, tagSysId: string): Observable<ContentfulMenu[]> {
     return this.contentfulService
       .create()
-      .searchEntries(typeMenu)
+      .searchEntries(menuType, {
+        param: 'fields.tag.sys.id',
+        value: tagSysId
+      })
+      .include(3)
+      .commit()
+      .map((response: Response) => transformResponse<ContentfulMenu>(response.json(), 3));
+  }
+
+  public getMenu(menuType: string): Observable<ContentfulMenu[]> {
+    return this.contentfulService
+      .create()
+      .searchEntries(menuType)
       .include(4)
       .commit()
       .map((response: Response) => transformResponse<ContentfulMenu>(response.json(), 3));
@@ -207,6 +219,7 @@ export class ContenfulContent {
       .commit()
       .map((response: Response) => response.json());
   }
+
   private getProfileByUsername(userName: string): Observable<ContentfulProfilePage> {
     return this.contentfulService
       .create()
@@ -218,15 +231,6 @@ export class ContenfulContent {
       .commit()
       .map((response: Response) => response.json());
   }
-
-  /*private getLatestItems(request: ContentfulRequest, limit: number, order: string = '-sys.createdAt', include: number = 0): Observable<ContentfulNodePagesResponse> {
-    return request
-      .limit(limit)
-      .order(order)
-      .include(include)
-      .commit()
-      .map((response: Response) => response.json());
-  }*/
 
   /**
    *

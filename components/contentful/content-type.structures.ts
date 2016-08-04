@@ -1,3 +1,4 @@
+import { ContentfulNodePage } from './aliases.structures';
 export interface NodePageContent {
   parent?: any;
   title: string;
@@ -26,17 +27,27 @@ export interface ImageContent {
   title: string;
 }
 
+export interface FooterMenu {
+  entries: Menu[];
+  title: string;
+  tag: string;
+}
+export interface HeaderMenu {
+  entries: Menu[];
+  title: string;
+  tag: string;
+}
+
 export interface Menu {
-  fields: any;
   entries: any;
   title: string;
   submenus: Submenu[];
-  entryPoint: NodePageContent[];
+  entryPoint: ContentfulNodePage;
 }
 
 export interface Submenu {
   title: string;
-  entries: NodePageContent[];
+  entryPoint: ContentfulNodePage;
   thumbnail: any;
 }
 
