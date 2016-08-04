@@ -15,7 +15,6 @@ import { RoutesManagerService } from '../../routes-gateway/routes-manager.servic
 export class HeaderMenuComponent implements OnInit {
   private menus: Menu[];
   private contentfulTypeIds: any;
-  private tagSlug: string = 'gapminder-org';
   private menuService: MenuService;
   private routesManager: RoutesManagerService;
 
@@ -29,7 +28,7 @@ export class HeaderMenuComponent implements OnInit {
 
   public ngOnInit(): void {
     this.menuService
-      .getMenus(this.contentfulTypeIds.HEADER_TYPE_ID, this.tagSlug)
+      .getMenus(this.contentfulTypeIds.HEADER_TYPE_ID)
       .subscribe((menus: Menu[]) => {
         this.menuService.addRoutes(menus);
         this.menus = menus;
