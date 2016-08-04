@@ -15,31 +15,47 @@ export class ShareFooterLineComponent {
   private logoId: string;
   /* tslint:enable:no-unused-variable */
 
-  protected scrollTop(e: Event): void {
+  public scrollTop(e: MouseEvent): void {
     e.preventDefault();
 
     this.animateScroll('goTo', 20, 1000, () => {
-      console.log('Scroll has done');
     });
   };
 
   private animateScroll(id: string, inc: number, duration: number, scrollCompleted: any): any {
-    let elem = document.getElementById(id);
-    let startScroll = document.body.scrollTop;
-    let endScroll = elem.offsetTop;
-    let step = (endScroll - startScroll) / duration * inc;
-
-    requestAnimationFrame(this.goToScroll(step, duration, inc, scrollCompleted));
+    const elem = document.getElementById(id);
+    const startScroll = this.getScrollTop();
+    const endScroll = elem.offsetTop;
+    const step = (endScroll - startScroll) / duration * inc;
+    window.requestAnimationFrame(this.goToScroll(step, duration, inc, scrollCompleted));
   }
 
   private goToScroll(step: number, duration: number, inc: number, scrollCompleted: any): any {
     return () => {
-      let currentDuration = duration - inc;
-      document.body.scrollTop += step;
+      const currentDuration = duration - inc;
+
+      this.incScrollTop(step);
+
       if (currentDuration < inc) {
         return scrollCompleted();
       }
-      requestAnimationFrame(this.goToScroll(step, currentDuration, inc, scrollCompleted));
+      window.requestAnimationFrame(this.goToScroll(step, currentDuration, inc, scrollCompleted));
     };
+  }
+
+  private getScrollTop(): number {
+    if (document.body.scrollTop) {
+      return document.body.scrollTop;
+    }
+
+    return document.documentElement.scrollTop;
+  }
+
+  private incScrollTop(step: number): void {
+    if (document.body.scrollTop) {
+      document.body.scrollTop += step;
+    } else {
+      document.documentElement.scrollTop += step;
+    }
   }
 }
