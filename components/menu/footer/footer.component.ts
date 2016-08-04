@@ -16,7 +16,6 @@ import { RoutesManagerService } from '../../routes-gateway/routes-manager.servic
 export class FooterMenuComponent implements OnInit {
   private menus: Menu[];
   private contentfulTypeIds: any;
-  private tagSlug: string = 'gapminder-org';
   private menuService: MenuService;
   private routesManager: RoutesManagerService;
 
@@ -30,7 +29,7 @@ export class FooterMenuComponent implements OnInit {
 
   public ngOnInit(): void {
     this.menuService
-      .getMenus(this.contentfulTypeIds.FOOTER_TYPE_ID, this.tagSlug)
+      .getMenus(this.contentfulTypeIds.FOOTER_TYPE_ID)
       .subscribe((menus: Menu[]) => {
         this.menuService.addRoutes(menus);
         this.menus = menus;

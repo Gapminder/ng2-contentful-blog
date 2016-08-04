@@ -23,6 +23,7 @@ export function ngApp(): Promise<ComponentRef<any>> {
     APP_ROUTER_PROVIDER,
     GAPMINDER_PROVIDERS,
     {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: 'ProjectTag', useValue: 'gapminder-org'},
     {provide: 'Routes', useValue: appRoutes},
     {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},
     {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},

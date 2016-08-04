@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import * as _ from 'lodash';
 import {
   ContentfulTagPage, ContentfulMenu, ContentfulNodePage,
@@ -16,16 +16,19 @@ import { RawRoute } from '../routes-gateway/routes-manager.service';
 export class MenuService {
   private routesManager: RoutesManagerService;
   private contentfulContentService: ContenfulContent;
+  private projectTag: string;
 
   public constructor(contentfulContentService: ContenfulContent,
+                     @Inject('ProjectTag') projectTag: string,
                      routesManager: RoutesManagerService) {
     this.routesManager = routesManager;
     this.contentfulContentService = contentfulContentService;
+    this.projectTag = projectTag;
   }
 
-  public getMenus(menuType: string, tagSlug: string): Observable<any[]> {
+  public getMenus(menuType: string): Observable<any[]> {
     return this.contentfulContentService
-      .getTagsBySlug(tagSlug)
+      .getTagsBySlug(this.projectTag)
       .map((tags: ContentfulTagPage[]) => _.map(tags, 'sys.id'))
       .mergeMap((tagSysIds: any) => this.contentfulContentService.getMenuByTag(menuType, tagSysIds))
       .map((menus: ContentfulMenu[]) => _.first(menus))
