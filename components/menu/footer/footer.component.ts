@@ -3,8 +3,6 @@ import { AsyncPipe } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Angulartics2On } from 'angulartics2';
 import { Menu } from '../../contentful/content-type.structures';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
 import { MenuService } from '../menu.service';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
 

@@ -1,6 +1,7 @@
-import { Directive, Input, OnInit, ElementRef } from '@angular/core';
+import { Directive, Input, OnInit, ElementRef, Renderer } from '@angular/core';
 import { ContentfulService } from 'ng2-contentful';
 import { URLSearchParams, Response } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Directive({
   selector: '[gmContentfulSrcId]',
@@ -18,10 +19,13 @@ export class ContentfulImageDirective implements OnInit {
   private queryParams: URLSearchParams = new URLSearchParams();
   private element: ElementRef;
   private contentfulService: ContentfulService;
+  private renderer: Renderer;
 
   public constructor(element: ElementRef,
+                     renderer: Renderer,
                      contentfulService: ContentfulService) {
     this.element = element;
+    this.renderer = renderer;
     this.contentfulService = contentfulService;
   }
 
@@ -33,8 +37,7 @@ export class ContentfulImageDirective implements OnInit {
       .map((response: Response) => response.json())
       .subscribe(
         (response: any) => {
-          this.element.nativeElement.src =
-            this.imageUrl(response.fields.file.url);
+          this.renderer.setElementProperty(this.element.nativeElement, 'src', this.imageUrl(response.fields.file.url));
         }
       );
   }

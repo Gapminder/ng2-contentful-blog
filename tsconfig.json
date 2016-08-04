@@ -9,9 +9,6 @@
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "listFiles": false,
-    "noLib": false,
-    "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true
   },
   "exclude": [

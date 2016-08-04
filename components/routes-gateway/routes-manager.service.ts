@@ -19,7 +19,12 @@ export class RoutesManagerService {
   }
 
   public getRouteName(path: string): string {
-    return this.pathToName.get(path);
+    const registeredPath = this.pathToName.get(path);
+    // fakePath is added to support angular2 universal server rendering
+    // for some reason routes are requested from pathToName before they were actually registered
+    // on the server. So fakePath it is path that would exist as if route was added 
+    const fakePath = `/${path}`;
+    return registeredPath ? registeredPath : fakePath;
   }
 
   public addRoute(route: RawRoute): string {
