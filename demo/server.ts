@@ -66,6 +66,7 @@ function ngApp(req: Request, res: Response): void {
       Angulartics2,
       Angulartics2GoogleAnalytics,
       GAPMINDER_PROVIDERS,
+      {provide: 'ProjectTag', useValue: 'gapminder-org'},
       {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
       {provide: 'Routes', useValue: appRoutes},
       {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},

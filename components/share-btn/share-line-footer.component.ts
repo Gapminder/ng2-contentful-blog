@@ -17,29 +17,27 @@ export class ShareFooterLineComponent {
 
   public scrollTop(e: MouseEvent): void {
     e.preventDefault();
-
-    this.animateScroll('goTo', 20, 1000, () => {
-    });
+    this.animateScroll('goTo', 20, 1000);
   };
 
-  private animateScroll(id: string, inc: number, duration: number, scrollCompleted: any): any {
+  private animateScroll(id: string, inc: number, duration: number): any {
     const elem = document.getElementById(id);
     const startScroll = this.getScrollTop();
     const endScroll = elem.offsetTop;
     const step = (endScroll - startScroll) / duration * inc;
-    window.requestAnimationFrame(this.goToScroll(step, duration, inc, scrollCompleted));
+    window.requestAnimationFrame(this.goToScroll(step, duration, inc));
   }
 
-  private goToScroll(step: number, duration: number, inc: number, scrollCompleted: any): any {
+  private goToScroll(step: number, duration: number, inc: number): any {
     return () => {
       const currentDuration = duration - inc;
 
       this.incScrollTop(step);
 
       if (currentDuration < inc) {
-        return scrollCompleted();
+        return;
       }
-      window.requestAnimationFrame(this.goToScroll(step, currentDuration, inc, scrollCompleted));
+      window.requestAnimationFrame(this.goToScroll(step, currentDuration, inc));
     };
   }
 
