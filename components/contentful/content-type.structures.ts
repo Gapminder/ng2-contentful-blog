@@ -1,6 +1,6 @@
-import { ContentfulNodePage } from './aliases.structures';
+import { ContentfulNodePage, ContentfulSocial, ContentfulMenu } from './aliases.structures';
 export interface NodePageContent {
-  parent?: any;
+  parent?: ContentfulNodePage;
   title: string;
   slug: string;
   description?: string;
@@ -9,6 +9,8 @@ export interface NodePageContent {
   createdAt: string;
   url?: string; // for TagComponent
   tags?: string[];
+  relatedLocation: boolean;
+  entries?: any[];
 }
 
 export interface VideoContent {
@@ -23,26 +25,36 @@ export interface HtmlContent {
   content: string;
 }
 
-export interface ImageContent {
+export interface Image {
   title: string;
+  image: any; // media
 }
 
 export interface FooterMenu {
-  entries: Menu[];
-  title: string;
-  tag: string;
+  menus: Menu[];
+  social: ContentfulSocial;
+  description: string;
 }
-export interface HeaderMenu {
-  entries: Menu[];
+export interface FooterHeader {
+  entries: ContentfulMenu[];
   title: string;
   tag: string;
+  social?: ContentfulSocial;
+  description?: string;
+}
+
+export interface Social {
+  facebook?: string;
+  twitter?: string;
+  linkedin?: string;
+  google?: string;
+  youtube?: string;
 }
 
 export interface Menu {
-  entries: any;
   title: string;
-  submenus: Submenu[];
-  entryPoint: ContentfulNodePage;
+  submenus?: Submenu[];
+  entryPoint?: ContentfulNodePage;
 }
 
 export interface Submenu {
@@ -70,7 +82,7 @@ export interface ProfilePage {
   google?: string;
   aboutMe: string;
   contributions: ContributionPage[];
-  myLinks: any;
+  myLinks: any[];
 }
 
 export interface ContributionPage {

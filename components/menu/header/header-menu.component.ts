@@ -1,26 +1,25 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import { CollapseDirective, DROPDOWN_DIRECTIVES } from 'ng2-bootstrap';
 import { Angulartics2On } from 'angulartics2';
 import { Menu } from '../../contentful/content-type.structures';
 import { MenuService } from '../menu.service';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
 
 @Component({
-  selector: 'gm-footer-menu',
-  template: require('./footer.html') as string,
-  directives: [ROUTER_DIRECTIVES, Angulartics2On],
-  styles: [require('./footer.css') as string],
-  pipes: [AsyncPipe]
+  selector: 'gm-header-menu',
+  template: require('./header-menu.html') as string,
+  styles: [require('./header-menu.css') as string],
+  directives: [CollapseDirective, DROPDOWN_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
 })
-export class FooterMenuComponent implements OnInit {
+export class HeaderMenuComponent implements OnInit {
   private menus: Menu[];
   private contentfulTypeIds: any;
   private menuService: MenuService;
   private routesManager: RoutesManagerService;
 
-  public constructor(menuService: MenuService,
-                     @Inject('ContentfulTypeIds') contentfulTypeIds: any,
+  public constructor(@Inject('ContentfulTypeIds') contentfulTypeIds: any,
+                     menuService: MenuService,
                      routesManager: RoutesManagerService) {
     this.contentfulTypeIds = contentfulTypeIds;
     this.menuService = menuService;
@@ -29,7 +28,7 @@ export class FooterMenuComponent implements OnInit {
 
   public ngOnInit(): void {
     this.menuService
-      .getMenus(this.contentfulTypeIds.FOOTER_TYPE_ID)
+      .getHeaderMenus()
       .subscribe((menus: Menu[]) => {
         this.menuService.addRoutes(menus);
         this.menus = menus;

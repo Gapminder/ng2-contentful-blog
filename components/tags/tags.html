@@ -1,7 +1,7 @@
-<div class="wrap-tags">
+<div class="wrap-tags" *ngIf="tags && tags.length">
   <p class="tag">Tagged: </p>
   <ul class="list-tags">
-    <li *ngFor="let tag of tagList">
+    <li *ngFor="let tag of tags">
       <a [routerLink]="['/tag', tag.fields.slug]"
          angulartics2On="click"
          angularticsEvent="{{tag.fields.title}}">

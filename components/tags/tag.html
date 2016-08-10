@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="col-md-8 margin-top-35" *ngIf="listNodePage && listNodePage.length">
-    <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35"
+  <div class="margin-top-35" *ngIf="listNodePage && listNodePage.length">
+    <div class="dynamic-item col-md-4 col-sm-6  col-xs-12 margin-bottom-35"
          *ngFor="let item of listNodePage">
       <a *ngIf="item.fields.thumbnail && item.fields.url" [routerLink]="[item.fields.url]"
          angulartics2On="click"

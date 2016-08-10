@@ -12,6 +12,7 @@ import { DynamicContentDetailsComponent } from './components/dynamic-content/dyn
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
 const ContentfulConfig = require('./contentTypeIds.json');
+const Constants = require('./constants.json');
 
 enableProdMode();
 
@@ -23,10 +24,10 @@ export function ngApp(): Promise<ComponentRef<any>> {
     APP_ROUTER_PROVIDER,
     GAPMINDER_PROVIDERS,
     {provide: APP_BASE_HREF, useValue: '/'},
-    {provide: 'ProjectTag', useValue: 'gapminder-org'},
     {provide: 'Routes', useValue: appRoutes},
     {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},
     {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
+    {provide: 'Constants', useValue: Constants},
     {provide: PLATFORM_DIRECTIVES, useValue: ContentfulImageDirective, multi: true}
   ]).then(
     (appRef:ComponentRef<any>) => {

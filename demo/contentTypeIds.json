@@ -8,5 +8,6 @@
   "CONTRIBUTION_TYPE_ID": "contribution",
   "HEADER_TYPE_ID": "header",
   "FOOTER_TYPE_ID": "footer",
-  "VIZABI_TYPE_ID": "vizabi"
+  "VIZABI_TYPE_ID": "vizabi",
+  "IMAGE_TYPE_ID": "image"
 }

@@ -1,7 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Angulartics2On } from 'angulartics2';
 import { ShareComponent } from './share.component';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ContenfulContent } from '../contentful/contentful-content.service';
+import { ContentfulImage } from '../contentful/aliases.structures';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-share-line-footer',
@@ -9,11 +12,23 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
   directives: [Angulartics2On, ShareComponent, ROUTER_DIRECTIVES],
   styles: [require('./share-footer.css') as string]
 })
-export class ShareFooterLineComponent {
-  /* tslint:disable:no-unused-variable */
-  @Input()
-  private logoId: string;
-  /* tslint:enable:no-unused-variable */
+export class ShareFooterLineComponent implements OnInit {
+  private imageInfo: ContentfulImage;
+  private contentfulContentService: ContenfulContent;
+  private constants: any;
+
+  public constructor(contentfulContentService: ContenfulContent,
+                     @Inject('Constants') constants: any) {
+    this.contentfulContentService = contentfulContentService;
+    this.constants = constants;
+  }
+
+  public ngOnInit(): void {
+    this.contentfulContentService.getImagesByTitle(this.constants.SHARE_FOOTER_LINE_LOGO_TITLE)
+      .subscribe((images: ContentfulImage[]) => {
+        this.imageInfo = _.first(images);
+      });
+  }
 
   public scrollTop(e: MouseEvent): void {
     e.preventDefault();
