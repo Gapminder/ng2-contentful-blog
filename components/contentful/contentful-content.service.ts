@@ -4,13 +4,13 @@ import { transformResponse } from './response.tools';
 import { ContentfulService, ContentfulRequest, SearchItem } from 'ng2-contentful';
 import { Response } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as _ from 'lodash';
 import {
   ContentfulNodePagesResponse,
   ContentfulNodePage,
-  ContentfulMenu,
   ContentfulTagPage,
   ContentfulProfilePage,
-  ContentfulContributionPage
+  ContentfulContributionPage, ContentfulImage, ContentfulFooterHeader
 } from './aliases.structures';
 
 /**
@@ -91,15 +91,63 @@ export class ContenfulContent {
     // .map(response => _.get(response, '[0].fields', null));
   }
 
+  /**
+   *
+   * @param tagId
+   * @param slug
+   * @returns {ContentfulNodePage}
+   */
+  public getArticleByTagAndSlug(tagId: string, slug: string): Observable<ContentfulNodePage[]> {
+    return this.contentfulService
+      .create()
+      .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
+        param: 'fields.tags.sys.id',
+        value: tagId
+      })
+      .getEntryBySlug(
+        this.contentfulTypeIds.NODE_PAGE_TYPE_ID,
+        slug
+      )
+      .include(1)
+      .commit()
+      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+  }
+
   public getTagsBySlug(slug: string): Observable<ContentfulTagPage[]> {
-    return this.getTagBySlug(slug)
-    // TODO: fix any
+    return this.contentfulService
+      .create()
+      .getEntryBySlug(
+        this.contentfulTypeIds.TAG_TYPE_ID,
+        slug
+      )
+      .include(2)
+      .commit()
+      .map((response: Response) => response.json())
       .map((response: any) => transformResponse<ContentfulTagPage>(response));
+  }
+
+  public getImagesByTitle(title: string): Observable<ContentfulImage[]> {
+    return this.contentfulService
+      .create()
+      .searchEntries(this.contentfulTypeIds.IMAGE_TYPE_ID, {
+        param: 'fields.title',
+        value: title
+      })
+      .include(1)
+      .commit()
+      .map((response: Response) =>response.json())
+      .map((response: any) => transformResponse<ContentfulImage>(response));
   }
 
   public getProfilesByUsername(username: string): Observable<ContentfulProfilePage[]> {
     return this.getProfileByUsername(username)
       .map((response: any) => transformResponse<ContentfulProfilePage>(response));
+  }
+
+  public gerProfilesByArticleId(id: string): Observable<ContentfulProfilePage[]> {
+    return this.getContributionsByArticle(id)
+      .map((contributions: ContentfulContributionPage[]) => _.map(contributions, 'sys.id'))
+      .mergeMap((contributionSysIds: string[]) => this.getProfilesByContributions(contributionSysIds));
   }
 
   public getChildrenOfArticle(articleSysId: string): Observable<ContentfulNodePage[]> {
@@ -161,7 +209,7 @@ export class ContenfulContent {
       .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json(), 2));
   }
 
-  public getMenuByTag(menuType: string, tagSysId: string): Observable<ContentfulMenu[]> {
+  public getMenuByTag(menuType: string, tagSysId: string): Observable<ContentfulFooterHeader[]> {
     return this.contentfulService
       .create()
       .searchEntries(menuType, {
@@ -170,16 +218,7 @@ export class ContenfulContent {
       })
       .include(3)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulMenu>(response.json(), 3));
-  }
-
-  public getMenu(menuType: string): Observable<ContentfulMenu[]> {
-    return this.contentfulService
-      .create()
-      .searchEntries(menuType)
-      .include(4)
-      .commit()
-      .map((response: Response) => transformResponse<ContentfulMenu>(response.json(), 3));
+      .map((response: Response) => transformResponse<ContentfulFooterHeader>(response.json(), 3));
   }
 
   public getArticleParentSlug(id: string, onSlugFound: (path: string) => void): void {
@@ -201,18 +240,6 @@ export class ContenfulContent {
       .create()
       .getEntryBySlug(
         this.contentfulTypeIds.NODE_PAGE_TYPE_ID,
-        slug
-      )
-      .include(2)
-      .commit()
-      .map((response: Response) => response.json());
-  }
-
-  private getTagBySlug(slug: string): Observable<ContentfulTagPage> {
-    return this.contentfulService
-      .create()
-      .getEntryBySlug(
-        this.contentfulTypeIds.TAG_TYPE_ID,
         slug
       )
       .include(2)

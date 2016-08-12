@@ -23,6 +23,7 @@ import { DynamicContentDetailsComponent } from './components/dynamic-content/dyn
 import { GAPMINDER_PROVIDERS, ContentfulImageDirective } from '../index';
 
 const ContentfulConfig = require('./contentTypeIds.json');
+const Constants = require('./constants.json');
 
 // enable prod for faster renders
 enableProdMode();
@@ -30,7 +31,7 @@ enableProdMode();
 const app: Application = express();
 
 const ROOT = path.join(path.resolve(__dirname, '..'));
-const pathToStaticContent = path.join(ROOT, '/dist/client');
+const pathToStaticContent = path.join(ROOT, '/dist/server');
 
 app.engine('.html', expressEngine);
 app.set('views', pathToStaticContent);
@@ -66,7 +67,7 @@ function ngApp(req: Request, res: Response): void {
       Angulartics2,
       Angulartics2GoogleAnalytics,
       GAPMINDER_PROVIDERS,
-      {provide: 'ProjectTag', useValue: 'gapminder-org'},
+      {provide: 'Constants', useValue: Constants},
       {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
       {provide: 'Routes', useValue: appRoutes},
       {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},

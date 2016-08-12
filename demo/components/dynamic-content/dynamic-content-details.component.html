@@ -1,18 +1,27 @@
-<div class="col-md-8 dynamic-details" *ngIf="content">
+<div class="row">
+<div class="dynamic-details col-md-8" *ngIf="content">
   <h1>
     {{ content.title }}
   </h1>
-  <p class="date-info margin-top-0">{{ content.createdAt | gmToDate | date }}</p>
-  <div class="entry-content" *ngIf="content.entries">
+  <p *ngIf="content.createdAt" class="date-info margin-top-0">
+    <i class="fa fa-calendar" aria-hidden="true"></i>
+    {{ content.createdAt | gmToDate | date }}
+  </p>  <div class="entry-content" *ngIf="content.entries">
     <gm-entries-view [entries]="content.entries"></gm-entries-view>
   </div>
 
   <!-- TAGS -->
-  <gm-tags *ngIf="content.tags" [tagList]="content.tags"></gm-tags>
+  <div class="row">
+    <div class="col-md-12">
+      <gm-tags *ngIf="content.tags" [tags]="content.tags"></gm-tags>
+    </div>
+  </div>
+
   <div class="dynamic-list row">
 
-    <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35" *ngFor="let child of childrenList">
-      <a *ngIf="child.fields.thumbnail"
+    <div class="dynamic-item col-md-6 col-sm-6 margin-bottom-35" *ngFor="let child of children">
+
+    <a *ngIf="child.fields.thumbnail"
          [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
          angulartics2On="click"
          angularticsEvent="{{child.fields.title}}"
@@ -29,20 +38,21 @@
          class="post-title">
         {{child.fields.title}}
       </a>
-
       <p class="post-p">{{child.fields.description}}</p>
     </div>
 
 
   </div>
 
-  <!--<gm-line-social></gm-line-social>-->
 </div>
 <div class="col-md-4 pull-right margin-top-35" *ngIf="content">
-  <gm-contributors [articleSysId]="articleSysId"></gm-contributors>
-
-  <!--<gm-sidebar [relatedItems]="content.relatedEntries"></gm-sidebar>-->
+  <gm-related [relatedItems]="content.related" *ngIf="!content.relatedLocation"
+              [relatedLocation]="content.relatedLocation"></gm-related>
+  <gm-contributors [profiles]="profiles"></gm-contributors>
 </div>
 
-
-<gm-share-line-footer [logoId]="logoId"></gm-share-line-footer>
+<div class="col-md-12 margin-top-35" *ngIf="content">
+  <gm-related [relatedItems]="content.related" *ngIf="content.relatedLocation"
+              [relatedLocation]="content.relatedLocation"></gm-related>
+</div>
+</div>
