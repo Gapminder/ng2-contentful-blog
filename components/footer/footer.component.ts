@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Angulartics2On } from 'angulartics2';
 import { FooterMenuComponent } from '../menu/footer/footer-menu.component';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { ContentfulImage } from '../contentful/aliases.structures';
@@ -12,7 +11,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'gm-footer',
   template: require('./footer.html') as string,
-  directives: [ROUTER_DIRECTIVES, Angulartics2On, FooterMenuComponent],
+  directives: [ROUTER_DIRECTIVES, FooterMenuComponent],
   styles: [require('./footer.css') as string],
   pipes: [AsyncPipe]
 })

@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params, ROUTER_DIRECTIVES } from '@angular/router';
-import { Angulartics2On } from 'angulartics2';
 import { BreadcrumbsService } from '../breadcrumbs/breadcrumbs.service';
 import { ToDatePipe } from '../pipes/to-date.pipe';
 import { ContentfulProfilePage } from '../contentful/aliases.structures';
@@ -9,7 +8,7 @@ import * as _ from 'lodash';
 
 @Component({
   template: require('./profile.html') as string,
-  directives: [ROUTER_DIRECTIVES, Angulartics2On],
+  directives: [ROUTER_DIRECTIVES],
   styles: [require('./profile.css') as string],
   pipes: [ToDatePipe]
 })

@@ -11,7 +11,6 @@ import { ContenfulContent } from '../../../components/contentful/contentful-cont
 import { BreadcrumbsService } from '../../../components/breadcrumbs/breadcrumbs.service';
 import { EntriesViewComponent } from '../../../components/entries-view/entries-view.component';
 import { TagsComponent } from '../../../components/tags/tags.component';
-import { Angulartics2On } from 'angulartics2';
 import { ContributorsComponent } from '../../../components/contributors/contributors.component';
 import { RoutesManagerService, RawRoute } from '../../../components/routes-gateway/routes-manager.service';
 import { RelatedComponent } from '../../../components/related/related.component';
@@ -21,7 +20,7 @@ import { Observable } from 'rxjs/Rx';
 @Component({
   selector: 'gm-dynamic-page',
   template: require('./dynamic-content-details.component.html') as string,
-  directives: [EntriesViewComponent, RelatedComponent, ROUTER_DIRECTIVES, TagsComponent, ContributorsComponent, Angulartics2On],
+  directives: [EntriesViewComponent, RelatedComponent, ROUTER_DIRECTIVES, TagsComponent, ContributorsComponent],
   styles: [require('./dynamic-content-details.component.styl') as string],
   pipes: [ToDatePipe]
 })

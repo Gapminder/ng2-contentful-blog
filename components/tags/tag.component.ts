@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params, ROUTER_DIRECTIVES } from '@angular/router';
-import { Angulartics2On } from 'angulartics2';
 import { BreadcrumbsService } from '../breadcrumbs/breadcrumbs.service';
 import { ToDatePipe } from '../pipes/to-date.pipe';
 import { ContentfulNodePage, ContentfulTagPage } from '../contentful/aliases.structures';
@@ -12,7 +11,7 @@ import { appInjector } from '../contentful/app-injector.tool';
 @Component({
   selector: 'gm-tagged-articles',
   template: require('./tag.html') as string,
-  directives: [ROUTER_DIRECTIVES, Angulartics2On],
+  directives: [ROUTER_DIRECTIVES],
   styles: [require('./tags.css') as string],
   pipes: [ToDatePipe]
 })

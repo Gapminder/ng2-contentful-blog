@@ -2,14 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router, Route } from '@angular/router';
 import { BreadcrumbsService, BreadcrumbsEvent } from './breadcrumbs.service';
 import { CORE_DIRECTIVES } from '@angular/common';
-import { Angulartics2On } from 'angulartics2';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-breadcrumbs',
   template: require('./breadcrumbs.html') as string,
   styles: [require('./breadcrumbs.css') as string],
-  directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
+  directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 export class BreadcrumbsComponent implements OnInit {
   public type: string = 'Breadcrumbs Component';

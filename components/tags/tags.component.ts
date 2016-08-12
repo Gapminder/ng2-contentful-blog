@@ -1,13 +1,12 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Angulartics2On } from 'angulartics2';
 import { ContentfulTagPage } from '../contentful/aliases.structures';
 import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-tags',
   template: require('./tags.html') as string,
-  directives: [ROUTER_DIRECTIVES, Angulartics2On],
+  directives: [ROUTER_DIRECTIVES],
   styles: [require('./tags.css') as string]
 })
 export class TagsComponent implements OnInit {
