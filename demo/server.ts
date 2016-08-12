@@ -15,7 +15,7 @@ import {
   NODE_LOCATION_PROVIDERS,
   ExpressEngineConfig
 } from 'angular2-universal';
-import { Angulartics2 } from 'angulartics2';
+import {Angulartics2, Angulartics2On} from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-google-analytics';
 import { DemoComponent } from './app';
 import { appRoutes, APP_ROUTER_PROVIDER } from './routes';
@@ -75,7 +75,8 @@ function ngApp(req: Request, res: Response): void {
       NODE_HTTP_PROVIDERS,
       APP_ROUTER_PROVIDER,
       NODE_LOCATION_PROVIDERS,
-      {provide: PLATFORM_DIRECTIVES, useValue: ContentfulImageDirective, multi: true}
+      {provide: PLATFORM_DIRECTIVES, useValue: ContentfulImageDirective, multi: true},
+      {provide: PLATFORM_DIRECTIVES, useValue: Angulartics2On, multi: true}
     ],
     async: true,
     preboot: false

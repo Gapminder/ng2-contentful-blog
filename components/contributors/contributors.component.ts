@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { Angulartics2On } from 'angulartics2';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toArray';
@@ -10,7 +9,7 @@ import { ContentfulProfilePage } from '../contentful/aliases.structures';
 @Component({
   selector: 'gm-contributors',
   template: require('./contributors.html') as string,
-  directives: [ROUTER_DIRECTIVES, Angulartics2On],
+  directives: [ROUTER_DIRECTIVES],
   styles: [require('./contributors.css') as string],
   pipes: [AsyncPipe]
 })

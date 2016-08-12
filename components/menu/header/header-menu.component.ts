@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { CollapseDirective, DROPDOWN_DIRECTIVES } from 'ng2-bootstrap';
-import { Angulartics2On } from 'angulartics2';
 import { Menu } from '../../contentful/content-type.structures';
 import { MenuService } from '../menu.service';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
@@ -10,7 +9,7 @@ import { RoutesManagerService } from '../../routes-gateway/routes-manager.servic
   selector: 'gm-header-menu',
   template: require('./header-menu.html') as string,
   styles: [require('./header-menu.css') as string],
-  directives: [CollapseDirective, DROPDOWN_DIRECTIVES, ROUTER_DIRECTIVES, Angulartics2On]
+  directives: [CollapseDirective, DROPDOWN_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 export class HeaderMenuComponent implements OnInit {
   private menus: Menu[];

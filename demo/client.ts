@@ -2,7 +2,7 @@ import 'angular2-universal/polyfills';
 import { enableProdMode, ComponentRef, PLATFORM_DIRECTIVES } from '@angular/core';
 import { prebootComplete } from 'angular2-universal';
 import { DemoComponent } from './app';
-import { Angulartics2 } from 'angulartics2';
+import {Angulartics2, Angulartics2On} from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-google-analytics';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { APP_ROUTER_PROVIDER, appRoutes } from './routes';
@@ -28,7 +28,8 @@ export function ngApp(): Promise<ComponentRef<any>> {
     {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},
     {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
     {provide: 'Constants', useValue: Constants},
-    {provide: PLATFORM_DIRECTIVES, useValue: ContentfulImageDirective, multi: true}
+    {provide: PLATFORM_DIRECTIVES, useValue: ContentfulImageDirective, multi: true},
+    {provide: PLATFORM_DIRECTIVES, useValue: Angulartics2On, multi: true}
   ]).then(
     (appRef:ComponentRef<any>) => {
       appInjector(appRef.injector);
