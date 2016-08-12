@@ -1,20 +1,17 @@
-<div *ngIf="showBreadcrumbs" class="col-md-12 col-xs-12 col-sm-12 ">
-  <ul class="breadcrumbs">
-    <li><a [routerLink]="['/']"
+<div class="row">
+  <div *ngIf="showBreadcrumbs" class="col-md-12 col-xs-12 col-sm-12 ">
+    <ul class="breadcrumbs">
+      <li><a [routerLink]="['/']"
+             angulartics2On="click"
+             angularticsEvent="go to Home">Home</a></li>
+      <li *ngFor="let url of urls; let last = last" [ngClass]="{'active': last}">
+        <i class="fa fa-angle-double-right"></i>
+        <a *ngIf="!last"
+           [routerLink]="[routesManager.getRouteName(url)]"
            angulartics2On="click"
-           angularticsEvent="go to Home">Home</a></li>
-    <li *ngFor="let url of urls; let last = last" [ngClass]="{'active': last, 'hide': hideItem}">
-      <i class="fa fa-angle-double-right"></i>
-      <a *ngIf="!last"
-         [routerLink]="[routesManager.getRouteName(url)]"
-         angulartics2On="click"
-         angularticsEvent="{{friendlyName(url)}}">{{friendlyName(url)}}</a>
-      <span *ngIf="last">{{friendlyName(url)}}</span>
-    </li>
-    <li [ngClass]="{'hide': !hideItem}">
-      <i class="fa fa-angle-double-right"></i>
-      <span>{{breadcrumbFragmentName}}</span>
-    </li>
-
-  </ul>
+           angularticsEvent="{{friendlyName(url)}}">{{friendlyName(url)}}</a>
+        <span *ngIf="last">{{friendlyName(url)}}</span>
+      </li>
+    </ul>
+  </div>
 </div>

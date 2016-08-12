@@ -1,0 +1,21 @@
+<div [ngClass]="{'related': relatedLocation, 'sidebar': !relatedLocation}" *ngIf="relatedItems">
+  <h3 class="title" *ngIf="!relatedLocation">Related</h3>
+  <h2 class="post-head margin-top-0" *ngIf="relatedLocation">Related</h2>
+  <div class="row">
+    <ul class="list-proposals">
+      <li *ngFor="let item of relatedItems"
+          class="col-xs-12 col-sm-6"
+          [ngClass]="{'col-md-4': relatedLocation, 'col-md-6': !relatedLocation}">
+        <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+           angulartics2On="click"
+           angularticsEvent="{{item.fields.title}}">
+          <span class="wrap-img">
+            <img *ngIf="item.fields.thumbnail" [gmContentfulSrcId]="item.fields.thumbnail.sys.id"
+                 alt="{{item.fields.title}}">
+          </span>
+          {{item.fields.title}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
