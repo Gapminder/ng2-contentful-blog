@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { Angulartics2On } from 'angulartics2';
 import { ShareComponent } from './share.component';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { ContenfulContent } from '../contentful/contentful-content.service';
@@ -9,7 +8,7 @@ import * as _ from 'lodash';
 @Component({
   selector: 'gm-share-line-footer',
   template: require('./share-footer-line.html') as string,
-  directives: [Angulartics2On, ShareComponent, ROUTER_DIRECTIVES],
+  directives: [ ShareComponent, ROUTER_DIRECTIVES],
   styles: [require('./share-footer.css') as string]
 })
 export class ShareFooterLineComponent implements OnInit {

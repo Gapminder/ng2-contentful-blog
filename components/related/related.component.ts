@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Angulartics2On } from 'angulartics2';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 import { ContenfulContent } from '../contentful/contentful-content.service';
@@ -8,7 +7,7 @@ import { ContenfulContent } from '../contentful/contentful-content.service';
   selector: 'gm-related',
   template: require('./related.html') as string,
   styles: [require('./related.css') as string],
-  directives: [ROUTER_DIRECTIVES, Angulartics2On]
+  directives: [ROUTER_DIRECTIVES]
 })
 export class RelatedComponent implements OnInit {
   @Input()
