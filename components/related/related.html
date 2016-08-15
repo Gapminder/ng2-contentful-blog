@@ -13,8 +13,21 @@
             <img *ngIf="item.fields.thumbnail" [gmContentfulSrcId]="item.fields.thumbnail.sys.id"
                  alt="{{item.fields.title}}">
           </span>
-          {{item.fields.title}}
         </a>
+        <div *ngIf="relatedLocation" class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
+        <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+           class="post-title"
+           angulartics2On="click"
+           angularticsEvent="{{item.fields.title}}">{{item.fields.title}}</a>
+        <p *ngIf="relatedLocation" class="post-p">
+          {{item.fields.description}}...
+          <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+             class="post-title"
+             angulartics2On="click"
+             angularticsEvent="{{item.fields.title}}">
+            Read more&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i>
+          </a>
+        </p>
       </li>
     </ul>
   </div>
