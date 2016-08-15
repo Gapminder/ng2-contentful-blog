@@ -17,14 +17,14 @@ import { appInjector } from '../contentful/app-injector.tool';
 })
 export class TagComponent implements OnInit {
   @Input()
-  private tag: string;
-  private listNodePage: ContentfulNodePage[];
-  private contentfulContentService: ContenfulContent;
-  private tagId: string;
-  private router: Router;
-  private routesManager: RoutesManagerService;
-  private breadcrumbsService: BreadcrumbsService;
-  private activatedRoute: ActivatedRoute;
+  protected tag: string;
+  protected listNodePage: ContentfulNodePage[];
+  protected contentfulContentService: ContenfulContent;
+  protected tagId: string;
+  protected router: Router;
+  protected routesManager: RoutesManagerService;
+  protected breadcrumbsService: BreadcrumbsService;
+  protected activatedRoute: ActivatedRoute;
 
   public constructor(router: Router,
                      activatedRoute: ActivatedRoute,
