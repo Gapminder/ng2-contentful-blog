@@ -36,6 +36,8 @@ export class DynamicContentDetailsComponent implements OnInit {
   private breadcrumbsService: BreadcrumbsService;
   private constants: any;
   private profiles: ContentfulProfilePage[];
+  private cssClassBigColumn: boolean = false;
+  private cssClassSmallColumn: boolean = false;
 
   public constructor(router: Router,
                      activatedRoute: ActivatedRoute,
@@ -77,7 +79,15 @@ export class DynamicContentDetailsComponent implements OnInit {
 
     this.contentfulContentService
       .gerProfilesByArticleId(article.sys.id)
-      .subscribe((profiles: ContentfulProfilePage[]) => this.profiles = profiles);
+      .subscribe((profiles: ContentfulProfilePage[]) => {
+        this.profiles = profiles;
+        if (this.content.relatedLocation && this.content.related || _.isEmpty(profiles) && !this.content.related) {
+          this.cssClassBigColumn = true;
+        }
+        if (!this.content.relatedLocation && this.content.related || !_.isEmpty(profiles)) {
+          this.cssClassSmallColumn = true;
+        }
+      });
 
     this.contentfulContentService.getChildrenOfArticle(article.sys.id)
       .do((articles: ContentfulNodePage[]) => this.addRoutes(articles))
