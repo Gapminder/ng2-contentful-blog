@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/from';
 import { ContenfulContent } from '../contentful/contentful-content.service';
-import { Menu, FooterMenu } from '../contentful/content-type.structures';
+import { Menu, FooterMenu, NodePageContent } from '../contentful/content-type.structures';
 import { RoutesManagerService, RawRoute } from '../routes-gateway/routes-manager.service';
 import { ContentfulSocial } from '../contentful/aliases.structures';
 
@@ -62,15 +62,18 @@ export class MenuService {
   public addRoutes(menus: Menu[]): void {
     const rawRoutes: RawRoute[] = [];
     _.forEach(menus, (menu: Menu) => {
-      const article: ContentfulNodePage = menu.entryPoint;
-      if (article) {
-        rawRoutes.push({path: article.fields.slug, data: {name: menu.title}});
+      if (menu.entryPoint) {
+        const article: ContentfulNodePage = menu.entryPoint;
+        const cover = article.fields.cover ? article.fields.cover.sys.id : undefined;
+        rawRoutes.push({path: article.fields.slug, data: {name: menu.title, cover}});
       }
 
       _.forEach(menu.submenus, (submenu: ContentfulSubmenu) => {
+        const article: NodePageContent = submenu.fields.entryPoint.fields;
+        const cover = article.cover ? article.cover.sys.id : undefined;
         rawRoutes.push({
-          path: submenu.fields.entryPoint.fields.slug,
-          data: {name: submenu.fields.entryPoint.fields.title}
+          path: article.slug,
+          data: {name: article.title, cover}
         });
       });
     });

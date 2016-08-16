@@ -1,7 +1,7 @@
 import { ContentfulIterableResponse, ContentfulCommon } from 'ng2-contentful';
 import {
   NodePageContent, Menu, TagPage, ProfilePage, ContributionPage, FooterHeader,
-  FooterMenu, Submenu, Image, Social
+  FooterMenu, Submenu, Image, Social, Media, EmbeddedBlock, VideoBlock, HtmlBlock, VizabiBlock, Block
 } from './content-type.structures';
 
 export interface ContentfulNodePagesResponse extends ContentfulIterableResponse<ContentfulCommon<NodePageContent>> {}
@@ -25,3 +25,15 @@ export interface ContentfulFooterMenu extends ContentfulCommon<FooterMenu> {}
 export interface ContentfulImage extends ContentfulCommon<Image> {}
 
 export interface ContentfulSocial extends ContentfulCommon<Social> {}
+
+export interface ContentfulMedia extends ContentfulCommon<Media> {}
+
+export interface ContentfulBlock extends ContentfulCommon<Block> {}
+
+export interface ContentfulEmbeddedBlock extends ContentfulCommon<EmbeddedBlock> {}
+
+export interface ContentfulVideoBlock extends ContentfulCommon<VideoBlock> {}
+
+export interface ContentfulHtmlBlock extends ContentfulCommon<HtmlBlock> {}
+
+export interface ContentfulVizabiBlock extends ContentfulCommon<VizabiBlock> {}

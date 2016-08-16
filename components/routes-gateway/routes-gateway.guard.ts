@@ -28,13 +28,13 @@ export class RoutesGatewayGuard implements CanActivate {
     const firstPath: string = _.first(paths);
     const lastPath: string = _.last(paths);
 
-    this.parentOf(firstPath, lastPath, paths.length - 1, paths, new Map<string, string>());
+    this.parentOf(firstPath, lastPath, paths.length - 1, paths, new Map<string, any>());
     return false;
   }
 
-  private parentOf(firstSlug: string, lastSlug: string, lastSlugIndex: number, slugs: string[], titles: Map<string, string>): void {
+  private parentOf(firstSlug: string, lastSlug: string, lastSlugIndex: number, slugs: string[], data: Map<string, any>): void {
     if (!slugs.length) {
-      this.registerRoutes(this.collectAllPossiblePaths(slugs), titles);
+      this.registerRoutes(this.collectAllPossiblePaths(slugs), data);
       return;
     }
 
@@ -43,20 +43,22 @@ export class RoutesGatewayGuard implements CanActivate {
       .subscribe(
         (contentfulNodePage: ContentfulNodePage[]) => {
           if (!_.isEmpty(contentfulNodePage)) {
-            let nodePageContent: NodePageContent = _.first(contentfulNodePage).fields;
-            titles.set(nodePageContent.slug, nodePageContent.title);
-            if (nodePageContent.parent) {
-              if (nodePageContent.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
-                slugs[lastSlugIndex - 1] = nodePageContent.parent.fields.slug;
+            let article: NodePageContent = _.first(contentfulNodePage).fields;
+
+            const cover = article.cover ? article.cover.sys.id : undefined;
+            data.set(article.slug, {name: article.title, cover});
+            if (article.parent) {
+              if (article.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
+                slugs[lastSlugIndex - 1] = article.parent.fields.slug;
               }
-              if (nodePageContent.slug === firstSlug) {
+              if (article.slug === firstSlug) {
                 this.router.navigate(['/']);
                 return;
               }
-              return this.parentOf(firstSlug, nodePageContent.parent.fields.slug, lastSlugIndex - 1, slugs, titles);
+              return this.parentOf(firstSlug, article.parent.fields.slug, lastSlugIndex - 1, slugs, data);
             }
 
-            this.registerRoutes(this.collectAllPossiblePaths(slugs), titles);
+            this.registerRoutes(this.collectAllPossiblePaths(slugs), data);
             return;
           }
           if (_.isEmpty(contentfulNodePage) || _.first(contentfulNodePage).fields.slug !== slugs.pop()) {
@@ -66,11 +68,11 @@ export class RoutesGatewayGuard implements CanActivate {
         });
   }
 
-  private registerRoutes(allPossiblePaths: string[], titles: Map<string, string>): any {
+  private registerRoutes(allPossiblePaths: string[], data: Map<string, string>): any {
     _.forEach(allPossiblePaths, (path: string) => {
 
       let currentTitle = path.split('/').pop();
-      this.routesManager.addRoute({path, data: {name: titles.get(currentTitle)}});
+      this.routesManager.addRoute({path, data: data.get(currentTitle)});
     });
     const lastPossiblePath = _.last(allPossiblePaths);
     const name = this.routesManager.getRouteName(lastPossiblePath);

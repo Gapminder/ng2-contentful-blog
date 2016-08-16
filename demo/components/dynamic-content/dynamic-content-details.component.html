@@ -33,13 +33,10 @@
            [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
            angulartics2On="click"
            angularticsEvent="{{child.fields.title}}"
-           class="dynamic-wrap-img">
+           class="dynamic-wrap-img" [gmContentfulSrcId]="child.fields.thumbnail.sys.id">
           <!--<span class="play"><i class="fa fa-play"></i></span>-->
-          <img [gmContentfulSrcId]="child.fields.thumbnail.sys.id"
-               alt="{{child.fields.title}}">
         </a>
         <div class="date-info">{{child.fields.createdAt | gmToDate | date}}</div>
-
         <a [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
            angulartics2On="click"
            angularticsEvent="{{child.fields.title}}"

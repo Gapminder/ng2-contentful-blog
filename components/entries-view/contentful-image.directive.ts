@@ -37,7 +37,14 @@ export class ContentfulImageDirective implements OnInit {
       .map((response: Response) => response.json())
       .subscribe(
         (response: any) => {
-          this.renderer.setElementProperty(this.element.nativeElement, 'src', this.imageUrl(response.fields.file.url));
+          const tagName = this.element.nativeElement.tagName.toLowerCase();
+          const imageUrl = this.imageUrl(response.fields.file.url);
+          if (tagName === 'div' || tagName === 'a') {
+            this.renderer.setElementStyle(this.element.nativeElement, 'background-image', `url(${imageUrl})`);
+          }
+          if (tagName === 'img') {
+            this.renderer.setElementProperty(this.element.nativeElement, 'src', imageUrl);
+          }
         }
       );
   }

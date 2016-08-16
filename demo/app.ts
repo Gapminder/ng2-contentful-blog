@@ -10,6 +10,7 @@ import { BreadcrumbsService, BreadcrumbsComponent } from '../index';
 import { HeaderMenuComponent } from '../components/menu/header/header-menu.component';
 import { ShareFooterLineComponent } from '../components/share-btn/share-line-footer.component';
 import { FooterComponent } from '../components/footer/footer.component';
+import { CoverImageComponent } from '../components/cover-image/cover-image.component';
 
 declare var CONTENTFUL_ACCESS_TOKEN: string;
 declare var CONTENTFUL_SPACE_ID: string;
@@ -38,15 +39,16 @@ Ng2ContentfulConfig.config = {
           </div>
         </div>
       </header>
+      <gm-cover></gm-cover>
       <div class='container'>
         <gm-breadcrumbs></gm-breadcrumbs>
-        <router-outlet></router-outlet>
+       <router-outlet></router-outlet>
       </div>
       <gm-footer></gm-footer>
       <gm-share-line-footer *ngIf="showShareLine"></gm-share-line-footer>
     </div>
     `,
-  directives: [ROUTER_DIRECTIVES, ShareFooterLineComponent, HeaderMenuComponent, FooterComponent, BreadcrumbsComponent]
+  directives: [ROUTER_DIRECTIVES, CoverImageComponent, ShareFooterLineComponent, HeaderMenuComponent, FooterComponent, BreadcrumbsComponent]
 })
 export class DemoComponent implements OnInit {
   private angulartics2: Angulartics2;

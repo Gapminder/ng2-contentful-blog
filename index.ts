@@ -25,6 +25,7 @@ import { ShareFooterLineComponent } from './components/share-btn/share-line-foot
 import { MenuService } from './components/menu/menu.service';
 import { RelatedComponent } from './components/related/related.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CoverImageComponent } from './components/cover-image/cover-image.component';
 
 import {
   ContentfulMenu,
@@ -62,6 +63,7 @@ export { ShareComponent };
 export { MenuService };
 export { RelatedComponent };
 export { FooterComponent };
+export { CoverImageComponent };
 export {
   ContentfulMenu,
   ContentfulNodePagesResponse,
