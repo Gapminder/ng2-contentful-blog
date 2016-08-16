@@ -23,7 +23,7 @@ import { DynamicContentDetailsComponent } from './components/dynamic-content/dyn
 import { GAPMINDER_PROVIDERS, ContentfulImageDirective } from '../index';
 
 const ContentfulConfig = require('./contentTypeIds.json');
-const Constants = require('./constants.json');
+const Constants = require('./constants');
 
 // enable prod for faster renders
 enableProdMode();

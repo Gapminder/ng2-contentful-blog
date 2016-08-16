@@ -31,7 +31,9 @@ import {
   ContentfulMenu,
   ContentfulNodePagesResponse,
   ContentfulNodePage,
-  ContentfulTagPage
+  ContentfulTagPage,
+  ContentfulImage,
+  ContentfulSocial
 } from './components/contentful/aliases.structures';
 import { RoutesGatewayGuard } from './components/routes-gateway/routes-gateway.guard';
 
@@ -68,7 +70,9 @@ export {
   ContentfulMenu,
   ContentfulNodePagesResponse,
   ContentfulNodePage,
-  ContentfulTagPage
+  ContentfulTagPage,
+  ContentfulImage,
+  ContentfulSocial
 };
 
 export const GAPMINDER_PROVIDERS: any[] = [

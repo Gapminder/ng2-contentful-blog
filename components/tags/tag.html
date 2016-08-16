@@ -1,22 +1,22 @@
 <div class="row">
-  <div class="margin-top-35" *ngIf="listNodePage && listNodePage.length">
+  <div class="margin-top-35" *ngIf="articles && articles.length">
     <div class="dynamic-item col-md-4 col-sm-6  col-xs-12 margin-bottom-35"
-         *ngFor="let item of listNodePage">
-      <a *ngIf="item.fields.thumbnail && item.fields.url" [routerLink]="[item.fields.url]"
+         *ngFor="let article of articles">
+      <a *ngIf="article.fields.thumbnail && article.fields.url" [routerLink]="[article.fields.url]"
          angulartics2On="click"
-         angularticsEvent="{{item.fields.title}}"
-         class="dynamic-wrap-img" [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
+         angularticsEvent="{{article.fields.title}}"
+         class="dynamic-wrap-img" [gmContentfulSrcId]="article.fields.thumbnail.sys.id">
         <!--<span class="play"><i class="fa fa-play"></i></span>-->
       </a>
-      <div class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
+      <div class="date-info">{{article.fields.createdAt | gmToDate | date}}</div>
 
-      <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+      <a *ngIf="article.fields.url" [routerLink]="[article.fields.url]"
          angulartics2On="click"
-         angularticsEvent="{{item.fields.title}}"
+         angularticsEvent="{{article.fields.title}}"
          class="post-title">
-        {{item.fields.title}}
+        {{article.fields.title}}
       </a>
-      <p class="post-p">{{item.fields.description}}</p>
+      <p class="post-p">{{article.fields.description}}</p>
 
     </div>
   </div>

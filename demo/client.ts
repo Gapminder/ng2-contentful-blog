@@ -12,7 +12,7 @@ import { DynamicContentDetailsComponent } from './components/dynamic-content/dyn
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
 const ContentfulConfig = require('./contentTypeIds.json');
-const Constants = require('./constants.json');
+const Constants = require('./constants');
 
 enableProdMode();
 

@@ -3,6 +3,8 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { ToDatePipe } from '../pipes/to-date.pipe';
+import * as _ from 'lodash';
+import { ContentfulNodePage } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-related',
@@ -13,7 +15,7 @@ import { ToDatePipe } from '../pipes/to-date.pipe';
 })
 export class RelatedComponent implements OnInit {
   @Input()
-  private relatedItems: Array<any> = [];
+  private relatedItems: ContentfulNodePage[] = [];
   /* tslint:disable:no-unused-variable */
   @Input() private relatedLocation: boolean = false;
   @Input() private contentSlug: string;
@@ -21,6 +23,7 @@ export class RelatedComponent implements OnInit {
 
   private routesManager: RoutesManagerService;
   private contentfulContentService: ContenfulContent;
+  private related: ContentfulNodePage[];
 
   public constructor(routesManager: RoutesManagerService,
                      contentfulContentService: ContenfulContent) {
@@ -29,12 +32,14 @@ export class RelatedComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.relatedItems) {
-      for (let item of this.relatedItems) {
-        this.contentfulContentService.getArticleParentSlug(item.sys.id, (url: string) => {
-          item.fields.url = this.routesManager.addRoute({path: url, data: {name: item.fields.title}});
-        });
-      }
-    }
+    this.related = _.filter(this.relatedItems, (article: ContentfulNodePage)=> {
+      return article.fields;
+    });
+    _.forEach(this.related, (article: ContentfulNodePage) => {
+      this.contentfulContentService.getArticleParentSlug(article.sys.id, (url: string) => {
+        const cover = article.fields.cover ? article.fields.cover.sys.id : undefined;
+        article.fields.url = this.routesManager.addRoute({path: url, data: {name: article.fields.title, cover}});
+      });
+    });
   }
 }

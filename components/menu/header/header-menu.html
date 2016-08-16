@@ -46,29 +46,31 @@
       <li *ngFor="let menu of menus">
         <a *ngIf="menu.entryPoint && !menu.submenus"
            [routerLink]="[routesManager.getRouteName(menu.entryPoint.fields.slug)]"
+           routerLinkActive="active"
            angulartics2On="click"
            angularticsEvent="{{menu.title}}">
           {{menu.title}}
         </a>
-
-        <a *ngIf="(menu.submenus && menu.entryPoint) || menu.submenus">
-          {{ menu.title }}
-        </a>
-        <ul class="dropdown-menu diff" role="menu"
-            *ngIf="menu.submenus">
-          <li *ngFor="let submenu of menu.submenus">
-            <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
-               angulartics2On="click"
-               angularticsEvent="{{submenu.fields.title}}"
-               class="dropdown-item">
-              <img
-                *ngIf="submenu.fields.thumbnail"
-                [gmContentfulSrcId]="submenu.fields.thumbnail.sys.id"
-                class="frame-img">
-              {{submenu.fields.title}}
-            </a>
-          </li>
-        </ul>
+        <div routerLinkActive="active">
+          <a class="submenu" *ngIf="(menu.submenus && menu.entryPoint) || menu.submenus">
+            {{ menu.title }}
+          </a>
+          <ul class="dropdown-menu diff" role="menu"
+              *ngIf="menu.submenus">
+            <li *ngFor="let submenu of menu.submenus">
+              <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
+                 angulartics2On="click"
+                 angularticsEvent="{{submenu.fields.title}}"
+                 class="dropdown-item">
+                <img
+                  *ngIf="submenu.fields.thumbnail"
+                  [gmContentfulSrcId]="submenu.fields.thumbnail.sys.id"
+                  class="frame-img">
+                {{submenu.fields.title}}
+              </a>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
 

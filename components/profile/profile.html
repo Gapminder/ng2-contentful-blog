@@ -1,4 +1,4 @@
-<div class="row profile" *ngFor="let profile of profiles">
+<div class="row profile" *ngIf="profile">
   <div class="col-md-4 margin-top-35">
     <img [gmContentfulSrcId]="profile.fields.avatar.sys.id"
          alt="{{profile.fields.title}}">
@@ -40,5 +40,6 @@
       </p>
     </div>
   </div>
-
+<!--TODO: add tags component-->
+  <!--<div class="col-md-12">Tags</div>-->
 </div>

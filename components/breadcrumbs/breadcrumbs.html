@@ -5,7 +5,7 @@
              angulartics2On="click"
              angularticsEvent="go to Home">Home</a></li>
       <li *ngFor="let url of urls; let last = last" [ngClass]="{'active': last}">
-        <i class="fa fa-angle-double-right"></i>
+        <i class="fa fa-angle-right"></i>
         <a *ngIf="!last"
            [routerLink]="[routesManager.getRouteName(url)]"
            angulartics2On="click"
