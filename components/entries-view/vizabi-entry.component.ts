@@ -1,44 +1,48 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer, OnDestroy } from '@angular/core';
 import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
+import { AbstractEntry } from './abstract-entry.component';
+import { ContentfulVizabiBlock } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-vizabi-entry',
   styles: [require('./video-entry.css')],
   template: `
-    <div class="video-wrapper">
-      <div class="loader" #loader></div>
-      <iframe #iframe
-        *ngIf="url"
-        [src]="url"
-        frameborder="0" 
-        webkitallowfullscreen="" 
-        mozallowfullscreen="" 
-        allowfullscreen="">
-      </iframe>
+    <div class="wrap-block" #backgroundOwner>
+      <div class="video-wrapper">
+        <div class="loader" #loader></div>
+        <iframe #iframe
+          *ngIf="url"
+          [src]="url"
+          frameborder="0" 
+          webkitallowfullscreen="" 
+          mozallowfullscreen="" 
+          allowfullscreen="">
+        </iframe>
+      </div>
     </div>
   `
 })
-export class VizabiEntryComponent implements OnInit, AfterViewInit, OnDestroy {
+export class VizabiEntryComponent extends AbstractEntry implements OnInit, AfterViewInit, OnDestroy {
   protected url: SafeResourceUrl;
-  @ViewChild('iframe') private iframeElementRef: ElementRef;
-  @ViewChild('loader') private loaderElementRef: ElementRef;
-  @Input() private entry: any;
+  @Input() protected entry: ContentfulVizabiBlock;
+  @ViewChild('iframe') private iframe: ElementRef;
+  @ViewChild('loader') private loader: ElementRef;
+  @ViewChild('backgroundOwner') private backgroundOwner: ElementRef;
 
   private sanitationService: DomSanitizationService;
-  private renderer: Renderer;
-  private listenLoad: any;
+  private disposeIframeOnLoadListener: Function;
 
   public constructor(sanitationService: DomSanitizationService,
-                     renderer: Renderer) {
+                     renderer: Renderer,
+                     elementRef: ElementRef) {
+    super(renderer, elementRef);
     this.sanitationService = sanitationService;
-    this.renderer = renderer;
   }
 
-  public ngAfterViewInit(): any {
+  public ngAfterViewInit(): void {
+    this.renderBackground(this.backgroundOwner);
     this.hideIframe();
-    this.listenLoad = this.renderer.listen(this.iframeElementRef.nativeElement, 'load', () => {
-      this.showIframe();
-    });
+    this.disposeIframeOnLoadListener = this.renderer.listen(this.iframe.nativeElement, 'load', () => this.showIframe());
   }
 
   public hideIframe(): void {
@@ -50,20 +54,19 @@ export class VizabiEntryComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public setStyles(iframeStyles: string, loaderStyles: string): void {
-    this.renderer.setElementStyle(this.iframeElementRef.nativeElement, 'visibility', iframeStyles);
-    this.renderer.setElementStyle(this.loaderElementRef.nativeElement, 'display', loaderStyles);
+    this.renderer.setElementStyle(this.iframe.nativeElement, 'visibility', iframeStyles);
+    this.renderer.setElementStyle(this.loader.nativeElement, 'display', loaderStyles);
   }
 
   public ngOnInit(): void {
     if (this.entry.fields.state) {
-      // TODO: remove bubbles
-      const staticState: string = '//www.gapminder.org/tools/bubbles?embedded=true';
+      const staticState: string = '//www.gapminder.org/tools/?embedded=true';
       this.url = this.sanitationService.bypassSecurityTrustResourceUrl(staticState + this.entry.fields.state);
     }
   }
 
   public ngOnDestroy(): any {
-    this.listenLoad();
+    this.disposeIframeOnLoadListener();
   }
 
 }

@@ -76,7 +76,6 @@ export class DynamicContentDetailsComponent implements OnInit {
 
     this.content = article.fields;
     this.breadcrumbsService.breadcrumbs$.next({url: this.urlPath, name: this.content.title});
-
     this.contentfulContentService
       .gerProfilesByArticleId(article.sys.id)
       .subscribe((profiles: ContentfulProfilePage[]) => {
@@ -100,7 +99,8 @@ export class DynamicContentDetailsComponent implements OnInit {
     const rawRoutes: RawRoute[] = [];
     _.forEach(articles, (contentfulArticle: ContentfulNodePage) => {
       const article: NodePageContent = contentfulArticle.fields;
-      rawRoutes.push({path: article.slug, data: {name: article.title}});
+      const cover = article.cover ? article.cover.sys.id : undefined;
+      rawRoutes.push({path: article.slug, data: {name: article.title, cover}});
     });
     this.routesManager.addRoutes(rawRoutes);
   }
