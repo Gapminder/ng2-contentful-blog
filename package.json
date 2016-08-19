@@ -6,7 +6,7 @@
     "flow.compile": "npm run flow.install:typings && npm run flow.compile:ts && npm run flow.compile:stylus",
     "flow.compile:ts": "./node_modules/.bin/tsc",
     "flow.compile:stylus": "gulp stylus",
-    "clean": "rimraf typings build dist '{components,demo}/**/*.{d.ts,js.map,js,css}' 'index.{js,js.map,d.ts}'",
+    "clean": "rimraf typings build dist '{components,demo}/**/!(constants).{d.ts,js.map,js,css}' 'index.{js,js.map,d.ts}'",
     "prepublish": "npm run clean && npm run flow.install:typings && npm run flow.compile",
     "start": "npm run flow.compile:stylus && webpack && node dist/server/index.js",
     "dev": "npm run flow.compile:stylus && webpack-dev-server --inline --hot",
