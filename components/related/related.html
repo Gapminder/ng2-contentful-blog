@@ -3,7 +3,7 @@
   <h2 class="post-head margin-top-0" *ngIf="relatedLocation">Related</h2>
   <div class="row">
     <ul class="list-proposals">
-      <li *ngFor="let item of relatedItems"
+      <li *ngFor="let item of related"
           class="col-xs-12 col-sm-6"
           [ngClass]="{'col-md-4': relatedLocation, 'col-md-6': !relatedLocation}">
         <a *ngIf="item.fields.url && item.fields.thumbnail" [routerLink]="[item.fields.url]"

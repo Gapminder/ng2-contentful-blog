@@ -65,6 +65,7 @@ export class DynamicContentDetailsComponent implements OnInit {
           .map((tag: ContentfulTagPage) => tag.sys.id)
           .mergeMap((tagSysId: string) => this.contentfulContentService.getArticleByTagAndSlug(tagSysId, this.contentSlug))
           .mergeMap((articles: ContentfulNodePage[]) => Observable.from(articles))
+          .filter((article: ContentfulNodePage) => !!_.find(article.fields.tags, (tag: ContentfulTagPage) => tag.fields.slug === this.constants.PROJECT_TAG))
           .subscribe((article: ContentfulNodePage) => this.onArticleReceived(article));
       });
   }
@@ -73,7 +74,6 @@ export class DynamicContentDetailsComponent implements OnInit {
     if (!article) {
       this.router.navigate(['/']);
     }
-
     this.content = article.fields;
     this.breadcrumbsService.breadcrumbs$.next({url: this.urlPath, name: this.content.title});
     this.contentfulContentService
@@ -88,7 +88,7 @@ export class DynamicContentDetailsComponent implements OnInit {
         }
       });
 
-    this.contentfulContentService.getChildrenOfArticle(article.sys.id)
+    this.contentfulContentService.getChildrenOfArticleByTag(article.sys.id, this.constants.PROJECT_TAG)
       .do((articles: ContentfulNodePage[]) => this.addRoutes(articles))
       .subscribe((children: ContentfulNodePage[]) => {
         this.children = children;

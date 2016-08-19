@@ -22,7 +22,9 @@ header
 
 .nav > li:focus > a,
 .nav > li:hover > a,
-.router-link-active
+.router-link-active,
+.active,
+.active > .submenu
   background #ffc300
   color #fff !important
   border-radius 2px
@@ -30,9 +32,12 @@ header
 .navbar-nav > li
   padding 20px 10px
 
-.navbar-nav > li > a
+.navbar-nav > li > a,
+.navbar-nav > li .submenu
   padding 3px 5px
   color #374551
+  &:hover
+    text-decoration none
 
 .navbar-nav
   li:hover

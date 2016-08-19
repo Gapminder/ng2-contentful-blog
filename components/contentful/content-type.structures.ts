@@ -1,6 +1,6 @@
 import {
   ContentfulNodePage, ContentfulSocial, ContentfulMenu,
-  ContentfulMedia
+  ContentfulMedia, ContentfulTagPage
 } from './aliases.structures';
 export interface NodePageContent {
   parent?: ContentfulNodePage;
@@ -11,7 +11,7 @@ export interface NodePageContent {
   thumbnail: ContentfulMedia;
   createdAt: string;
   url?: string; // for TagComponent
-  tags?: string[];
+  tags?: ContentfulTagPage[];
   relatedLocation: boolean;
   entries?: any[];
   cover?: ContentfulMedia; // media

@@ -19,6 +19,7 @@ typings
 # ignore incline compiling
 /demo/**/*.css
 /demo/**/*.js
+!/demo/constants.js
 /demo/**/*.js.map
 /demo/**/*.d.ts
 /components/**/*.css
