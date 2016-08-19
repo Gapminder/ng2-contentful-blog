@@ -22,7 +22,7 @@ export class TagsComponent implements OnInit {
   public ngOnInit(): any {
 
     this.tags = _.filter(this.tags, (tag: ContentfulTagPage)=> {
-      return tag.fields.slug !== this.constants.PROJECT_TAG;
+      return !_.includes(this.constants.EXCLUDED_TAGS, tag.fields.slug );
     });
 
   }

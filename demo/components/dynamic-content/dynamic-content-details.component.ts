@@ -65,6 +65,7 @@ export class DynamicContentDetailsComponent implements OnInit {
           .map((tag: ContentfulTagPage) => tag.sys.id)
           .mergeMap((tagSysId: string) => this.contentfulContentService.getArticleByTagAndSlug(tagSysId, this.contentSlug))
           .mergeMap((articles: ContentfulNodePage[]) => Observable.from(articles))
+          .filter((article: ContentfulNodePage) => !!_.find(article.fields.tags, (tag: ContentfulTagPage) => tag.fields.slug === this.constants.PROJECT_TAG))
           .subscribe((article: ContentfulNodePage) => this.onArticleReceived(article));
       });
   }
@@ -73,10 +74,8 @@ export class DynamicContentDetailsComponent implements OnInit {
     if (!article) {
       this.router.navigate(['/']);
     }
-
     this.content = article.fields;
     this.breadcrumbsService.breadcrumbs$.next({url: this.urlPath, name: this.content.title});
-
     this.contentfulContentService
       .gerProfilesByArticleId(article.sys.id)
       .subscribe((profiles: ContentfulProfilePage[]) => {
@@ -89,7 +88,7 @@ export class DynamicContentDetailsComponent implements OnInit {
         }
       });
 
-    this.contentfulContentService.getChildrenOfArticle(article.sys.id)
+    this.contentfulContentService.getChildrenOfArticleByTag(article.sys.id, this.constants.PROJECT_TAG)
       .do((articles: ContentfulNodePage[]) => this.addRoutes(articles))
       .subscribe((children: ContentfulNodePage[]) => {
         this.children = children;
@@ -100,7 +99,8 @@ export class DynamicContentDetailsComponent implements OnInit {
     const rawRoutes: RawRoute[] = [];
     _.forEach(articles, (contentfulArticle: ContentfulNodePage) => {
       const article: NodePageContent = contentfulArticle.fields;
-      rawRoutes.push({path: article.slug, data: {name: article.title}});
+      const cover = article.cover ? article.cover.sys.id : undefined;
+      rawRoutes.push({path: article.slug, data: {name: article.title, cover}});
     });
     this.routesManager.addRoutes(rawRoutes);
   }

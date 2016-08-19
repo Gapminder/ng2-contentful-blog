@@ -162,6 +162,14 @@ export class ContenfulContent {
       .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
   }
 
+  public getChildrenOfArticleByTag(articleSysId: string, projectTag: string): Observable<ContentfulNodePage[]> {
+    return this.getChildrenOfArticle(articleSysId)
+      .mergeMap((children: ContentfulNodePage[]) => Observable.from(children))
+      .filter((child: ContentfulNodePage) => !_.isEmpty(child.fields.tags))
+      .filter((child: ContentfulNodePage) => !!_.find(child.fields.tags, (tag: ContentfulTagPage) => tag.fields.slug === projectTag))
+      .toArray();
+  }
+
   public getArticlesByTag(tagSysId: string): Observable<ContentfulNodePage[]> {
     return this.contentfulService
       .create()

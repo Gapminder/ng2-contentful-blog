@@ -1,47 +1,48 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, AfterViewInit, Renderer, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, Renderer, OnDestroy, AfterViewInit } from '@angular/core';
 import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
+import { AbstractEntry } from './abstract-entry.component';
+import { ContentfulEmbeddedBlock } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-embedded-entry',
   styles: [require('./video-entry.css')],
   template: `
-    <div class="video-wrapper">
-      <div class="loader" #loader></div>
-      <iframe #iframe
-        *ngIf="url"
-        [src]="url"
-        frameborder="0" 
-        webkitallowfullscreen="" 
-        mozallowfullscreen="" 
-        allowfullscreen="">
-      </iframe>
+    <div class="wrap-block" #backgroundOwner>
+      <div class="video-wrapper">
+        <div class="loader" #loader></div>
+        <iframe #iframe
+          *ngIf="url"
+          [src]="url"
+          frameborder="0" 
+          webkitallowfullscreen="" 
+          mozallowfullscreen="" 
+          allowfullscreen="">
+        </iframe>
+      </div>
     </div>
   `
 })
-export class EmbeddedEntryComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EmbeddedEntryComponent extends AbstractEntry implements OnInit, AfterViewInit, OnDestroy {
   protected url: SafeResourceUrl;
-  @ViewChild('iframe') private iframeElementRef: ElementRef;
-  @ViewChild('loader') private loaderElementRef: ElementRef;
-  @Input() private entry: any;
+  @Input() protected entry: ContentfulEmbeddedBlock;
+  @ViewChild('iframe') private iframe: ElementRef;
+  @ViewChild('loader') private loader: ElementRef;
+  @ViewChild('backgroundOwner') private backgroundOwner: ElementRef;
 
   private sanitationService: DomSanitizationService;
-  private renderer: Renderer;
-  private elementRef: ElementRef;
-  private listenLoad: any;
+  private disposeIframeOnLoadListener: Function;
 
   public constructor(sanitationService: DomSanitizationService,
                      renderer: Renderer,
                      elementRef: ElementRef) {
+    super(renderer, elementRef);
     this.sanitationService = sanitationService;
-    this.renderer = renderer;
-    this.elementRef = elementRef;
   }
 
-  public ngAfterViewInit(): any {
+  public ngAfterViewInit(): void {
+    this.renderBackground(this.backgroundOwner);
     this.hideIframe();
-    this.listenLoad = this.renderer.listen(this.iframeElementRef.nativeElement, 'load', () => {
-      this.showIframe();
-    });
+    this.disposeIframeOnLoadListener = this.renderer.listen(this.iframe.nativeElement, 'load', () => this.showIframe());
   }
 
   public hideIframe(): void {
@@ -53,8 +54,8 @@ export class EmbeddedEntryComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   public setStyles(iframeStyles: string, loaderStyles: string): void {
-    this.renderer.setElementStyle(this.iframeElementRef.nativeElement, 'visibility', iframeStyles);
-    this.renderer.setElementStyle(this.loaderElementRef.nativeElement, 'display', loaderStyles);
+    this.renderer.setElementStyle(this.iframe.nativeElement, 'visibility', iframeStyles);
+    this.renderer.setElementStyle(this.loader.nativeElement, 'display', loaderStyles);
   }
 
   public ngOnInit(): void {
@@ -63,8 +64,7 @@ export class EmbeddedEntryComponent implements OnInit, AfterViewInit, OnDestroy 
     }
   }
 
-  public ngOnDestroy(): any {
-    this.listenLoad();
+  public ngOnDestroy(): void {
+    this.disposeIframeOnLoadListener();
   }
-
 }

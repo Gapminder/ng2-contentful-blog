@@ -25,12 +25,15 @@ import { ShareFooterLineComponent } from './components/share-btn/share-line-foot
 import { MenuService } from './components/menu/menu.service';
 import { RelatedComponent } from './components/related/related.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { CoverImageComponent } from './components/cover-image/cover-image.component';
 
 import {
   ContentfulMenu,
   ContentfulNodePagesResponse,
   ContentfulNodePage,
-  ContentfulTagPage
+  ContentfulTagPage,
+  ContentfulImage,
+  ContentfulSocial
 } from './components/contentful/aliases.structures';
 import { RoutesGatewayGuard } from './components/routes-gateway/routes-gateway.guard';
 
@@ -62,11 +65,14 @@ export { ShareComponent };
 export { MenuService };
 export { RelatedComponent };
 export { FooterComponent };
+export { CoverImageComponent };
 export {
   ContentfulMenu,
   ContentfulNodePagesResponse,
   ContentfulNodePage,
-  ContentfulTagPage
+  ContentfulTagPage,
+  ContentfulImage,
+  ContentfulSocial
 };
 
 export const GAPMINDER_PROVIDERS: any[] = [

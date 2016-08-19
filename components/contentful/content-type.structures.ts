@@ -1,33 +1,59 @@
-import { ContentfulNodePage, ContentfulSocial, ContentfulMenu } from './aliases.structures';
+import {
+  ContentfulNodePage, ContentfulSocial, ContentfulMenu,
+  ContentfulMedia, ContentfulTagPage
+} from './aliases.structures';
 export interface NodePageContent {
   parent?: ContentfulNodePage;
   title: string;
   slug: string;
   description?: string;
   related?: NodePageContent[];
-  thumbnail: any; // will be changed to sys structure
+  thumbnail: ContentfulMedia;
   createdAt: string;
   url?: string; // for TagComponent
-  tags?: string[];
+  tags?: ContentfulTagPage[];
   relatedLocation: boolean;
   entries?: any[];
+  cover?: ContentfulMedia; // media
 }
 
-export interface VideoContent {
+export interface Block {
   title: string;
+  backgroundColor?: string;
+  backgroundImage?: ContentfulMedia;
+}
+
+export interface VideoBlock extends Block {
   description?: string;
   youtube?: string;
   vimeo?: string;
 }
 
-export interface HtmlContent {
-  title: string;
+export interface HtmlBlock extends Block {
   content: string;
+}
+
+export interface EmbeddedBlock extends Block {
+  link: string;
+}
+
+export interface VizabiBlock extends Block {
+  state: string;
+}
+
+export interface Media {
+  file: MediaFile;
+  title: string;
+}
+export interface MediaFile {
+  url: string;
+  fileName: string;
+  contentType: string;
 }
 
 export interface Image {
   title: string;
-  image: any; // media
+  image: ContentfulMedia; // media
 }
 
 export interface FooterMenu {
@@ -60,7 +86,7 @@ export interface Menu {
 export interface Submenu {
   title: string;
   entryPoint: ContentfulNodePage;
-  thumbnail: any;
+  thumbnail: ContentfulMedia;
 }
 
 export interface TagPage {
@@ -72,7 +98,7 @@ export interface ProfilePage {
   userName: string;
   firstName: string;
   lastName: string;
-  avatar?: any;
+  avatar?: ContentfulMedia;
   title: string;
   location: string;
   email: string;

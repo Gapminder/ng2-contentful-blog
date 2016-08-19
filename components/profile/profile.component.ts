@@ -15,7 +15,7 @@ import * as _ from 'lodash';
 export class ProfileComponent implements OnInit {
   @Input()
   private username: string;
-  private profiles: ContentfulProfilePage[];
+  private profile: ContentfulProfilePage;
   private contentfulContentService: ContenfulContent;
   private router: Router;
   private breadcrumbsService: BreadcrumbsService;
@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
           if (_.isEmpty(profiles)) {
             this.router.navigate(['Root']);
           } else {
-            this.profiles = profiles;
+            this.profile = _.first(profiles);
           }
         });
       });

@@ -3,16 +3,13 @@
   <h2 class="post-head margin-top-0" *ngIf="relatedLocation">Related</h2>
   <div class="row">
     <ul class="list-proposals">
-      <li *ngFor="let item of relatedItems"
+      <li *ngFor="let item of related"
           class="col-xs-12 col-sm-6"
           [ngClass]="{'col-md-4': relatedLocation, 'col-md-6': !relatedLocation}">
-        <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+        <a *ngIf="item.fields.url && item.fields.thumbnail" [routerLink]="[item.fields.url]"
            angulartics2On="click"
-           angularticsEvent="{{item.fields.title}}">
-          <span class="wrap-img">
-            <img *ngIf="item.fields.thumbnail" [gmContentfulSrcId]="item.fields.thumbnail.sys.id"
-                 alt="{{item.fields.title}}">
-          </span>
+           angularticsEvent="{{item.fields.title}}" class="wrap-img"
+           [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
         </a>
         <div *ngIf="relatedLocation" class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
         <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"

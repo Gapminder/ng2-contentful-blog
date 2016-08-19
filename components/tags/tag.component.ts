@@ -18,7 +18,7 @@ import { appInjector } from '../contentful/app-injector.tool';
 export class TagComponent implements OnInit {
   @Input()
   protected tag: string;
-  protected listNodePage: ContentfulNodePage[];
+  protected articles: ContentfulNodePage[];
   protected contentfulContentService: ContenfulContent;
   protected tagId: string;
   protected router: Router;
@@ -48,15 +48,18 @@ export class TagComponent implements OnInit {
           if (_.isEmpty(contentTag)) {
             this.router.navigate(['/']);
           } else {
-            this.tagId = contentTag[0].sys.id;
+            this.tagId = _.first(contentTag).sys.id;
             this.contentfulContentService.getArticlesByTag(this.tagId)
-              .subscribe((res: ContentfulNodePage[]) => {
-                this.listNodePage = res;
-                for (let item of this.listNodePage) {
-                  this.contentfulContentService.getArticleParentSlug(item.sys.id, (url: string) => {
-                    item.fields.url = this.routesManager.addRoute({path: url, data: {name: item.fields.title}});
+              .subscribe((articles: ContentfulNodePage[]) => {
+                this.articles = _.filter(articles, (article: ContentfulNodePage)=> {
+                  return article.fields;
+                });
+                _.forEach(this.articles, (article: ContentfulNodePage) => {
+                  this.contentfulContentService.getArticleParentSlug(article.sys.id, (url: string) => {
+                    article.fields.url = this.routesManager.addRoute({path: url, data: {name: article.fields.title}});
                   });
-                }
+
+                });
               });
           }
         });
