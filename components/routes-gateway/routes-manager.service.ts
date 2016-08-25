@@ -1,6 +1,8 @@
 import { Injectable, Inject, Type } from '@angular/core';
 import { Router, Route, RouterConfig } from '@angular/router';
 import * as _ from 'lodash';
+import { NodePageContent, Menu } from '../contentful/content-type.structures';
+import { ContentfulNodePage, ContentfulSubmenu } from '../contentful/aliases.structures';
 
 @Injectable()
 export class RoutesManagerService {
@@ -22,7 +24,7 @@ export class RoutesManagerService {
     const registeredPath = this.pathToName.get(path);
     // fakePath is added to support angular2 universal server rendering
     // for some reason routes are requested from pathToName before they were actually registered
-    // on the server. So fakePath it is path that would exist as if route was added 
+    // on the server. So fakePath it is path that would exist as if route was added
     const fakePath = `/${path}`;
     return registeredPath ? registeredPath : fakePath;
   }
@@ -48,6 +50,28 @@ export class RoutesManagerService {
     this._addRoutes(newRoutes);
   }
 
+  public addRoutesFromArticles(... contentfulArticles: ContentfulNodePage[]): void {
+    const rawRoutes: RawRoute[] = [];
+    _.forEach(contentfulArticles, (contentfulArticle: ContentfulNodePage) => {
+      rawRoutes.push(this.convertArticleToRawRoute(contentfulArticle));
+    });
+    this.addRoutes(rawRoutes);
+  }
+
+  public addRoutesFromMenus(... menus: Menu[]): void {
+    const rawRoutes: RawRoute[] = [];
+    _.forEach(menus, (menu: Menu) => {
+      if (menu.entryPoint) {
+        rawRoutes.push(this.convertArticleToRawRoute(menu.entryPoint));
+      }
+
+      _.forEach(menu.submenus, (submenu: ContentfulSubmenu) => {
+        rawRoutes.push(this.convertArticleToRawRoute(submenu.fields.entryPoint));
+      });
+    });
+    this.addRoutes(rawRoutes);
+  }
+
   public containsRoute(path: string): boolean {
     return !!this.findRouteByPath(path);
   }
@@ -56,6 +80,12 @@ export class RoutesManagerService {
     return _.find(this.routes, (route: any) => {
       return route.path === path;
     });
+  }
+
+  private convertArticleToRawRoute(contentfulArticle: ContentfulNodePage): RawRoute {
+    const article: NodePageContent = contentfulArticle.fields;
+    const cover = article.cover ? article.cover.sys.id : undefined;
+    return {path: article.url || article.slug, data: {name: article.title, cover}};
   }
 
   private _addRoutes(routes: Route[]): void {

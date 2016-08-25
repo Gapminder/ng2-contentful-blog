@@ -109,6 +109,7 @@ export interface ProfilePage {
   aboutMe: string;
   contributions: ContributionPage[];
   myLinks: any[];
+  tags?: ContentfulTagPage[];
 }
 
 export interface ContributionPage {

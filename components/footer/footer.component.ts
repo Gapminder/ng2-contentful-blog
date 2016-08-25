@@ -7,6 +7,7 @@ import { ContentfulImage } from '../contentful/aliases.structures';
 import { MenuService } from '../menu/menu.service';
 import { Menu, FooterMenu, Social } from '../contentful/content-type.structures';
 import * as _ from 'lodash';
+import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-footer',
@@ -23,11 +24,14 @@ export class FooterComponent implements OnInit {
   private menuService: MenuService;
   private menus: Menu[];
   private socials: ViewSocial[];
+  private routesManager: RoutesManagerService;
 
   public constructor(contentfulContentService: ContenfulContent,
                      menuService: MenuService,
+                     routesManager: RoutesManagerService,
                      @Inject('Constants') constants: any) {
     this.contentfulContentService = contentfulContentService;
+    this.routesManager = routesManager;
     this.constants = constants;
     this.menuService = menuService;
   }
@@ -47,7 +51,7 @@ export class FooterComponent implements OnInit {
 
         this.description = footerMenu.description;
         this.menus = footerMenu.menus;
-        this.menuService.addRoutes(this.menus);
+        this.routesManager.addRoutesFromMenus(... this.menus);
       });
 
     this.contentfulContentService.getImagesByTitle(this.constants.FOOTER_LOGO_TITLE)

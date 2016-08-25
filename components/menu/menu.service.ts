@@ -3,17 +3,15 @@ import * as _ from 'lodash';
 import {
   ContentfulTagPage,
   ContentfulMenu,
-  ContentfulNodePage,
-  ContentfulSubmenu,
-  ContentfulFooterHeader
+  ContentfulFooterHeader,
+  ContentfulSocial
 } from '../contentful/aliases.structures';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/from';
 import { ContenfulContent } from '../contentful/contentful-content.service';
-import { Menu, FooterMenu, NodePageContent } from '../contentful/content-type.structures';
-import { RoutesManagerService, RawRoute } from '../routes-gateway/routes-manager.service';
-import { ContentfulSocial } from '../contentful/aliases.structures';
+import { Menu, FooterMenu } from '../contentful/content-type.structures';
+import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Injectable()
 export class MenuService {
@@ -49,35 +47,10 @@ export class MenuService {
           .value() as Menu[];
 
         const social: ContentfulSocial = menu.fields.social;
-
         const description: string = menu.fields.description;
-        return {
-          menus,
-          social,
-          description
-        };
-      });
-  }
 
-  public addRoutes(menus: Menu[]): void {
-    const rawRoutes: RawRoute[] = [];
-    _.forEach(menus, (menu: Menu) => {
-      if (menu.entryPoint) {
-        const article: ContentfulNodePage = menu.entryPoint;
-        const cover = article.fields.cover ? article.fields.cover.sys.id : undefined;
-        rawRoutes.push({path: article.fields.slug, data: {name: menu.title, cover}});
-      }
-
-      _.forEach(menu.submenus, (submenu: ContentfulSubmenu) => {
-        const article: NodePageContent = submenu.fields.entryPoint.fields;
-        const cover = article.cover ? article.cover.sys.id : undefined;
-        rawRoutes.push({
-          path: article.slug,
-          data: {name: article.title, cover}
-        });
+        return {menus, social, description};
       });
-    });
-    this.routesManager.addRoutes(rawRoutes);
   }
 
   private getContentfulMenus(menuType: string): Observable<ContentfulFooterHeader> {

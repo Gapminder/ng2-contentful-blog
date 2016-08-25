@@ -12,7 +12,7 @@ import { BreadcrumbsService } from '../../../components/breadcrumbs/breadcrumbs.
 import { EntriesViewComponent } from '../../../components/entries-view/entries-view.component';
 import { TagsComponent } from '../../../components/tags/tags.component';
 import { ContributorsComponent } from '../../../components/contributors/contributors.component';
-import { RoutesManagerService, RawRoute } from '../../../components/routes-gateway/routes-manager.service';
+import { RoutesManagerService } from '../../../components/routes-gateway/routes-manager.service';
 import { RelatedComponent } from '../../../components/related/related.component';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs/Rx';
@@ -76,8 +76,7 @@ export class DynamicContentDetailsComponent implements OnInit {
     }
     this.content = article.fields;
     this.breadcrumbsService.breadcrumbs$.next({url: this.urlPath, name: this.content.title});
-    this.contentfulContentService
-      .gerProfilesByArticleId(article.sys.id)
+    this.contentfulContentService.gerProfilesByArticleId(article.sys.id)
       .subscribe((profiles: ContentfulProfilePage[]) => {
         this.profiles = profiles;
         if (this.content.relatedLocation && this.content.related || _.isEmpty(profiles) && !this.content.related) {
@@ -89,20 +88,14 @@ export class DynamicContentDetailsComponent implements OnInit {
       });
 
     this.contentfulContentService.getChildrenOfArticleByTag(article.sys.id, this.constants.PROJECT_TAG)
-      .do((articles: ContentfulNodePage[]) => this.addRoutes(articles))
       .subscribe((children: ContentfulNodePage[]) => {
+        _.forEach(children, (child: ContentfulNodePage) => {
+          const currentPagePath: string = _.map(this.activatedRoute.snapshot.url, 'path').join('/');
+          child.fields.url = `${currentPagePath}/${child.fields.slug}`;
+        });
+        this.routesManager.addRoutesFromArticles(... children);
         this.children = children;
       });
-  }
-
-  private addRoutes(articles: ContentfulNodePage[]): void {
-    const rawRoutes: RawRoute[] = [];
-    _.forEach(articles, (contentfulArticle: ContentfulNodePage) => {
-      const article: NodePageContent = contentfulArticle.fields;
-      const cover = article.cover ? article.cover.sys.id : undefined;
-      rawRoutes.push({path: article.slug, data: {name: article.title, cover}});
-    });
-    this.routesManager.addRoutes(rawRoutes);
   }
 }
 

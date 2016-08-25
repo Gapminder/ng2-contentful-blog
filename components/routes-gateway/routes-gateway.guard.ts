@@ -28,6 +28,9 @@ export class RoutesGatewayGuard implements CanActivate {
     const firstPath: string = _.first(paths);
     const lastPath: string = _.last(paths);
 
+    // this help in debugging routes that was not registered during regular site navigation
+    // console.debug('GUARD ACTIVATED:', paths.join('/'));
+
     this.parentOf(firstPath, lastPath, paths.length - 1, paths, new Map<string, any>());
     return false;
   }
@@ -48,6 +51,14 @@ export class RoutesGatewayGuard implements CanActivate {
             const cover = article.cover ? article.cover.sys.id : undefined;
             data.set(article.slug, {name: article.title, cover});
             if (article.parent) {
+
+              // if (!slugs[lastSlugIndex - 1]) {
+              //   slugs.unshift(article.parent.fields.slug);
+              //   firstSlug = article.parent.fields.slug;
+              // } else if (article.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
+              //   slugs[lastSlugIndex - 1] = article.parent.fields.slug;
+              // }
+
               if (article.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
                 slugs[lastSlugIndex - 1] = article.parent.fields.slug;
               }
@@ -56,6 +67,8 @@ export class RoutesGatewayGuard implements CanActivate {
                 return;
               }
               return this.parentOf(firstSlug, article.parent.fields.slug, lastSlugIndex - 1, slugs, data);
+            } else {
+              slugs = this.cleanPathFromDuplicateConsequentSlugs(article.slug, slugs);
             }
 
             this.registerRoutes(this.collectAllPossiblePaths(slugs), data);
@@ -68,7 +81,11 @@ export class RoutesGatewayGuard implements CanActivate {
         });
   }
 
-  private registerRoutes(allPossiblePaths: string[], data: Map<string, string>): any {
+  private cleanPathFromDuplicateConsequentSlugs(currentSlug: string, slugs: string[]): string[] {
+    return _.slice(slugs, _.findLastIndex(slugs, (slug: string) => currentSlug === slug));
+  }
+
+  private registerRoutes(allPossiblePaths: string[], data: Map<string, any>): any {
     _.forEach(allPossiblePaths, (path: string) => {
 
       let currentTitle = path.split('/').pop();

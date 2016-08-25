@@ -1,7 +1,6 @@
-<div class="row profile" *ngIf="profile">
-  <div class="col-md-4 margin-top-35">
-    <img [gmContentfulSrcId]="profile.fields.avatar.sys.id"
-         alt="{{profile.fields.title}}">
+<div class="row profile margin-bottom-35" *ngIf="profile">
+  <div class="col-md-4 margin-top-35 margin-bottom-35">
+    <div class="avatar" [height]="270" [gmContentfulSrcId]="profile.fields.avatar.sys.id"></div>
     <p>Contributions</p>
     <div *ngFor="let contribution of profile.fields.contributions">
       {{contribution.fields.description }}
@@ -40,6 +39,7 @@
       </p>
     </div>
   </div>
-<!--TODO: add tags component-->
-  <!--<div class="col-md-12">Tags</div>-->
+  <div class="col-md-12">
+    <gm-tags *ngIf="profile.fields.tags" [tags]="profile.fields.tags" [taggedContentType]="taggedContentType"></gm-tags>
+  </div>
 </div>

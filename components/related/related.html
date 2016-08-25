@@ -6,25 +6,17 @@
       <li *ngFor="let item of related"
           class="col-xs-12 col-sm-6"
           [ngClass]="{'col-md-4': relatedLocation, 'col-md-6': !relatedLocation}">
-        <a *ngIf="item.fields.url && item.fields.thumbnail" [routerLink]="[item.fields.url]"
+        <a *ngIf="item.fields.url && item.fields.thumbnail" [routerLink]="[routesManager.getRouteName(item.fields.url)]"
            angulartics2On="click"
            angularticsEvent="{{item.fields.title}}" class="wrap-img"
-           [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
+           [height]="getThumbnailHeight()" [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
         </a>
         <div *ngIf="relatedLocation" class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
-        <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
+        <a *ngIf="item.fields.url" [routerLink]="[routesManager.getRouteName(item.fields.url)]"
            class="post-title"
            angulartics2On="click"
            angularticsEvent="{{item.fields.title}}">{{item.fields.title}}</a>
-        <p *ngIf="relatedLocation" class="post-p">
-          {{item.fields.description}}...
-          <a *ngIf="item.fields.url" [routerLink]="[item.fields.url]"
-             class="post-title"
-             angulartics2On="click"
-             angularticsEvent="{{item.fields.title}}">
-            Read more&nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i>
-          </a>
-        </p>
+        <p *ngIf="relatedLocation" class="post-p">{{item.fields.description}}</p>
       </li>
     </ul>
   </div>
