@@ -2,7 +2,7 @@
   <p class="tag">Tagged: </p>
   <ul class="list-tags">
     <li *ngFor="let tag of tags">
-      <a [routerLink]="['/tag', tag.fields.slug]"
+      <a [queryParams]="taggedContentType ? {contentType: taggedContentType} : {}" [routerLink]="['/tag', tag.fields.slug]"
          angulartics2On="click"
          angularticsEvent="{{tag.fields.title}}">
         {{tag.fields.title}}

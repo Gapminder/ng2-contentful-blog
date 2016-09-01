@@ -2,9 +2,7 @@
   <p class="info">Thanks to: </p>
   <ul class="contributors">
     <li *ngFor="let prolile of profiles">
-      <a *ngIf="prolile.fields.avatar" [routerLink]="['/profile', prolile.fields.userName]">
-        <img [gmContentfulSrcId]="prolile.fields.avatar.sys.id" alt="{{prolile.fields.userName}}">
-      </a>
+      <a [height]="100" [width]="100" [gmContentfulSrcId]="prolile.fields.avatar.sys.id" *ngIf="prolile.fields.avatar" [routerLink]="['/profile', prolile.fields.userName]"></a>
     </li>
   </ul>
 </div>

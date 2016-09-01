@@ -29,7 +29,7 @@ export class HeaderMenuComponent implements OnInit {
     this.menuService
       .getHeaderMenus()
       .subscribe((menus: Menu[]) => {
-        this.menuService.addRoutes(menus);
+        this.routesManager.addRoutesFromMenus(... menus);
         this.menus = menus;
       });
   }

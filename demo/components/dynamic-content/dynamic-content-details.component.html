@@ -30,14 +30,14 @@
            [ngClass]="{'col-md-4': cssClassBigColumn, 'col-md-6': cssClassSmallColumn}">
 
         <a *ngIf="child.fields.thumbnail"
-           [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
+           [routerLink]="[routesManager.getRouteName(child.fields.url)]"
            angulartics2On="click"
            angularticsEvent="{{child.fields.title}}"
-           class="dynamic-wrap-img" [gmContentfulSrcId]="child.fields.thumbnail.sys.id">
+           class="dynamic-wrap-img" [height]="240" [gmContentfulSrcId]="child.fields.thumbnail.sys.id">
           <!--<span class="play"><i class="fa fa-play"></i></span>-->
         </a>
         <div class="date-info">{{child.fields.createdAt | gmToDate | date}}</div>
-        <a [routerLink]="[routesManager.getRouteName(urlPath + '/'+ child.fields.slug)]"
+        <a [routerLink]="[routesManager.getRouteName(child.fields.url)]"
            angulartics2On="click"
            angularticsEvent="{{child.fields.title}}"
            class="post-title">

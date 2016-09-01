@@ -10,12 +10,19 @@ import 'rxjs/add/operator/map';
 export class ContentfulImageDirective implements OnInit {
   @Input()
   private gmContentfulSrcId: string;
+
   @Input()
   private width: string;
+
   @Input()
   private height: string;
+
   @Input()
   private fit: string;
+
+  @Input()
+  private quality: string;
+
   private queryParams: URLSearchParams = new URLSearchParams();
   private element: ElementRef;
   private contentfulService: ContentfulService;
@@ -55,6 +62,9 @@ export class ContentfulImageDirective implements OnInit {
     }
     if (this.height) {
       this.queryParams.set('h', this.height);
+    }
+    if (this.quality) {
+      this.queryParams.set('q', this.quality);
     }
     if (this.fit) {
       this.queryParams.set('fit', this.fit);
