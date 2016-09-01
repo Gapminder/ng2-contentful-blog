@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { FooterMenuComponent } from '../menu/footer/footer-menu.component';
 import { ContenfulContent } from '../contentful/contentful-content.service';
-import { ContentfulImage } from '../contentful/aliases.structures';
+import { ContentfulImage, ContentfulSocial } from '../contentful/aliases.structures';
 import { MenuService } from '../menu/menu.service';
 import { Menu, FooterMenu, Social } from '../contentful/content-type.structures';
 import * as _ from 'lodash';
@@ -41,13 +41,7 @@ export class FooterComponent implements OnInit {
     this.menuService
       .getFooterMenus()
       .subscribe((footerMenu: FooterMenu) => {
-        const social: Social = footerMenu.social.fields;
-        this.socials = _.chain(social)
-          .keys()
-          .map((socialTitle: string) => {
-            return {link: social[socialTitle], iconCssClass: socialTitle};
-          })
-          .value();
+        this.socials = this.toViewSocials(footerMenu.social);
 
         this.description = footerMenu.description;
         this.menus = footerMenu.menus;
@@ -58,6 +52,20 @@ export class FooterComponent implements OnInit {
       .subscribe((images: ContentfulImage[]) => {
         this.footerLogo = _.first(images);
       });
+  }
+
+  private toViewSocials(contentfulSocial: ContentfulSocial): ViewSocial[] {
+    if (!contentfulSocial || !contentfulSocial.fields) {
+      return [];
+    }
+
+    const social: Social = contentfulSocial.fields;
+    return _.chain(social)
+      .keys()
+      .map((socialTitle: string) => {
+        return {link: social[socialTitle], iconCssClass: socialTitle};
+      })
+      .value();
   }
 }
 
