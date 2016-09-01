@@ -1,23 +1,22 @@
 <div class="row">
-  <div class="margin-top-35" *ngIf="articles && articles.length">
+  <div class="margin-top-35" *ngIf="taggedContent && taggedContent.length">
     <div class="dynamic-item col-md-4 col-sm-6  col-xs-12 margin-bottom-35"
-         *ngFor="let article of articles">
-      <a *ngIf="article.fields.thumbnail && article.fields.url" [routerLink]="[article.fields.url]"
+         *ngFor="let taggedContentItem of taggedContent">
+      <a *ngIf="taggedContentItem.thumbnail && taggedContentItem.url" [routerLink]="[taggedContentItem.url]" [queryParams]="{}"
          angulartics2On="click"
-         angularticsEvent="{{article.fields.title}}"
-         class="dynamic-wrap-img" [gmContentfulSrcId]="article.fields.thumbnail.sys.id">
+         angularticsEvent="{{taggedContentItem.title}}"
+         class="dynamic-wrap-img" [height]="240" [gmContentfulSrcId]="taggedContentItem.thumbnail">
         <!--<span class="play"><i class="fa fa-play"></i></span>-->
       </a>
-      <div class="date-info">{{article.fields.createdAt | gmToDate | date}}</div>
+      <div class="date-info">{{taggedContentItem.createdAt | gmToDate | date}}</div>
 
-      <a *ngIf="article.fields.url" [routerLink]="[article.fields.url]"
+      <a *ngIf="taggedContentItem.url" [routerLink]="[taggedContentItem.url]" [queryParams]="{}"
          angulartics2On="click"
-         angularticsEvent="{{article.fields.title}}"
+         angularticsEvent="{{taggedContentItem.title}}"
          class="post-title">
-        {{article.fields.title}}
+        {{taggedContentItem.title}}
       </a>
-      <p class="post-p">{{article.fields.description}}</p>
-
+      <p class="post-p">{{taggedContentItem.description}}</p>
     </div>
   </div>
 </div>

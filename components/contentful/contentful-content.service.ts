@@ -150,6 +150,17 @@ export class ContenfulContent {
       .mergeMap((contributionSysIds: string[]) => this.getProfilesByContributions(contributionSysIds));
   }
 
+  public getProfilesByTag(tagSysId: string): Observable<ContentfulProfilePage[]> {
+    return this.contentfulService
+      .create()
+      .searchEntries(this.contentfulTypeIds.PROFILE_TYPE_ID, {
+        param: 'fields.tags.sys.id',
+        value: tagSysId
+      })
+      .commit()
+      .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json()));
+  }
+
   public getChildrenOfArticle(articleSysId: string): Observable<ContentfulNodePage[]> {
     return this.contentfulService
       .create()
@@ -182,7 +193,7 @@ export class ContenfulContent {
       .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
   }
 
-  public getParentOf(sysId: string): Observable<ContentfulNodePage[]> {
+  public getArticleBySysId(sysId: string): Observable<ContentfulNodePage[]> {
     return this.contentfulService
       .create()
       .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
@@ -230,7 +241,7 @@ export class ContenfulContent {
   }
 
   public getArticleParentSlug(id: string, onSlugFound: (path: string) => void): void {
-    this.getParentOf(id).subscribe(
+    this.getArticleBySysId(id).subscribe(
       (res: any) => {
         const slug = res[0].fields.slug;
         if (!res[0].fields.parent) {
@@ -241,6 +252,42 @@ export class ContenfulContent {
           return onSlugFound(`${parentUrl}/${slug}`);
         });
       });
+  }
+
+  public getArticleWithFullUrlPopulated(articles: ContentfulNodePage[]): Observable<ContentfulNodePage[]> {
+    if (!articles) {
+      return Observable.empty() as Observable<ContentfulNodePage[]>;
+    }
+
+    return Observable
+      .from(articles)
+      .filter((article: ContentfulNodePage) => !!article)
+      .mergeMap((article: ContentfulNodePage) => {
+        const onFound: OnArticleWithFullUrlFound = this.getArticleWithFullUrl.bind(this);
+        return Observable.bindCallback(onFound)(article);
+      })
+      .do((articleWithFullUrl: ArticleWithFullUrl) => {
+        articleWithFullUrl.article.fields.url = articleWithFullUrl.url;
+      })
+      .map((articleWithFullUrl: ArticleWithFullUrl) => articleWithFullUrl.article)
+      .toArray();
+  }
+
+  private getArticleWithFullUrl(article: ContentfulNodePage, onSlugFound: (articleWithFullUrl: ArticleWithFullUrl) => void): void {
+    if (!article.fields.parent) {
+      return onSlugFound({article, url: article.fields.slug});
+    }
+
+    this.getArticleBySysId(article.fields.parent.sys.id).subscribe((res: any[]) => {
+      const parentArticle: ContentfulNodePage = _.first(res) as ContentfulNodePage;
+      if (!parentArticle) {
+        return onSlugFound({article, url: article.fields.slug});
+      }
+
+      this.getArticleWithFullUrl(parentArticle, (articleWithFullUrl: ArticleWithFullUrl) => {
+        return onSlugFound({article, url: `${articleWithFullUrl.url}/${article.fields.slug}`});
+      });
+    });
   }
 
   private getRawNodePageBySlug(slug: string): Observable<ContentfulNodePagesResponse> {
@@ -298,3 +345,10 @@ export class ContenfulContent {
     return submenuItems;
   }
 }
+
+export interface ArticleWithFullUrl {
+  url: string;
+  article: ContentfulNodePage;
+}
+
+type OnArticleWithFullUrlFound = (article: ContentfulNodePage, done: (articleWithFullUrl: ArticleWithFullUrl) => void) => void;

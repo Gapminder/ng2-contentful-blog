@@ -22,14 +22,11 @@ export class CoverImageComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-
-    this.router.events.filter((value: any) => value instanceof NavigationStart)
-      .map((value: NavigationStart)=>this.routesManager.findRouteByPath(value.url.replace('/', '')))
-      .filter((route: Route)=> !!route)
-      .map((route: Route)=> route.data)
-      .filter((data: RouteData)=> !!data)
-      .subscribe((data: RouteData) => {
-        this.cover = data.cover;
+    this.router.events
+      .filter((value: any) => value instanceof NavigationStart)
+      .map((value: NavigationStart) => this.routesManager.findRouteByPath(value.url.replace('/', '')))
+      .subscribe((route: Route) => {
+        this.cover = route && route.data && (route.data as RouteData).cover;
       });
   }
 }

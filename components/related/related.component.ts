@@ -3,7 +3,6 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { ToDatePipe } from '../pipes/to-date.pipe';
-import * as _ from 'lodash';
 import { ContentfulNodePage } from '../contentful/aliases.structures';
 
 @Component({
@@ -18,7 +17,6 @@ export class RelatedComponent implements OnInit {
   private relatedItems: ContentfulNodePage[] = [];
   /* tslint:disable:no-unused-variable */
   @Input() private relatedLocation: boolean = false;
-  @Input() private contentSlug: string;
   /* tslint:enable:no-unused-variable */
 
   private routesManager: RoutesManagerService;
@@ -32,14 +30,16 @@ export class RelatedComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.related = _.filter(this.relatedItems, (article: ContentfulNodePage)=> {
-      return article.fields;
-    });
-    _.forEach(this.related, (article: ContentfulNodePage) => {
-      this.contentfulContentService.getArticleParentSlug(article.sys.id, (url: string) => {
-        const cover = article.fields.cover ? article.fields.cover.sys.id : undefined;
-        article.fields.url = this.routesManager.addRoute({path: url, data: {name: article.fields.title, cover}});
+    this.contentfulContentService.getArticleWithFullUrlPopulated(this.relatedItems)
+      .subscribe((articlesWithFullUrl: ContentfulNodePage[]) => {
+        this.routesManager.addRoutesFromArticles(... articlesWithFullUrl);
+        this.related = articlesWithFullUrl;
       });
-    });
   }
+
+  /* tslint:disable */
+  private getThumbnailHeight(): string {
+    return this.relatedLocation ? '240' : '100';
+  }
+  /* tslint:enable */
 }

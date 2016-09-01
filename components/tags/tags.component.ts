@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 })
 export class TagsComponent implements OnInit {
   /* tslint:disable:no-unused-variable */
+  @Input() private taggedContentType: string;
   @Input() private tags: ContentfulTagPage[] = [];
   /* tslint:enable:no-unused-variable */
   private constants: any;
@@ -20,11 +21,9 @@ export class TagsComponent implements OnInit {
   }
 
   public ngOnInit(): any {
-
     this.tags = _.filter(this.tags, (tag: ContentfulTagPage)=> {
-      return !_.includes(this.constants.EXCLUDED_TAGS, tag.fields.slug );
+      return !_.includes(this.constants.EXCLUDED_TAGS, tag.fields.slug);
     });
-
   }
 }
 
