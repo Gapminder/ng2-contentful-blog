@@ -52,8 +52,9 @@ export class ContenfulContent {
       param: 'fields.showInMainPageSlider',
       value: '1'
     })
-      .commit()
-      .map((response: Response) => response.json().items);
+    .include(2)
+    .commit()
+    .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
   }
 
   public getLatestArticlesByTag(tagSysId: string, limit: number): Observable<ContentfulNodePage[]> {
