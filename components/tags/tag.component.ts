@@ -50,7 +50,7 @@ export class TagComponent implements OnInit {
         .zip(this.router.routerState.queryParams)
         .subscribe((contentTagWithTaggedContentType: any[]) => {
           const contentTag: ContentfulTagPage = _.first(contentTagWithTaggedContentType);
-          const taggedContentType: string = _.get(_.last(contentTagWithTaggedContentType), 'ctId') as string;
+          const taggedContentType: string = _.get(_.last(contentTagWithTaggedContentType), 'contentType') as string;
 
           this.breadcrumbsService.breadcrumbs$.next({url: this.tag, name: contentTag.fields.title, show: false});
 
