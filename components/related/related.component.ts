@@ -36,10 +36,4 @@ export class RelatedComponent implements OnInit {
         this.related = articlesWithFullUrl;
       });
   }
-
-  /* tslint:disable */
-  private getThumbnailHeight(): string {
-    return this.relatedLocation ? '240' : '100';
-  }
-  /* tslint:enable */
 }

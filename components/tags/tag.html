@@ -5,7 +5,7 @@
       <a *ngIf="taggedContentItem.thumbnail && taggedContentItem.url" [routerLink]="[taggedContentItem.url]" [queryParams]="{}"
          angulartics2On="click"
          angularticsEvent="{{taggedContentItem.title}}"
-         class="dynamic-wrap-img" [height]="240" [gmContentfulSrcId]="taggedContentItem.thumbnail">
+         class="dynamic-wrap-img" [height]="300" [gmContentfulSrcId]="taggedContentItem.thumbnail">
         <!--<span class="play"><i class="fa fa-play"></i></span>-->
       </a>
       <div class="date-info">{{taggedContentItem.createdAt | gmToDate | date}}</div>
