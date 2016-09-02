@@ -9,7 +9,7 @@
         <a *ngIf="item.fields.url && item.fields.thumbnail" [routerLink]="[routesManager.getRouteName(item.fields.url)]"
            angulartics2On="click"
            angularticsEvent="{{item.fields.title}}" class="wrap-img"
-           [height]="getThumbnailHeight()" [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
+           [height]="300" [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
         </a>
         <div *ngIf="relatedLocation" class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
         <a *ngIf="item.fields.url" [routerLink]="[routesManager.getRouteName(item.fields.url)]"
