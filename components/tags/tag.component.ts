@@ -26,11 +26,13 @@ export class TagComponent implements OnInit {
   protected breadcrumbsService: BreadcrumbsService;
   protected activatedRoute: ActivatedRoute;
   private contentfulTypeIds: any;
+  private constants: any;
 
   public constructor(router: Router,
                      activatedRoute: ActivatedRoute,
                      contentfulContentService: ContenfulContent,
                      breadcrumbsService: BreadcrumbsService,
+                     @Inject('Constants') constants: any,
                      @Inject('ContentfulTypeIds') contentfulTypeIds: any) {
     this.activatedRoute = activatedRoute;
     this.contentfulContentService = contentfulContentService;
@@ -39,6 +41,7 @@ export class TagComponent implements OnInit {
     // FIXME: Using appInjector because of some kind of cyclic dependency in which RoutesManagerService is involved
     this.routesManager = appInjector().get(RoutesManagerService);
     this.breadcrumbsService = breadcrumbsService;
+    this.constants = constants;
   }
 
   public ngOnInit(): void {
@@ -57,24 +60,23 @@ export class TagComponent implements OnInit {
           if (!contentTag) {
             return this.router.navigate(['/']);
           }
-
-          this.retrieveTaggedContentByType(taggedContentType, contentTag.sys.id)
-            .subscribe((taggedContent: TaggedContent[]) => {
-              this.taggedContent = taggedContent;
-            });
+          this.getProjectTagId().subscribe((projectTagId: string) => {
+            this.retrieveTaggedContentByType(taggedContentType, [contentTag.sys.id, projectTagId])
+              .subscribe((taggedContent: TaggedContent[]) => this.taggedContent = taggedContent);
+          });
         });
     });
   }
 
-  private retrieveTaggedContentByType(taggedContentType: string, tagSysId: string): Observable<TaggedContent[]> {
+  private retrieveTaggedContentByType(taggedContentType: string, tagSysIds: string[]): Observable<TaggedContent[]> {
     if (this.contentfulTypeIds.PROFILE_TYPE_ID === taggedContentType) {
-      return this.retrieveTaggedProfiles(tagSysId);
+      return this.retrieveTaggedProfiles(tagSysIds);
     }
-    return this.retrieveTaggedArticles(tagSysId);
+    return this.retrieveTaggedArticles(tagSysIds);
   }
 
-  private retrieveTaggedArticles(tagSysId: string): Observable<TaggedContent[]> {
-    return this.contentfulContentService.getArticlesByTag(tagSysId)
+  private retrieveTaggedArticles(tagSysIds: string[]): Observable<TaggedContent[]> {
+    return this.contentfulContentService.getArticlesByTags(tagSysIds)
       .mergeMap((articlesWithFullUrl: ContentfulNodePage[]) => this.contentfulContentService.getArticleWithFullUrlPopulated(articlesWithFullUrl))
       .do((articlesWithFullUrl: ContentfulNodePage[]) => {
         this.routesManager.addRoutesFromArticles(... articlesWithFullUrl);
@@ -92,8 +94,8 @@ export class TagComponent implements OnInit {
       });
   }
 
-  private retrieveTaggedProfiles(tagSysId: string): Observable<TaggedContent[]> {
-    return this.contentfulContentService.getProfilesByTag(tagSysId)
+  private retrieveTaggedProfiles(tagSysIds: string[]): Observable<TaggedContent[]> {
+    return this.contentfulContentService.getProfilesByTags(tagSysIds)
       .map((contentfulProfiles: ContentfulProfilePage[]) => {
         return _.map(contentfulProfiles, (profile: ContentfulProfilePage) => {
           return {
@@ -105,6 +107,14 @@ export class TagComponent implements OnInit {
         });
       });
   }
+
+  private getProjectTagId(): Observable<string> {
+    return this.contentfulContentService
+      .getTagsBySlug(this.constants.PROJECT_TAG)
+      .mergeMap((tags: ContentfulTagPage[]) => Observable.from(tags))
+      .map((tag: ContentfulTagPage) => tag.sys.id);
+  }
+
 }
 
 export interface TagRouteParams {

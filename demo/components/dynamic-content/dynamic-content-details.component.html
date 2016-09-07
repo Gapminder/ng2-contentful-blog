@@ -51,13 +51,13 @@
 
   </div>
   <div class="col-md-4 pull-right margin-top-35" *ngIf="content">
-    <gm-related [relatedItems]="content.related" *ngIf="!content.relatedLocation"
+    <gm-related [relatedItems]="relatedArticles" *ngIf="!content.relatedLocation"
                 [relatedLocation]="content.relatedLocation"></gm-related>
     <gm-contributors [profiles]="profiles"></gm-contributors>
   </div>
 
   <div class="col-md-12 margin-top-35" *ngIf="content">
-    <gm-related [relatedItems]="content.related" *ngIf="content.relatedLocation"
+    <gm-related [relatedItems]="relatedArticles" *ngIf="content.relatedLocation"
                 [relatedLocation]="content.relatedLocation"></gm-related>
   </div>
 </div>
