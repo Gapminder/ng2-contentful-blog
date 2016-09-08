@@ -1,3 +1,12 @@
+hr
+  border-top 1px solid #edf0f5
+  border-bottom 1px solid #f1f3f7
+  margin 0
+
+
+.post-title
+  font-size 18px
+  line-height 22px
 
 .wrap-img
   border 1px solid #e2e6ec
@@ -8,26 +17,27 @@
   margin-bottom 10px
 
 .sidebar
-  background #f3fafc
-  padding 20px
   margin-bottom 20px
+  @media screen and (min-width: 992px)
+    .post-p,
+    hr
+      display none
+    .title
+      margin 0
+    .post-title
+      font-size 16px
 
   .wrap-img
-    height 100px
+    padding-top 66.66%
     background-size cover
     background-position 50% 50%;
-    //@media screen and (max-width: 768px)
-    //    height auto
 
   li
-    &:nth-child(2n)
-      padding-left 0
-    @media screen and (max-width: 768px)
-      &:nth-child(2n)
-        padding-left 15px
-    a
-      font-size 16px
-      line-height 20px
+    &:nth-child(n)
+      padding-right 0
+    @media screen and (max-width: 992px)
+      &:nth-child(n)
+        padding-right 15px
 
 
 .related
@@ -37,8 +47,11 @@
     background-position 50% 50%;
 
 .title
-  font-size 28px
-  margin 0
+  font-size 22px
+  font-family 'Bariol Light', sans-serif
+  margin 40px 0 10px
+  color #374551
+  text-transform uppercase
 
 p
   font-size 16px
@@ -67,7 +80,14 @@ p
 
 .post-p
   margin-top 10px
+  font-size 14px
   a
     color #b04514
-    font-size 16px
     line-height 20px
+
+@media screen and (max-width: 992px)
+  .post-title
+    font-size 24px
+    line-height 30px
+  .post-p
+    font-size 16px

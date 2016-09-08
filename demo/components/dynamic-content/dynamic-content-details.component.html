@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="dynamic-details" *ngIf="content"
+  <div class="dynamic-details col-xs-12 col-sm-12" *ngIf="content"
        [ngClass]="{'col-md-12': cssClassBigColumn, 'col-md-8': cssClassSmallColumn}">
     <h1 *ngIf="!content.entries">{{ content.title }}</h1>
 
@@ -24,9 +24,9 @@
       </div>
     </div>
 
-    <div class="dynamic-list row">
+    <div class="dynamic-list row margin-top-15">
 
-      <div class="dynamic-item col-sm-6 margin-bottom-35" *ngFor="let child of children"
+      <div class="dynamic-item col-xs-12 col-sm-6 margin-bottom-35" *ngFor="let child of children"
            [ngClass]="{'col-md-4': cssClassBigColumn, 'col-md-6': cssClassSmallColumn}">
 
         <a *ngIf="child.fields.thumbnail"
@@ -43,14 +43,18 @@
            class="post-title">
           {{child.fields.title}}
         </a>
-        <p class="post-p">{{child.fields.description}}</p>
+        <p class="post-p">
+          {{child.fields.description | slice:0:100}}<span *ngIf="child.fields.description.length >101">...
+            <a [routerLink]="[routesManager.getRouteName(child.fields.url)]">Read more&nbsp;»</a>
+          </span>
+        </p>
       </div>
 
 
     </div>
 
   </div>
-  <div class="col-md-4 pull-right margin-top-35" *ngIf="content">
+  <div class="col-md-4 col-xs-12 col-sm-12 pull-right margin-top-35" *ngIf="content">
     <gm-related [relatedItems]="relatedArticles" *ngIf="!content.relatedLocation"
                 [relatedLocation]="content.relatedLocation"></gm-related>
     <gm-contributors [profiles]="profiles"></gm-contributors>
