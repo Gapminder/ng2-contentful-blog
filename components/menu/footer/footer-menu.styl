@@ -3,10 +3,20 @@ h3
 
 .indent
   margin-right 70px
+.wrap-menu
+  flex-wrap wrap
+  display flex
+  flex-direction row
 
 .menu-footer
   margin-top 10px
-  float left
+  &.social
+    a
+      text-transform capitalize;
+      &:hover
+        text-decoration none
+    i
+      font-size 18px
   a
     font-family 'Bariol Light', sans-serif
     font-size 16px
@@ -20,19 +30,3 @@ h3
     color #edf0f5
     text-transform uppercase
     margin 0 70px 0 0
-
-.menu-footer-small
-  li
-    float left
-    margin-right 10px
-    margin-top 7px
-  a
-    font-size 16px
-
-.social
-  margin-top 10px
-  li
-    float left
-    margin-left 20px
-  a
-    font-size 20px

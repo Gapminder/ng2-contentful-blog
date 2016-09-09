@@ -69,7 +69,7 @@ export class FooterComponent implements OnInit {
   }
 }
 
-interface ViewSocial {
+export interface ViewSocial {
   link: string;
   iconCssClass: string;
 }

@@ -13,10 +13,6 @@ avisited
   font-size 24px
   line-height 30px
 
-.post-p
-  font-size 16px
-  color #767d86
-
 .post-head
   position relative
   color #374551
@@ -47,8 +43,11 @@ ul
 
 
 .dynamic-details
+  font-family 'Bariol Regular', sans-serif
+
   h1
     font-size 38px
+    line-height 1
     margin-bottom 0
 
   ul
@@ -59,6 +58,15 @@ ul
       margin-bottom 10px
       &:before
         content "- "
+  .small-description
+    margin 0
+    font-size 22px
+    font-family 'Bariol Light Italic', Bariol Light, sans-serif
+
+  .date-info
+    font-family 'Bariol Light', sans-serif;
+    font-size 14px;
+    color #767d86
 
 .dynamic-item
   margin-bottom 70px
@@ -98,6 +106,20 @@ ul
       color #ffc300
     .play
       opacity 1
+.post-title
+  font-size 24px
+  line-height 30px
+  color #374551
+
+.post-p
+  margin-top 10px
+  font-size 14px
+  a
+    color #b04514
+    line-height 20px
+
+.padding-0
+  padding 0
 
 .thumbnail-title
   max-width 50px
@@ -105,3 +127,26 @@ ul
   float left
   margin-right 15px
   margin-top 10px
+.entry-content
+  margin-bottom 25px
+
+.dynamic-details
+  @media screen and (max-width: 992px)
+    .post-p
+      font-size 16px
+    .post-title
+      font-size 24px
+      line-height 30px
+  @media screen and (max-width: 768px)
+    h1
+      font-size 34px
+    .small-description
+      font-size 20px
+
+  @media screen and (max-width: 375px)
+    h1
+      font-size 24px
+    .small-description
+      font-size 16px
+    .date-info
+      font-size 13px

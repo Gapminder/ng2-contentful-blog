@@ -3,6 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Menu } from '../../contentful/content-type.structures';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
+import { ViewSocial } from '../../footer/footer.component';
 
 @Component({
   selector: 'gm-footer-menu',
@@ -14,6 +15,7 @@ import { RoutesManagerService } from '../../routes-gateway/routes-manager.servic
 export class FooterMenuComponent {
   /* tslint:disable:no-unused-variable */
   @Input() private menus: Menu[];
+  @Input() private socials: ViewSocial[];
   /* tslint:enable:no-unused-variable */
   private routesManager: RoutesManagerService;
 
