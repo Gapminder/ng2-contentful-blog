@@ -52,9 +52,9 @@ export class ContenfulContent {
       param: 'fields.showInMainPageSlider',
       value: '1'
     })
-    .include(2)
-    .commit()
-    .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .include(2)
+      .commit()
+      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
   }
 
   public getLatestArticlesByTag(tagSysId: string, limit: number): Observable<ContentfulNodePage[]> {
@@ -145,10 +145,13 @@ export class ContenfulContent {
       .map((response: any) => transformResponse<ContentfulProfilePage>(response));
   }
 
-  public gerProfilesByArticleId(id: string): Observable<ContentfulProfilePage[]> {
+  public gerProfilesByArticleIdAndProjectTag(id: string, projectTag: string): Observable<ContentfulProfilePage[]> {
     return this.getContributionsByArticle(id)
       .map((contributions: ContentfulContributionPage[]) => _.map(contributions, 'sys.id'))
-      .mergeMap((contributionSysIds: string[]) => this.getProfilesByContributions(contributionSysIds));
+      .mergeMap((contributionSysIds: string[]) => this.getProfilesByContributions(contributionSysIds))
+      .mergeMap((profiles: ContentfulProfilePage[]) => Observable.from(profiles))
+      .filter((profile: ContentfulProfilePage) => !!_.find(_.get(profile, 'fields.tags') as ContentfulTagPage[], (tag: ContentfulTagPage) => tag.fields.slug === projectTag))
+      .toArray();
   }
 
   public getProfilesByTag(tagSysId: string): Observable<ContentfulProfilePage[]> {
@@ -157,6 +160,17 @@ export class ContenfulContent {
       .searchEntries(this.contentfulTypeIds.PROFILE_TYPE_ID, {
         param: 'fields.tags.sys.id',
         value: tagSysId
+      })
+      .commit()
+      .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json()));
+  }
+
+  public getProfilesByTags(tagSysIds: string[]): Observable<ContentfulProfilePage[]> {
+    return this.contentfulService
+      .create()
+      .searchEntries(this.contentfulTypeIds.PROFILE_TYPE_ID, {
+        param: 'fields.tags.sys.id[all]',
+        value: _.join(tagSysIds)
       })
       .commit()
       .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json()));
@@ -177,8 +191,7 @@ export class ContenfulContent {
   public getChildrenOfArticleByTag(articleSysId: string, projectTag: string): Observable<ContentfulNodePage[]> {
     return this.getChildrenOfArticle(articleSysId)
       .mergeMap((children: ContentfulNodePage[]) => Observable.from(children))
-      .filter((child: ContentfulNodePage) => !_.isEmpty(child.fields.tags))
-      .filter((child: ContentfulNodePage) => !!_.find(child.fields.tags, (tag: ContentfulTagPage) => tag.fields.slug === projectTag))
+      .filter((child: ContentfulNodePage) => !!_.find(_.get(child, 'fields.tags') as ContentfulTagPage[], (tag: ContentfulTagPage) => tag.fields.slug === projectTag))
       .toArray();
   }
 
@@ -188,6 +201,18 @@ export class ContenfulContent {
       .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
         param: 'fields.tags.sys.id',
         value: tagSysId
+      })
+      .include(3)
+      .commit()
+      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+  }
+
+  public getArticlesByTags(tagSysIds: string[]): Observable<ContentfulNodePage[]> {
+    return this.contentfulService
+      .create()
+      .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
+        param: 'fields.tags.sys.id[all]',
+        value: _.join(tagSysIds)
       })
       .include(3)
       .commit()
@@ -222,7 +247,7 @@ export class ContenfulContent {
       .create()
       .searchEntries(this.contentfulTypeIds.PROFILE_TYPE_ID, {
         param: 'fields.contributions.sys.id[in]',
-        value: contributionSysIds.join()
+        value: _.join(contributionSysIds)
       })
       .include(1)
       .commit()

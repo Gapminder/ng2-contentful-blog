@@ -8,19 +8,7 @@
       <p *ngIf="description">{{description}}</p>
     </div>
 
-    <gm-footer-menu [menus]="menus"></gm-footer-menu>
-
-    <ul *ngIf="socials" class="menu-footer social">
-      <li class="head-submenu">Follow Us</li>
-      <li *ngFor="let social of socials">
-        <a href="{{social.link}}" target="_blank">
-          <i *ngIf="social.iconCssClass != 'googlePlus'" class="fa fa-{{social.iconCssClass}}-square" aria-hidden="true"></i>
-          <i *ngIf="social.iconCssClass === 'googlePlus'" class="fa fa-google-plus-square" aria-hidden="true"></i>
-          {{social.iconCssClass}}
-        </a>
-      </li>
-    </ul>
-
+    <gm-footer-menu [menus]="menus" [socials]="socials"></gm-footer-menu>
 
   </div>
 </footer>

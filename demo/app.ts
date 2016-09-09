@@ -45,7 +45,7 @@ Ng2ContentfulConfig.config = {
        <router-outlet></router-outlet>
       </div>
       <gm-footer></gm-footer>
-      <gm-share-line-footer *ngIf="showShareLine"></gm-share-line-footer>
+      <gm-share-line-footer [hidden]="!showShareLine"></gm-share-line-footer>
     </div>
     `,
   directives: [ROUTER_DIRECTIVES, CoverImageComponent, ShareFooterLineComponent, HeaderMenuComponent, FooterComponent, BreadcrumbsComponent]

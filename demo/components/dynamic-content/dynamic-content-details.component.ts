@@ -38,6 +38,8 @@ export class DynamicContentDetailsComponent implements OnInit {
   private profiles: ContentfulProfilePage[];
   private cssClassBigColumn: boolean = false;
   private cssClassSmallColumn: boolean = false;
+  private projectTagId: string;
+  private relatedArticles: ContentfulNodePage[];
 
   public constructor(router: Router,
                      activatedRoute: ActivatedRoute,
@@ -62,6 +64,7 @@ export class DynamicContentDetailsComponent implements OnInit {
         this.contentfulContentService
           .getTagsBySlug(this.constants.PROJECT_TAG)
           .mergeMap((tags: ContentfulTagPage[]) => Observable.from(tags))
+          .do((projectTagId: ContentfulTagPage) => this.projectTagId = projectTagId.sys.id)
           .map((tag: ContentfulTagPage) => tag.sys.id)
           .mergeMap((tagSysId: string) => this.contentfulContentService.getArticleByTagAndSlug(tagSysId, this.contentSlug))
           .mergeMap((articles: ContentfulNodePage[]) => Observable.from(articles))
@@ -70,21 +73,34 @@ export class DynamicContentDetailsComponent implements OnInit {
       });
   }
 
+  private related(related: ContentfulNodePage[]): Observable<ContentfulNodePage[]> {
+    return Observable
+      .from(related)
+      .filter((article: ContentfulNodePage) => !!_.find(article.fields.tags, (tag: ContentfulTagPage) => tag.sys.id === this.projectTagId))
+      .toArray();
+  }
+
   private onArticleReceived(article: ContentfulNodePage): void {
     if (!article) {
       this.router.navigate(['/']);
     }
     this.content = article.fields;
+    if (this.content.related) {
+
+      this.related(this.content.related).subscribe((related: ContentfulNodePage[]) => {
+        if (!_.isEmpty(related)) {
+          this.relatedArticles = related;
+        }
+      });
+    }
+
     this.breadcrumbsService.breadcrumbs$.next({url: this.urlPath, name: this.content.title});
-    this.contentfulContentService.gerProfilesByArticleId(article.sys.id)
+    this.contentfulContentService.gerProfilesByArticleIdAndProjectTag(article.sys.id, this.constants.PROJECT_TAG)
       .subscribe((profiles: ContentfulProfilePage[]) => {
         this.profiles = profiles;
-        if (this.content.relatedLocation && this.content.related || _.isEmpty(profiles) && !this.content.related) {
-          this.cssClassBigColumn = true;
-        }
-        if (!this.content.relatedLocation && this.content.related || !_.isEmpty(profiles)) {
-          this.cssClassSmallColumn = true;
-        }
+        this.cssClassSmallColumn = this.relatedSectionIsAtRight() || !_.isEmpty(profiles);
+        // TODO: remove this css class
+        this.cssClassBigColumn = !this.cssClassSmallColumn;
       });
 
     this.contentfulContentService.getChildrenOfArticleByTag(article.sys.id, this.constants.PROJECT_TAG)
@@ -96,6 +112,14 @@ export class DynamicContentDetailsComponent implements OnInit {
         this.routesManager.addRoutesFromArticles(... children);
         this.children = children;
       });
+  }
+
+  private relatedSectionIsAtRight(): boolean {
+    return Boolean(this.rightRelatedLocation() && this.content.related);
+  }
+
+  private rightRelatedLocation(): boolean {
+    return !Boolean(this.content.relatedLocation);
   }
 }
 

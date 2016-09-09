@@ -7,7 +7,7 @@ export interface NodePageContent {
   title: string;
   slug: string;
   description?: string;
-  related?: NodePageContent[];
+  related?: ContentfulNodePage[];
   thumbnail: ContentfulMedia;
   createdAt: string;
   url?: string; // for TagComponent
