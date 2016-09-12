@@ -145,7 +145,7 @@ export class ContenfulContent {
       .map((response: any) => transformResponse<ContentfulProfilePage>(response));
   }
 
-  public gerProfilesByArticleIdAndProjectTag(id: string, projectTag: string): Observable<ContentfulProfilePage[]> {
+  public getProfilesByArticleIdAndProjectTag(id: string, projectTag: string): Observable<ContentfulProfilePage[]> {
     return this.getContributionsByArticle(id)
       .map((contributions: ContentfulContributionPage[]) => _.map(contributions, 'sys.id'))
       .mergeMap((contributionSysIds: string[]) => this.getProfilesByContributions(contributionSysIds))
