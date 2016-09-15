@@ -43,7 +43,7 @@ export class ProfileComponent implements OnInit {
           .getProfilesByUsername(this.username).subscribe((profiles: ContentfulProfilePage[]) => {
           this.breadcrumbsService.breadcrumbs$.next({url: this.username, name: profiles[0].fields.userName, show: false});
           if (_.isEmpty(profiles)) {
-            this.router.navigate(['Root']);
+            this.router.navigate(['/']);
           } else {
             this.profile = _.first(profiles);
           }
