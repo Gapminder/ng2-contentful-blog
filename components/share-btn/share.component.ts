@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
   selector: 'gm-share',
   template: require('./share.html') as string,
-  directives: [ ROUTER_DIRECTIVES],
   styles: [require('./share.css') as string]
 })
 export class ShareComponent implements OnInit {

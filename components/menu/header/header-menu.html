@@ -8,7 +8,7 @@
 
 
   <nav class="visible-xs hidden-md-up">
-    <ul class="nav nav-pills nav-stacked scrollable-menu" [collapse]="!isCollapsed"
+    <ul class="nav nav-pills  nav-stacked scrollable-menu" [collapse]="!isCollapsed"
         (click)="isCollapsed = !isCollapsed; true">
       <li dropdown *ngFor="let menu of menus">
         <a *ngIf="menu.entryPoint && !menu.submenus"
@@ -75,4 +75,6 @@
     </ul>
 
   </nav>
+
 </div>
+

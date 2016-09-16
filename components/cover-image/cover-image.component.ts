@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router, NavigationStart, Route } from '@angular/router';
-import { CORE_DIRECTIVES } from '@angular/common';
+import { Router, NavigationStart, Route } from '@angular/router';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-cover',
   template: require('./cover-image.html') as string,
-  styles: [require('./cover-image.css') as string],
-  directives: [CORE_DIRECTIVES, ROUTER_DIRECTIVES]
+  styles: [require('./cover-image.css') as string]
 })
 export class CoverImageComponent implements OnInit {
 

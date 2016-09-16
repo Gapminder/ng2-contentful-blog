@@ -1,8 +1,4 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { VideoEntryComponent } from './video-entry.component';
-import { HtmlEntryComponent } from './html-entry.component';
-import { EmbeddedEntryComponent } from './embedded-entry.component';
-import { VizabiEntryComponent } from './vizabi-entry.component';
 
 @Component({
   selector: 'gm-entries-view',
@@ -13,8 +9,7 @@ import { VizabiEntryComponent } from './vizabi-entry.component';
       <gm-embedded-entry *ngIf="entry.isEmbedded" [entry]="entry"></gm-embedded-entry>
       <gm-vizabi-entry *ngIf="entry.isVizabi" [entry]="entry"></gm-vizabi-entry>
     </div>
-  `,
-  directives: [VideoEntryComponent, HtmlEntryComponent, EmbeddedEntryComponent, VizabiEntryComponent]
+  `
 })
 export class EntriesViewComponent implements OnInit {
   @Input()

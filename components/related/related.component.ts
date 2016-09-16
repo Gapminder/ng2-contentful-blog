@@ -1,16 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 import { ContenfulContent } from '../contentful/contentful-content.service';
-import { ToDatePipe } from '../pipes/to-date.pipe';
 import { ContentfulNodePage } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-related',
   template: require('./related.html') as string,
-  styles: [require('./related.css') as string],
-  directives: [ROUTER_DIRECTIVES],
-  pipes: [ToDatePipe]
+  styles: [require('./related.css') as string]
 })
 export class RelatedComponent implements OnInit {
   @Input()
