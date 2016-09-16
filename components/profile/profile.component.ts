@@ -1,17 +1,13 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { Router, ActivatedRoute, Params, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BreadcrumbsService } from '../breadcrumbs/breadcrumbs.service';
-import { ToDatePipe } from '../pipes/to-date.pipe';
 import { ContentfulProfilePage } from '../contentful/aliases.structures';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import * as _ from 'lodash';
-import { TagsComponent } from '../tags/tags.component';
 
 @Component({
   template: require('./profile.html') as string,
-  directives: [ROUTER_DIRECTIVES, TagsComponent],
-  styles: [require('./profile.css') as string],
-  pipes: [ToDatePipe]
+  styles: [require('./profile.css') as string]
 })
 export class ProfileComponent implements OnInit {
   @Input()

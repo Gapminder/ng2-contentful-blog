@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit, ElementRef, Renderer, ViewChild } from '@angular/core';
-import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { AbstractEntry } from './abstract-entry.component';
 import { ContentfulVideoBlock } from '../contentful/aliases.structures';
 import * as _ from 'lodash';
@@ -34,9 +34,9 @@ export class VideoEntryComponent extends AbstractEntry implements OnInit, AfterV
   @Input() protected entry: ContentfulVideoBlock;
   @ViewChild('backgroundOwner') private backgroundOwner: ElementRef;
 
-  private sanitationService: DomSanitizationService;
+  private sanitationService: DomSanitizer;
 
-  public constructor(sanitationService: DomSanitizationService,
+  public constructor(sanitationService: DomSanitizer,
                      renderer: Renderer,
                      elementRef: ElementRef) {
     super(renderer, elementRef);
@@ -84,13 +84,12 @@ export class VideoEntryComponent extends AbstractEntry implements OnInit, AfterV
   }
 
   private extractEmbeddedVideoId(videoUrl: string, externalVideoUrlPart: string, externalEmbeddedVideoUrlPart: string): string {
-    let urlSplitToken;
+    let urlSplitToken: string;
     if (_.includes(videoUrl, externalEmbeddedVideoUrlPart)) {
       urlSplitToken = externalEmbeddedVideoUrlPart;
     } else if (_.includes(videoUrl, externalVideoUrlPart)) {
       urlSplitToken = externalVideoUrlPart;
     }
-
-    return String(_.chain(videoUrl).split(urlSplitToken).last().value() || videoUrl);
+    return String(_.last(_.split(videoUrl, urlSplitToken)) || videoUrl);
   }
 }

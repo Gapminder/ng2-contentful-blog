@@ -72,4 +72,3 @@ export class ContentfulImageDirective implements OnInit {
     return `${url}?${this.queryParams.toString()}`;
   }
 }
-

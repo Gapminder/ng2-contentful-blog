@@ -1,5 +1,5 @@
-import { Injectable, Inject, Type } from '@angular/core';
-import { Router, Route, RouterConfig } from '@angular/router';
+import { Injectable, Inject } from '@angular/core';
+import { Router, Route, Routes } from '@angular/router';
 import * as _ from 'lodash';
 import { NodePageContent, Menu } from '../contentful/content-type.structures';
 import { ContentfulNodePage, ContentfulSubmenu } from '../contentful/aliases.structures';
@@ -8,12 +8,12 @@ import { ContentfulNodePage, ContentfulSubmenu } from '../contentful/aliases.str
 export class RoutesManagerService {
   private router: Router;
   private pathToName: Map<string, string>;
-  private defaultArticleComponent: Type;
-  private routes: RouterConfig;
+  private defaultArticleComponent: any;
+  private routes: Routes;
 
   public constructor(router: Router,
-                     @Inject('DefaultArticleComponent') defaultArticleComponent: Type,
-                     @Inject('Routes') routes: RouterConfig) {
+                     @Inject('DefaultArticleComponent') defaultArticleComponent: any,
+                     @Inject('Routes') routes: Routes) {
     this.router = router;
     this.routes = routes;
     this.pathToName = new Map<string, string>();
@@ -46,7 +46,6 @@ export class RoutesManagerService {
         };
       })
       .value();
-
     this._addRoutes(newRoutes);
   }
 

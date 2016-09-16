@@ -1,8 +1,4 @@
-import {
-  Component, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewInit,
-  Renderer
-} from '@angular/core';
-import { MarkdownPipe } from '../pipes/markdown.pipe';
+import { Component, ViewEncapsulation, Input, ViewChild, ElementRef, AfterViewInit, Renderer } from '@angular/core';
 import { AbstractEntry } from './abstract-entry.component';
 import { ContentfulHtmlBlock } from '../contentful/aliases.structures';
 
@@ -12,8 +8,7 @@ import { ContentfulHtmlBlock } from '../contentful/aliases.structures';
   template: `
     <div class="block-entry" #backgroundOwner [innerHTML]="entry.fields.content | gmMarkdown"></div>
   `,
-  styles: [require('./entries-html.css') as string],
-  pipes: [MarkdownPipe]
+  styles: [require('./entries-html.css') as string]
 })
 export class HtmlEntryComponent extends AbstractEntry implements AfterViewInit {
   @Input() protected entry: ContentfulHtmlBlock;
