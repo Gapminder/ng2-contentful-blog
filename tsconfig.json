@@ -15,6 +15,7 @@
     "node_modules"
   ],
   "files": [
+    "./demo/custom-typings.d.ts",
     "typings/index.d.ts",
     "index.ts"
   ]
