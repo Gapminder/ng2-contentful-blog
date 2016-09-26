@@ -31,16 +31,6 @@ import { MarkdownPipe } from './components/pipes/markdown.pipe';
 import { Angulartics2Module } from 'angulartics2';
 import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
 
-/*
- ContentfulMenu,
- ContentfulNodePagesResponse,
- ContentfulNodePage,
- ContentfulTagPage,
- ContentfulImage,
- ContentfulSocial,
- NodePageContent, Menu, TagPage,
- */
-
 @NgModule({
   imports: [
     CommonModule,
@@ -104,8 +94,6 @@ import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
     MenuService
   ]
 })
-
-// appInjector,
 
 export class Ng2ContentfulBlogModule {
 }

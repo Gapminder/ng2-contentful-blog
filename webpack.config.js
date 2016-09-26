@@ -6,10 +6,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const contentfulConfig = JSON.parse(
-  fs.readFileSync('demo/contentful.json') //eslint-disable-line no-sync
-);
-
 const dest = 'dist';
 const absDest = root(dest);
 
@@ -91,11 +87,6 @@ const commonConfig = {
     new CleanWebpackPlugin(['dist'], {
       root: __dirname,
       verbose: true
-    }),
-    new webpack.DefinePlugin({
-      CONTENTFUL_ACCESS_TOKEN: JSON.stringify(contentfulConfig.accessToken),
-      CONTENTFUL_SPACE_ID: JSON.stringify(contentfulConfig.spaceId),
-      CONTENTFUL_HOST: JSON.stringify(contentfulConfig.host)
     })
   ]
 };

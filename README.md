@@ -317,7 +317,7 @@ Go to `contentful` choose `content` then choose `Add entry` and fill in `Menu`, 
 
 1. `git clone git@github.com:VS-work/ng2-contentful-blog.git`
 2. in folder `ng2-contentful-blog/demo` - open and edit next files:
-  - `contentful.json` - add your accessToken and space
+  - `contentful.cfg.json` - add your accessToken and space
  
      ```typescript
      Ng2ContentfulConfig.config = {

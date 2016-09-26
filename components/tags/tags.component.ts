@@ -14,13 +14,14 @@ export class TagsComponent implements OnInit {
 
   @Input() private tags: ContentfulTagPage[] = [];
   private constants: any;
+  private visibleTags: ContentfulTagPage[] = [];
 
   public constructor(@Inject('Constants') constants: any) {
     this.constants = constants;
   }
 
   public ngOnInit(): any {
-    this.tags = _.filter(this.tags, (tag: ContentfulTagPage)=> {
+    this.visibleTags = _.filter(this.tags, (tag: ContentfulTagPage)=> {
       return !_.includes(this.constants.EXCLUDED_TAGS, tag.fields.slug);
     });
   }

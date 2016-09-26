@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Component, OnInit, ViewEncapsulation, HostListener, NgModule, NgModuleRef } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
-import { Ng2ContentfulConfig, ContentfulService } from 'ng2-contentful';
 import { Angulartics2, Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-google-analytics';
 import 'rxjs/add/operator/filter';
@@ -15,16 +14,9 @@ import { DynamicContentDetailsComponent } from './components/dynamic-content/dyn
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BreadcrumbsService } from '../components/breadcrumbs/breadcrumbs.service';
 import { RootDemoComponent } from './components/root/root-demo';
+import { ContentfulService } from 'ng2-contentful';
 
-declare var CONTENTFUL_ACCESS_TOKEN: string;
-declare var CONTENTFUL_SPACE_ID: string;
-declare var CONTENTFUL_HOST: string;
-
-Ng2ContentfulConfig.config = {
-  accessToken: CONTENTFUL_ACCESS_TOKEN,
-  space: CONTENTFUL_SPACE_ID,
-  host: CONTENTFUL_HOST
-};
+const Ng2ContentfulConfig = require('./contentful.cfg');
 
 const ContentfulConfig = require('./contentTypeIds.json');
 const Constants = require('./constants');
@@ -107,8 +99,9 @@ export class DemoComponent implements OnInit {
   ],
   entryComponents: [DynamicContentDetailsComponent],
   providers: [
-    ContentfulService,
     Angulartics2GoogleAnalytics,
+    ContentfulService,
+    {provide: 'ContentfulConfiguration', useValue: Ng2ContentfulConfig},
     {provide: 'Routes', useValue: routes},
     {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},
     {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
@@ -120,9 +113,4 @@ export class DemoComponent implements OnInit {
 export class DemoModule {
 }
 
-platformBrowserDynamic().bootstrapModule(DemoModule).then(
-  (appRef: NgModuleRef<any>) => {
-    // (appRef: ComponentRef<any>) => {
-    appInjector(appRef.injector);
-    return appRef;
-  });
+platformBrowserDynamic().bootstrapModule(DemoModule);

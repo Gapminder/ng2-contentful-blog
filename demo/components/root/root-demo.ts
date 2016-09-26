@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 
-// webpack html imports
-let template = require('./root-demo.html');
-
 @Component({
-  template: template
+  template: require('./root-demo.html') as string
 })
 
 export class RootDemoComponent {

@@ -47,7 +47,6 @@ export class TagComponent implements OnInit {
       this.contentfulContentService.getTagsBySlug(this.tag)
         .map((contentTags: ContentfulTagPage[]) => _.first(contentTags))
         .zip(this.router.routerState.root.queryParams)
-        // .zip(this.router.routerState.queryParams)
         .subscribe((contentTagWithTaggedContentType: any[]) => {
           const contentTag: ContentfulTagPage = _.first(contentTagWithTaggedContentType);
           const taggedContentType: string = _.get(_.last(contentTagWithTaggedContentType), 'contentType') as string;
