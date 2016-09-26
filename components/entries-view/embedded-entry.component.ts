@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, Renderer, OnDestroy, AfterViewInit } from '@angular/core';
-import { SafeResourceUrl, DomSanitizationService } from '@angular/platform-browser';
+import {  DomSanitizer , SafeResourceUrl } from '@angular/platform-browser';
 import { AbstractEntry } from './abstract-entry.component';
 import { ContentfulEmbeddedBlock } from '../contentful/aliases.structures';
 
@@ -29,10 +29,10 @@ export class EmbeddedEntryComponent extends AbstractEntry implements OnInit, Aft
   @ViewChild('loader') private loader: ElementRef;
   @ViewChild('backgroundOwner') private backgroundOwner: ElementRef;
 
-  private sanitationService: DomSanitizationService;
+  private sanitationService: DomSanitizer;
   private disposeIframeOnLoadListener: Function;
 
-  public constructor(sanitationService: DomSanitizationService,
+  public constructor(sanitationService: DomSanitizer,
                      renderer: Renderer,
                      elementRef: ElementRef) {
     super(renderer, elementRef);

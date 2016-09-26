@@ -1,20 +1,16 @@
 import { Component, Input, OnInit, Inject } from '@angular/core';
-import { Router, ActivatedRoute, Params, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { BreadcrumbsService } from '../breadcrumbs/breadcrumbs.service';
-import { ToDatePipe } from '../pipes/to-date.pipe';
 import { ContentfulNodePage, ContentfulTagPage, ContentfulProfilePage } from '../contentful/aliases.structures';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 import * as _ from 'lodash';
-import { appInjector } from '../contentful/app-injector.tool';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'gm-tagged-articles',
   template: require('./tag.html') as string,
-  directives: [ROUTER_DIRECTIVES],
-  styles: [require('./tags.css') as string],
-  pipes: [ToDatePipe]
+  styles: [require('./tags.css') as string]
 })
 export class TagComponent implements OnInit {
   @Input()
@@ -30,6 +26,7 @@ export class TagComponent implements OnInit {
 
   public constructor(router: Router,
                      activatedRoute: ActivatedRoute,
+                     routesManager: RoutesManagerService,
                      contentfulContentService: ContenfulContent,
                      breadcrumbsService: BreadcrumbsService,
                      @Inject('Constants') constants: any,
@@ -38,8 +35,7 @@ export class TagComponent implements OnInit {
     this.contentfulContentService = contentfulContentService;
     this.router = router;
     this.contentfulTypeIds = contentfulTypeIds;
-    // FIXME: Using appInjector because of some kind of cyclic dependency in which RoutesManagerService is involved
-    this.routesManager = appInjector().get(RoutesManagerService);
+    this.routesManager = routesManager;
     this.breadcrumbsService = breadcrumbsService;
     this.constants = constants;
   }
@@ -50,7 +46,7 @@ export class TagComponent implements OnInit {
 
       this.contentfulContentService.getTagsBySlug(this.tag)
         .map((contentTags: ContentfulTagPage[]) => _.first(contentTags))
-        .zip(this.router.routerState.queryParams)
+        .zip(this.router.routerState.root.queryParams)
         .subscribe((contentTagWithTaggedContentType: any[]) => {
           const contentTag: ContentfulTagPage = _.first(contentTagWithTaggedContentType);
           const taggedContentType: string = _.get(_.last(contentTagWithTaggedContentType), 'contentType') as string;

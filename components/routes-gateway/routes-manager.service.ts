@@ -1,5 +1,5 @@
-import { Injectable, Inject, Type } from '@angular/core';
-import { Router, Route, RouterConfig } from '@angular/router';
+import { Injectable, Inject } from '@angular/core';
+import { Router, Route, Routes } from '@angular/router';
 import * as _ from 'lodash';
 import { NodePageContent, Menu } from '../contentful/content-type.structures';
 import { ContentfulNodePage, ContentfulSubmenu } from '../contentful/aliases.structures';
@@ -8,12 +8,12 @@ import { ContentfulNodePage, ContentfulSubmenu } from '../contentful/aliases.str
 export class RoutesManagerService {
   private router: Router;
   private pathToName: Map<string, string>;
-  private defaultArticleComponent: Type;
-  private routes: RouterConfig;
+  private defaultArticleComponent: any;
+  private routes: Routes;
 
   public constructor(router: Router,
-                     @Inject('DefaultArticleComponent') defaultArticleComponent: Type,
-                     @Inject('Routes') routes: RouterConfig) {
+                     @Inject('DefaultArticleComponent') defaultArticleComponent: any,
+                     @Inject('Routes') routes: Routes) {
     this.router = router;
     this.routes = routes;
     this.pathToName = new Map<string, string>();
@@ -46,11 +46,10 @@ export class RoutesManagerService {
         };
       })
       .value();
-
     this._addRoutes(newRoutes);
   }
 
-  public addRoutesFromArticles(... contentfulArticles: ContentfulNodePage[]): void {
+  public addRoutesFromArticles(...contentfulArticles: ContentfulNodePage[]): void {
     const rawRoutes: RawRoute[] = [];
     _.forEach(contentfulArticles, (contentfulArticle: ContentfulNodePage) => {
       rawRoutes.push(this.convertArticleToRawRoute(contentfulArticle));
@@ -58,14 +57,23 @@ export class RoutesManagerService {
     this.addRoutes(rawRoutes);
   }
 
-  public addRoutesFromMenus(... menus: Menu[]): void {
+  public addRoutesFromMenus(...menus: Menu[]): void {
     const rawRoutes: RawRoute[] = [];
     _.forEach(menus, (menu: Menu) => {
+      if (!menu.entryPoint && !menu.submenus) {
+        console.warn(`Menu "${menu.title}" has no entry point nor submenus, hence routes from it won't be registered`);
+      }
+
       if (menu.entryPoint) {
         rawRoutes.push(this.convertArticleToRawRoute(menu.entryPoint));
       }
 
       _.forEach(menu.submenus, (submenu: ContentfulSubmenu) => {
+        if (!submenu.fields.entryPoint) {
+          console.warn(`Submenu "${submenu.fields.title}" has no entry point, hence route from it won't be registered`);
+          return;
+        }
+
         rawRoutes.push(this.convertArticleToRawRoute(submenu.fields.entryPoint));
       });
     });

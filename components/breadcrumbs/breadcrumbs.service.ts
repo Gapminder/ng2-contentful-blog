@@ -11,4 +11,3 @@ export interface BreadcrumbsEvent {
   url: string;
   show?: boolean;
 }
-

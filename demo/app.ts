@@ -1,26 +1,25 @@
-import { Component, OnInit, ViewEncapsulation, HostListener } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router, NavigationStart } from '@angular/router';
-import { Ng2ContentfulConfig } from 'ng2-contentful';
-import { Angulartics2 } from 'angulartics2';
+import { BrowserModule } from '@angular/platform-browser';
+import { Component, OnInit, ViewEncapsulation, HostListener, NgModule, NgModuleRef } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
+import { Angulartics2, Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-google-analytics';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { BreadcrumbsService, BreadcrumbsComponent } from '../index';
-import { HeaderMenuComponent } from '../components/menu/header/header-menu.component';
-import { ShareFooterLineComponent } from '../components/share-btn/share-line-footer.component';
-import { FooterComponent } from '../components/footer/footer.component';
-import { CoverImageComponent } from '../components/cover-image/cover-image.component';
+import { Ng2ContentfulBlogModule } from '../index';
+import { HttpModule } from '@angular/http';
+import { routing, routes } from './routes';
+import { appInjector } from '../components/contentful/app-injector.tool';
+import { DynamicContentDetailsComponent } from './components/dynamic-content/dynamic-content-details.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BreadcrumbsService } from '../components/breadcrumbs/breadcrumbs.service';
+import { RootDemoComponent } from './components/root/root-demo';
+import { ContentfulService } from 'ng2-contentful';
 
-declare var CONTENTFUL_ACCESS_TOKEN: string;
-declare var CONTENTFUL_SPACE_ID: string;
-declare var CONTENTFUL_HOST: string;
+const Ng2ContentfulConfig = require('./contentful.cfg');
 
-Ng2ContentfulConfig.config = {
-  accessToken: CONTENTFUL_ACCESS_TOKEN,
-  space: CONTENTFUL_SPACE_ID,
-  host: CONTENTFUL_HOST
-};
+const ContentfulConfig = require('./contentTypeIds.json');
+const Constants = require('./constants');
 
 @Component({
   selector: 'gm-app',
@@ -47,8 +46,7 @@ Ng2ContentfulConfig.config = {
       <gm-footer></gm-footer>
       <gm-share-line-footer [hidden]="!showShareLine"></gm-share-line-footer>
     </div>
-    `,
-  directives: [ROUTER_DIRECTIVES, CoverImageComponent, ShareFooterLineComponent, HeaderMenuComponent, FooterComponent, BreadcrumbsComponent]
+    `
 })
 export class DemoComponent implements OnInit {
   private angulartics2: Angulartics2;
@@ -85,3 +83,34 @@ export class DemoComponent implements OnInit {
     return typeof window !== 'undefined' ? window.pageYOffset : 0;
   }
 }
+
+@NgModule({
+  declarations: [
+    DemoComponent,
+    DynamicContentDetailsComponent,
+    RootDemoComponent
+  ],
+  imports: [
+    BrowserModule,
+    Ng2ContentfulBlogModule,
+    Angulartics2Module.forRoot(),
+    HttpModule,
+    routing
+  ],
+  entryComponents: [DynamicContentDetailsComponent],
+  providers: [
+    Angulartics2GoogleAnalytics,
+    ContentfulService,
+    {provide: 'ContentfulConfiguration', useValue: Ng2ContentfulConfig},
+    {provide: 'Routes', useValue: routes},
+    {provide: 'DefaultArticleComponent', useValue: DynamicContentDetailsComponent},
+    {provide: 'ContentfulTypeIds', useValue: ContentfulConfig},
+    {provide: 'Constants', useValue: Constants}
+  ],
+  bootstrap: [DemoComponent]
+})
+
+export class DemoModule {
+}
+
+platformBrowserDynamic().bootstrapModule(DemoModule);

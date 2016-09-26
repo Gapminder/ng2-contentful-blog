@@ -2,7 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { transformResponse } from './response.tools';
 import { ContentfulService, ContentfulRequest, SearchItem } from 'ng2-contentful';
-import { Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as _ from 'lodash';
 import {
@@ -10,7 +9,9 @@ import {
   ContentfulNodePage,
   ContentfulTagPage,
   ContentfulProfilePage,
-  ContentfulContributionPage, ContentfulImage, ContentfulFooterHeader
+  ContentfulContributionPage,
+  ContentfulImage,
+  ContentfulFooterHeader
 } from './aliases.structures';
 
 /**
@@ -54,7 +55,7 @@ export class ContenfulContent {
     })
       .include(2)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
   public getLatestArticlesByTag(tagSysId: string, limit: number): Observable<ContentfulNodePage[]> {
@@ -67,18 +68,8 @@ export class ContenfulContent {
       .include(3)
       .limit(limit)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
-  }
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
 
-  public getNodePagesByType(type: string): Observable<ContentfulNodePage[]> {
-    return this.contentfulService
-      .create()
-      .searchEntries(
-        this.contentfulTypeIds.NODE_PAGE_TYPE_ID,
-        {param: 'fields.type', value: type}
-      )
-      .commit()
-      .map((response: Response) => response.json().items);
   }
 
   /**
@@ -111,7 +102,7 @@ export class ContenfulContent {
       )
       .include(1)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
   public getTagsBySlug(slug: string): Observable<ContentfulTagPage[]> {
@@ -123,7 +114,6 @@ export class ContenfulContent {
       )
       .include(2)
       .commit()
-      .map((response: Response) => response.json())
       .map((response: any) => transformResponse<ContentfulTagPage>(response));
   }
 
@@ -136,7 +126,6 @@ export class ContenfulContent {
       })
       .include(1)
       .commit()
-      .map((response: Response) =>response.json())
       .map((response: any) => transformResponse<ContentfulImage>(response));
   }
 
@@ -145,7 +134,7 @@ export class ContenfulContent {
       .map((response: any) => transformResponse<ContentfulProfilePage>(response));
   }
 
-  public gerProfilesByArticleIdAndProjectTag(id: string, projectTag: string): Observable<ContentfulProfilePage[]> {
+  public getProfilesByArticleIdAndProjectTag(id: string, projectTag: string): Observable<ContentfulProfilePage[]> {
     return this.getContributionsByArticle(id)
       .map((contributions: ContentfulContributionPage[]) => _.map(contributions, 'sys.id'))
       .mergeMap((contributionSysIds: string[]) => this.getProfilesByContributions(contributionSysIds))
@@ -162,7 +151,8 @@ export class ContenfulContent {
         value: tagSysId
       })
       .commit()
-      .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json()));
+      .map((response: any) => transformResponse<ContentfulProfilePage>(response));
+
   }
 
   public getProfilesByTags(tagSysIds: string[]): Observable<ContentfulProfilePage[]> {
@@ -173,7 +163,8 @@ export class ContenfulContent {
         value: _.join(tagSysIds)
       })
       .commit()
-      .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json()));
+      .map((response: any) => transformResponse<ContentfulProfilePage>(response));
+
   }
 
   public getChildrenOfArticle(articleSysId: string): Observable<ContentfulNodePage[]> {
@@ -185,7 +176,7 @@ export class ContenfulContent {
       })
       .include(3)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
   public getChildrenOfArticleByTag(articleSysId: string, projectTag: string): Observable<ContentfulNodePage[]> {
@@ -204,7 +195,7 @@ export class ContenfulContent {
       })
       .include(3)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
   public getArticlesByTags(tagSysIds: string[]): Observable<ContentfulNodePage[]> {
@@ -216,7 +207,8 @@ export class ContenfulContent {
       })
       .include(3)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
+
   }
 
   public getArticleBySysId(sysId: string): Observable<ContentfulNodePage[]> {
@@ -228,7 +220,7 @@ export class ContenfulContent {
       })
       .include(3)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulNodePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
   public getContributionsByArticle(articleSysId: string): Observable<ContentfulContributionPage[]> {
@@ -239,7 +231,8 @@ export class ContenfulContent {
         value: articleSysId
       })
       .commit()
-      .map((response: Response) => transformResponse<ContentfulContributionPage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulContributionPage>(response, 2));
+
   }
 
   public getProfilesByContributions(contributionSysIds: string[]): Observable<ContentfulProfilePage[]> {
@@ -251,7 +244,8 @@ export class ContenfulContent {
       })
       .include(1)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulProfilePage>(response.json(), 2));
+      .map((response: any) => transformResponse<ContentfulProfilePage>(response, 2));
+
   }
 
   public getMenuByTag(menuType: string, tagSysId: string): Observable<ContentfulFooterHeader[]> {
@@ -263,7 +257,8 @@ export class ContenfulContent {
       })
       .include(3)
       .commit()
-      .map((response: Response) => transformResponse<ContentfulFooterHeader>(response.json(), 3));
+      .map((response: any) => transformResponse<ContentfulFooterHeader>(response, 3));
+
   }
 
   public getArticleParentSlug(id: string, onSlugFound: (path: string) => void): void {
@@ -324,8 +319,7 @@ export class ContenfulContent {
         slug
       )
       .include(2)
-      .commit()
-      .map((response: Response) => response.json());
+      .commit();
   }
 
   private getProfileByUsername(userName: string): Observable<ContentfulProfilePage> {
@@ -336,8 +330,7 @@ export class ContenfulContent {
         value: userName
       })
       .include(2)
-      .commit()
-      .map((response: Response) => response.json());
+      .commit();
   }
 
   /**

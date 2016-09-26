@@ -1,6 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 import { Menu } from '../../contentful/content-type.structures';
 import { RoutesManagerService } from '../../routes-gateway/routes-manager.service';
 import { ViewSocial } from '../../footer/footer.component';
@@ -8,9 +6,7 @@ import { ViewSocial } from '../../footer/footer.component';
 @Component({
   selector: 'gm-footer-menu',
   template: require('./footer-menu.html') as string,
-  directives: [ROUTER_DIRECTIVES],
-  styles: [require('./footer-menu.css') as string],
-  pipes: [AsyncPipe]
+  styles: [require('./footer-menu.css') as string]
 })
 export class FooterMenuComponent {
   /* tslint:disable:no-unused-variable */

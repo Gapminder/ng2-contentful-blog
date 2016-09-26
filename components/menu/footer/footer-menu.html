@@ -17,6 +17,7 @@
       <ul class="indent" *ngIf="menu.submenus">
         <li *ngFor="let submenu of menu.submenus">
           <a [routerLink]="[routesManager.getRouteName(submenu.fields.entryPoint.fields.slug)]"
+             *ngIf="submenu.fields.entryPoint"
              angulartics2On="click"
              angularticsEvent="{{submenu.fields.title}}">
             {{submenu.fields.title}}
