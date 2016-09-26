@@ -1,7 +1,7 @@
 import { ContentfulService } from 'ng2-contentful';
 import { HeaderMenuComponent } from './components/menu/header/header-menu.component';
 import { FooterMenuComponent } from './components/menu/footer/footer-menu.component';
-import { BreadcrumbsService, BreadcrumbsEvent } from './components/breadcrumbs/breadcrumbs.service';
+import { BreadcrumbsService } from './components/breadcrumbs/breadcrumbs.service';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { RoutesManagerService } from './components/routes-gateway/routes-manager.service';
 import { RoutesGatewayComponent } from './components/routes-gateway/routes-gateway.component';
@@ -14,10 +14,6 @@ import { VizabiEntryComponent } from './components/entries-view/vizabi-entry.com
 import { VideoEntryComponent } from './components/entries-view/video-entry.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { TagComponent } from './components/tags/tag.component';
-import { MarkdownPipe } from './components/pipes/markdown.pipe';
-import { ToDatePipe } from './components/pipes/to-date.pipe';
-import { appInjector } from './components/contentful/app-injector.tool';
-import { NodePageContent, Menu, TagPage } from './components/contentful/content-type.structures';
 import { ProfileComponent } from './components/profile/profile.component';
 import { ContributorsComponent } from './components/contributors/contributors.component';
 import { ShareComponent } from './components/share-btn/share.component';
@@ -26,60 +22,78 @@ import { MenuService } from './components/menu/menu.service';
 import { RelatedComponent } from './components/related/related.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CoverImageComponent } from './components/cover-image/cover-image.component';
-
-import {
-  ContentfulMenu,
-  ContentfulNodePagesResponse,
-  ContentfulNodePage,
-  ContentfulTagPage,
-  ContentfulImage,
-  ContentfulSocial
-} from './components/contentful/aliases.structures';
 import { RoutesGatewayGuard } from './components/routes-gateway/routes-gateway.guard';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { ToDatePipe } from './components/pipes/to-date.pipe';
+import { MarkdownPipe } from './components/pipes/markdown.pipe';
+import { Angulartics2Module } from 'angulartics2';
+import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
 
-export { HeaderMenuComponent };
-export { FooterMenuComponent };
-export { BreadcrumbsService, BreadcrumbsEvent };
-export { BreadcrumbsComponent };
-export { RoutesManagerService };
-export { RoutesGatewayComponent };
-export { ContenfulContent };
-export { ContentfulImageDirective };
-export { EmbeddedEntryComponent };
-export { VizabiEntryComponent };
-export { HtmlEntryComponent };
-export { EntriesViewComponent };
-export { VideoEntryComponent };
-export { TagsComponent };
-export { TagComponent };
-export { MarkdownPipe };
-export { ToDatePipe };
-export { appInjector };
-export { NodePageContent, Menu, TagPage };
-export { ContentfulService };
-export { ContributorsComponent };
-export { ProfileComponent };
-export { RoutesGatewayGuard };
-export { ShareFooterLineComponent };
-export { ShareComponent };
-export { MenuService };
-export { RelatedComponent };
-export { FooterComponent };
-export { CoverImageComponent };
-export {
-  ContentfulMenu,
-  ContentfulNodePagesResponse,
-  ContentfulNodePage,
-  ContentfulTagPage,
-  ContentfulImage,
-  ContentfulSocial
-};
+@NgModule({
+  imports: [
+    CommonModule,
+    RouterModule,
+    DropdownModule,
+    CollapseModule,
+    Angulartics2Module.forRoot()
+  ],
+  declarations: [
+    BreadcrumbsComponent,
+    RoutesGatewayComponent,
+    ContentfulImageDirective,
+    EmbeddedEntryComponent,
+    VizabiEntryComponent,
+    HtmlEntryComponent,
+    EntriesViewComponent,
+    VideoEntryComponent,
+    TagsComponent,
+    TagComponent,
+    HeaderMenuComponent,
+    FooterMenuComponent,
+    ContributorsComponent,
+    ProfileComponent,
+    ShareFooterLineComponent,
+    ShareComponent,
+    RelatedComponent,
+    FooterComponent,
+    CoverImageComponent,
+    MarkdownPipe,
+    ToDatePipe
+  ],
+  exports: [
+    BreadcrumbsComponent,
+    RoutesGatewayComponent,
+    ContentfulImageDirective,
+    EmbeddedEntryComponent,
+    VizabiEntryComponent,
+    HtmlEntryComponent,
+    EntriesViewComponent,
+    VideoEntryComponent,
+    TagsComponent,
+    TagComponent,
+    HeaderMenuComponent,
+    FooterMenuComponent,
+    ContributorsComponent,
+    ProfileComponent,
+    ShareFooterLineComponent,
+    ShareComponent,
+    RelatedComponent,
+    FooterComponent,
+    CoverImageComponent,
+    MarkdownPipe,
+    ToDatePipe
+  ],
+  providers: [
+    BreadcrumbsService,
+    RoutesManagerService,
+    ContenfulContent,
+    ContentfulService,
+    RoutesGatewayGuard,
+    MenuService
+  ]
+})
 
-export const GAPMINDER_PROVIDERS: any[] = [
-  {provide: BreadcrumbsService, useClass: BreadcrumbsService},
-  {provide: RoutesManagerService, useClass: RoutesManagerService},
-  {provide: ContenfulContent, useClass: ContenfulContent},
-  {provide: ContentfulService, useClass: ContentfulService},
-  {provide: RoutesGatewayGuard, useClass: RoutesGatewayGuard},
-  {provide: MenuService, useClass: MenuService}
-];
+export class Ng2ContentfulBlogModule {
+}

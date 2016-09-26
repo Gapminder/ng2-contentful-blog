@@ -1,6 +1,6 @@
 import { Directive, Input, OnInit, ElementRef, Renderer } from '@angular/core';
 import { ContentfulService } from 'ng2-contentful';
-import { URLSearchParams, Response } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Directive({
@@ -41,7 +41,6 @@ export class ContentfulImageDirective implements OnInit {
       .create()
       .getAsset(this.gmContentfulSrcId)
       .commit()
-      .map((response: Response) => response.json())
       .subscribe(
         (response: any) => {
           const tagName = this.element.nativeElement.tagName.toLowerCase();
@@ -72,4 +71,3 @@ export class ContentfulImageDirective implements OnInit {
     return `${url}?${this.queryParams.toString()}`;
   }
 }
-

@@ -1,15 +1,7 @@
 import { Component } from '@angular/core';
-import { CORE_DIRECTIVES, FORM_DIRECTIVES } from '@angular/common';
-import { MarkdownPipe } from '../../../components/pipes/markdown.pipe';
-import { ToDatePipe } from '../../../components/pipes/to-date.pipe';
-
-// webpack html imports
-let template = require('./root-demo.html');
 
 @Component({
-  template: template,
-  directives: [CORE_DIRECTIVES, FORM_DIRECTIVES],
-  pipes: [ToDatePipe, MarkdownPipe]
+  template: require('./root-demo.html') as string
 })
 
 export class RootDemoComponent {

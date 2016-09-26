@@ -1,6 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ShareComponent } from './share.component';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { ContentfulImage } from '../contentful/aliases.structures';
 import * as _ from 'lodash';
@@ -8,7 +6,6 @@ import * as _ from 'lodash';
 @Component({
   selector: 'gm-share-line-footer',
   template: require('./share-footer-line.html') as string,
-  directives: [ ShareComponent, ROUTER_DIRECTIVES],
   styles: [require('./share-footer.css') as string]
 })
 export class ShareFooterLineComponent implements OnInit {

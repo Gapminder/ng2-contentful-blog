@@ -1,7 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { FooterMenuComponent } from '../menu/footer/footer-menu.component';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { ContentfulImage, ContentfulSocial } from '../contentful/aliases.structures';
 import { MenuService } from '../menu/menu.service';
@@ -12,9 +9,7 @@ import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 @Component({
   selector: 'gm-footer',
   template: require('./footer.html') as string,
-  directives: [ROUTER_DIRECTIVES, FooterMenuComponent],
-  styles: [require('./footer.css') as string],
-  pipes: [AsyncPipe]
+  styles: [require('./footer.css') as string]
 })
 export class FooterComponent implements OnInit {
   private contentfulContentService: ContenfulContent;

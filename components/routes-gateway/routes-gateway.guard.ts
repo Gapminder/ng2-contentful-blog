@@ -1,4 +1,4 @@
-import { CanActivate, ActivatedRouteSnapshot, Router, UrlPathWithParams } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, Router, UrlSegment } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import { ContentfulNodePage } from '../contentful/aliases.structures';
@@ -24,7 +24,7 @@ export class RoutesGatewayGuard implements CanActivate {
   }
 
   public canActivate(route: ActivatedRouteSnapshot): boolean {
-    const paths: string[] = route.url.map((url: UrlPathWithParams) => url.path);
+    const paths: string[] = route.url.map((url: UrlSegment) => url.path);
     const firstPath: string = _.first(paths);
     const lastPath: string = _.last(paths);
 
