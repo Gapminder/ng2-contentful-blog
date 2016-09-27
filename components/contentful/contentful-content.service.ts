@@ -198,7 +198,7 @@ export class ContenfulContent {
       .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
-  public getArticlesByTags(tagSysIds: string[]): Observable<ContentfulNodePage[]> {
+  public getArticlesByTags(tagSysIds: string[], limit?: number): Observable<ContentfulNodePage[]> {
     return this.contentfulService
       .create()
       .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
@@ -206,6 +206,7 @@ export class ContenfulContent {
         value: _.join(tagSysIds)
       })
       .include(3)
+      .limit(limit)
       .commit()
       .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
 

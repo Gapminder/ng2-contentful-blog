@@ -30,6 +30,56 @@ import { ToDatePipe } from './components/pipes/to-date.pipe';
 import { MarkdownPipe } from './components/pipes/markdown.pipe';
 import { Angulartics2Module } from 'angulartics2';
 import { CollapseModule, DropdownModule } from 'ng2-bootstrap';
+import {
+  NodePageContent, Menu, TagPage
+} from './components/contentful/content-type.structures';
+import {
+  ContentfulMenu,
+  ContentfulNodePage,
+  ContentfulTagPage,
+  ContentfulImage,
+  ContentfulProfilePage
+} from './components/contentful/aliases.structures';
+
+export { HeaderMenuComponent };
+export { FooterMenuComponent };
+export { BreadcrumbsService };
+export { BreadcrumbsComponent };
+export { RoutesManagerService };
+export { RoutesGatewayComponent };
+export { ContenfulContent };
+export { ContentfulImageDirective };
+export { EmbeddedEntryComponent };
+export { VizabiEntryComponent };
+export { HtmlEntryComponent };
+export { EntriesViewComponent };
+export { VideoEntryComponent };
+export { TagsComponent };
+export { TagComponent };
+export { MarkdownPipe };
+export { ToDatePipe };
+export { ContentfulService };
+export { ContributorsComponent };
+export { ProfileComponent };
+export { RoutesGatewayGuard };
+export { ShareFooterLineComponent };
+export { ShareComponent };
+export { MenuService };
+export { RelatedComponent };
+export { FooterComponent };
+export { CoverImageComponent };
+export {
+  NodePageContent,
+  Menu,
+  TagPage
+}
+export {
+  ContentfulMenu,
+  ContentfulImage,
+  ContentfulNodePage,
+  ContentfulTagPage,
+  ContentfulProfilePage
+};
 
 @NgModule({
   imports: [

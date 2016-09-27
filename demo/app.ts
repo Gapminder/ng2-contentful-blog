@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { Component, OnInit, ViewEncapsulation, HostListener, NgModule, NgModuleRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, HostListener, NgModule } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Angulartics2, Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-google-analytics';
@@ -9,7 +9,6 @@ import 'rxjs/add/operator/toPromise';
 import { Ng2ContentfulBlogModule } from '../index';
 import { HttpModule } from '@angular/http';
 import { routing, routes } from './routes';
-import { appInjector } from '../components/contentful/app-injector.tool';
 import { DynamicContentDetailsComponent } from './components/dynamic-content/dynamic-content-details.component';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BreadcrumbsService } from '../components/breadcrumbs/breadcrumbs.service';
