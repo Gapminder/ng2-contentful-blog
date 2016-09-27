@@ -1,6 +1,6 @@
 {
   "name": "ng2-contentful-blog",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "flow.compile": "npm run flow.compile:common && npm run flow.compile:stylus",
     "flow.compile:common": "tsc -p tsconfig.publish.json",
