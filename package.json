@@ -1,6 +1,6 @@
 {
   "name": "ng2-contentful-blog",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "scripts": {
     "flow.compile": "npm run flow.compile:common && npm run flow.compile:stylus",
     "flow.compile:common": "tsc -p tsconfig.publish.json",
@@ -58,7 +58,7 @@
     "lodash": "4.16.1",
     "marked": "0.3.6",
     "ng2-bootstrap": "1.1.5",
-    "ng2-contentful": "0.5.0",
+    "ng2-contentful": "0.5.1",
     "preboot": "4.5.2",
     "reflect-metadata": "0.1.8",
     "rimraf": "2.5.4",
