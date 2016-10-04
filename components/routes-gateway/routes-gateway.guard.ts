@@ -52,12 +52,12 @@ export class RoutesGatewayGuard implements CanActivate {
             data.set(article.slug, {name: article.title, cover});
             if (article.parent) {
 
-              // if (!slugs[lastSlugIndex - 1]) {
-              //   slugs.unshift(article.parent.fields.slug);
-              //   firstSlug = article.parent.fields.slug;
-              // } else if (article.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
-              //   slugs[lastSlugIndex - 1] = article.parent.fields.slug;
-              // }
+              if (!slugs[lastSlugIndex - 1]) {
+                slugs.unshift(article.parent.fields.slug);
+                firstSlug = article.parent.fields.slug;
+              } else if (article.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
+                slugs[lastSlugIndex - 1] = article.parent.fields.slug;
+              }
 
               if (article.parent.fields.slug !== slugs[lastSlugIndex - 1]) {
                 slugs[lastSlugIndex - 1] = article.parent.fields.slug;
