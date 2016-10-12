@@ -40,6 +40,7 @@ import {
   ContentfulImage,
   ContentfulProfilePage
 } from './components/contentful/aliases.structures';
+import { LatestComponent } from './components/entries-view/latest.component';
 
 export { HeaderMenuComponent };
 export { FooterMenuComponent };
@@ -68,6 +69,7 @@ export { MenuService };
 export { RelatedComponent };
 export { FooterComponent };
 export { CoverImageComponent };
+export { LatestComponent };
 export {
   NodePageContent,
   Menu,
@@ -91,6 +93,7 @@ export {
   ],
   declarations: [
     BreadcrumbsComponent,
+    LatestComponent,
     RoutesGatewayComponent,
     ContentfulImageDirective,
     EmbeddedEntryComponent,
@@ -114,6 +117,7 @@ export {
   ],
   exports: [
     BreadcrumbsComponent,
+    LatestComponent,
     RoutesGatewayComponent,
     ContentfulImageDirective,
     EmbeddedEntryComponent,

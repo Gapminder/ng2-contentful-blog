@@ -1,10 +1,15 @@
 ROOT COMPONENT
-<!--
-<hr>
-gm-breadcrumbs
-<gm-breadcrumbs></gm-breadcrumbs>
 
+
+<!--
+<div class="entry-content" *ngIf="content && content.entries">
+  <gm-entries-view [entries]="content.entries"></gm-entries-view>
+</div>
 -->
+
+
+<gm-dynamic-page></gm-dynamic-page>
+
 
 <hr>
 <p>date</p>

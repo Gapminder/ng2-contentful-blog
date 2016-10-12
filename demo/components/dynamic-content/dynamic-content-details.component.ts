@@ -17,6 +17,7 @@ import { Observable } from 'rxjs/Rx';
   template: require('./dynamic-content-details.component.html') as string,
   styles: [require('./dynamic-content-details.component.styl') as string]
 })
+
 export class DynamicContentDetailsComponent implements OnInit {
   private content: NodePageContent;
   private children: ContentfulNodePage[];
@@ -29,7 +30,6 @@ export class DynamicContentDetailsComponent implements OnInit {
   private breadcrumbsService: BreadcrumbsService;
   private constants: any;
   private profiles: ContentfulProfilePage[];
-  private cssClassBigColumn: boolean = false;
   private cssClassSmallColumn: boolean = false;
   private projectTagId: string;
   private relatedArticles: ContentfulNodePage[];
@@ -49,20 +49,40 @@ export class DynamicContentDetailsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.getProjectTagId().subscribe((projectTagId: ContentfulTagPage) => this.projectTagId = projectTagId.sys.id);
+
     this.activatedRoute.url
       .subscribe((urls: UrlSegment[]) => {
         this.urlPath = urls.map((value: UrlSegment) => value.path).join('/');
         this.contentSlug = this.urlPath.split('/').pop();
 
-        this.contentfulContentService
-          .getTagsBySlug(this.constants.PROJECT_TAG)
-          .mergeMap((tags: ContentfulTagPage[]) => Observable.from(tags))
-          .do((projectTagId: ContentfulTagPage) => this.projectTagId = projectTagId.sys.id)
-          .map((tag: ContentfulTagPage) => tag.sys.id)
-          .mergeMap((tagSysId: string) => this.contentfulContentService.getArticleByTagAndSlug(tagSysId, this.contentSlug))
-          .mergeMap((articles: ContentfulNodePage[]) => Observable.from(articles))
-          .subscribe((article: ContentfulNodePage) => this.onArticleReceived(article));
+        const getNameTag = _.get(this.activatedRoute.snapshot, 'data.tag') as string;
+
+        if (!_.isEmpty(this.contentSlug)) {
+          this.getProjectTagId()
+            .map((tag: ContentfulTagPage) => tag.sys.id)
+            .mergeMap((tagSysId: string) => this.contentfulContentService.getArticleByTagAndSlug(tagSysId, this.contentSlug))
+            .mergeMap((articles: ContentfulNodePage[]) => Observable.from(articles))
+            .subscribe((article: ContentfulNodePage) => this.onArticleReceived(article));
+        }
+        if (getNameTag) {
+          this.contentfulContentService
+            .getTagsBySlug(getNameTag).subscribe((tags: ContentfulTagPage[])=> {
+            const homeTagSysId = _.get(_.first(tags), 'sys.id') as string;
+            this.contentfulContentService.getArticlesByTag(homeTagSysId)
+              .subscribe((articles: ContentfulNodePage[])=> {
+                const homePage = _.first(_.sortBy(articles, 'sys.createdAt'));
+                this.onArticleReceived(homePage);
+              });
+          });
+        }
       });
+  }
+
+  private getProjectTagId(): Observable<ContentfulTagPage> {
+    return this.contentfulContentService
+      .getTagsBySlug(this.constants.PROJECT_TAG)
+      .mergeMap((tags: ContentfulTagPage[]) => Observable.from(tags));
   }
 
   private related(related: ContentfulNodePage[]): Observable<ContentfulNodePage[]> {
@@ -86,13 +106,15 @@ export class DynamicContentDetailsComponent implements OnInit {
       });
     }
 
-    this.breadcrumbsService.breadcrumbs$.next({url: this.urlPath, name: this.content.title});
+    this.breadcrumbsService.breadcrumbs$.next({
+      url: this.urlPath,
+      name: this.content.title,
+      show: !_.isEmpty(this.urlPath)
+    });
     this.contentfulContentService.getProfilesByArticleIdAndProjectTag(article.sys.id, this.constants.PROJECT_TAG)
       .subscribe((profiles: ContentfulProfilePage[]) => {
         this.profiles = profiles;
         this.cssClassSmallColumn = this.relatedSectionIsAtRight() || !_.isEmpty(profiles);
-        // TODO: remove this css class
-        this.cssClassBigColumn = !this.cssClassSmallColumn;
       });
 
     this.contentfulContentService.getChildrenOfArticleByTag(article.sys.id, this.constants.PROJECT_TAG)

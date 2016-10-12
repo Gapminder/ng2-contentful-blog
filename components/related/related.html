@@ -16,7 +16,7 @@
            class="post-title"
            angulartics2On="click"
            angularticsEvent="{{item.fields.title}}">{{item.fields.title}}</a>
-        <p class="post-p">
+        <p class="post-p" *ngIf="item.fields.description">
           {{item.fields.description | slice:0:100}}<span *ngIf="item.fields.description.length >101">...
             <a [routerLink]="[routesManager.getRouteName(item.fields.url)]">Read more&nbsp;»</a>
           </span>

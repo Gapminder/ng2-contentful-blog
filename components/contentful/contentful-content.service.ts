@@ -100,7 +100,7 @@ export class ContenfulContent {
         this.contentfulTypeIds.NODE_PAGE_TYPE_ID,
         slug
       )
-      .include(1)
+      .include(2)
       .commit()
       .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
