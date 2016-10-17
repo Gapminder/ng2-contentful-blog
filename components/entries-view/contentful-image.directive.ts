@@ -1,13 +1,12 @@
-import { Directive, Input, OnInit, ElementRef, Renderer } from '@angular/core';
+import { Directive, Input, ElementRef, Renderer, OnChanges } from '@angular/core';
 import { ContentfulService } from 'ng2-contentful';
 import { URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Directive({
-  selector: '[gmContentfulSrcId]',
-  providers: [ContentfulService]
+  selector: '[gmContentfulSrcId]'
 })
-export class ContentfulImageDirective implements OnInit {
+export class ContentfulImageDirective implements OnChanges {
   @Input()
   private gmContentfulSrcId: string;
 
@@ -36,7 +35,7 @@ export class ContentfulImageDirective implements OnInit {
     this.contentfulService = contentfulService;
   }
 
-  public ngOnInit(): void {
+  public ngOnChanges(): void {
     this.contentfulService
       .create()
       .getAsset(this.gmContentfulSrcId)

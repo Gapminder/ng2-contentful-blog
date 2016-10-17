@@ -3,22 +3,22 @@
   <h3 class="title">Related</h3>
   <div class="row">
     <ul class="list-proposals">
-      <li *ngFor="let item of related"
+      <li *ngFor="let article of related"
           class="col-xs-12 col-sm-6"
           [ngClass]="{'col-md-3': relatedLocation, 'col-md-6': !relatedLocation}">
-        <a *ngIf="item.fields.url && item.fields.thumbnail" [routerLink]="[routesManager.getRouteName(item.fields.url)]"
+        <a *ngIf="article.fields.url && article.fields.thumbnail" [routerLink]="[routesManager.getRouteName(article.fields.url)]"
            angulartics2On="click"
-           angularticsEvent="{{item.fields.title}}" class="wrap-img"
-           [height]="300" [gmContentfulSrcId]="item.fields.thumbnail.sys.id">
+           angularticsEvent="{{article.fields.title}}" class="wrap-img"
+           [height]="300" [gmContentfulSrcId]="article.fields.thumbnail.sys.id">
         </a>
-        <div *ngIf="relatedLocation" class="date-info">{{item.fields.createdAt | gmToDate | date}}</div>
-        <a *ngIf="item.fields.url" [routerLink]="[routesManager.getRouteName(item.fields.url)]"
+        <div *ngIf="relatedLocation" class="date-info">{{article.fields.createdAt | gmToDate | date}}</div>
+        <a *ngIf="article.fields.url" [routerLink]="[routesManager.getRouteName(article.fields.url)]"
            class="post-title"
            angulartics2On="click"
-           angularticsEvent="{{item.fields.title}}">{{item.fields.title}}</a>
-        <p class="post-p" *ngIf="item.fields.description">
-          {{item.fields.description | slice:0:100}}<span *ngIf="item.fields.description.length >101">...
-            <a [routerLink]="[routesManager.getRouteName(item.fields.url)]">Read more&nbsp;»</a>
+           angularticsEvent="{{article.fields.title}}">{{article.fields.title}}</a>
+        <p class="post-p" *ngIf="article.fields.description">
+          {{article.fields.description | slice:0:100}}<span *ngIf="article.fields.description.length >101">...
+            <a [routerLink]="[routesManager.getRouteName(article.fields.url)]">Read more&nbsp;»</a>
           </span>
         </p>
       </li>

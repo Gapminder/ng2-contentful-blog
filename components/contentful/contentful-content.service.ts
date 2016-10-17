@@ -212,6 +212,20 @@ export class ContenfulContent {
 
   }
 
+  public getLatestArticlesByTags(tagSysIds: string[], limit?: number): Observable<ContentfulNodePage[]> {
+    return this.contentfulService
+      .create()
+      .order('-sys.createdAt')
+      .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
+        param: 'fields.tags.sys.id[all]',
+        value: _.join(tagSysIds)
+      })
+      .include(3)
+      .limit(limit)
+      .commit()
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
+  }
+
   public getArticleBySysId(sysId: string): Observable<ContentfulNodePage[]> {
     return this.contentfulService
       .create()

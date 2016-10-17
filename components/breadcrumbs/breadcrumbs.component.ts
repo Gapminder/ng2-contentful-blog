@@ -37,7 +37,7 @@ export class BreadcrumbsComponent implements OnInit {
 
   public generateBreadcrumbTrail(url: string): void {
     this.urls.unshift(url);
-    if (url && url.lastIndexOf('/') > 0) {
+    if (_.lastIndexOf(url, '/')> 0) {
       this.generateBreadcrumbTrail(url.substr(0, url.lastIndexOf('/')));
     }
   }

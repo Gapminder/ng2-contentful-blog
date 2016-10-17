@@ -1,11 +1,11 @@
 <div class="row">
   <div class="dynamic-details col-xs-12 col-sm-12" *ngIf="content"
-       [ngClass]="{'col-md-12': !cssClassSmallColumn, 'col-md-8': cssClassSmallColumn}">
+       [ngClass]="{'col-md-12': !cssClassSmallColumn || isHomePage, 'col-md-8': cssClassSmallColumn && !isHomePage}">
     <h1 *ngIf="!content.entries">{{ content.title }}</h1>
 
-    <div [ngClass]="{'col-md-2': !cssClassSmallColumn}"></div>
+    <div [ngClass]="{'col-md-2': !cssClassSmallColumn && !isHomePage}"></div>
     <div class="padding-0"
-         [ngClass]="{'col-md-8': !cssClassSmallColumn}">
+         [ngClass]="{'col-md-8': !cssClassSmallColumn && !isHomePage, 'col-md-12': isHomePage}">
       <h1 *ngIf="content.entries">{{ content.title }}</h1>
       <p class="small-description" *ngIf="content.description">{{ content.description}}</p>
       <p *ngIf="content.createdAt" class="date-info margin-top-0">

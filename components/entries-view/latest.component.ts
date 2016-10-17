@@ -9,7 +9,7 @@ import { ContentfulNodePage, ContentfulTagPage } from '../contentful/aliases.str
 @Component({
   selector: 'gm-latest',
   template: require('./latest.html') as string,
-  styles: [require('./latest.styl') as string]
+  styles: [require('./latest.css') as string]
 })
 export class LatestComponent implements OnInit {
   @Input()
@@ -42,7 +42,7 @@ export class LatestComponent implements OnInit {
       if (!_.isEmpty(tags)) {
         const tagId = _.get(_.first(tags), 'sys.id') as string;
         this.getProjectTagId().subscribe((projectTagId: string) => {
-          this.contentfulContentService.getArticlesByTags([tagId, projectTagId], this.limit)
+          this.contentfulContentService.getLatestArticlesByTags([tagId, projectTagId],  this.limit)
             .mergeMap((articles: ContentfulNodePage[]) => this.contentfulContentService.getArticleWithFullUrlPopulated(articles))
             .subscribe((articles: ContentfulNodePage[]) => {
               this.routesManager.addRoutesFromArticles(... articles);

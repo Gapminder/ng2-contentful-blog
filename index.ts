@@ -41,6 +41,7 @@ import {
   ContentfulProfilePage
 } from './components/contentful/aliases.structures';
 import { LatestComponent } from './components/entries-view/latest.component';
+import { CoverService } from './components/cover-image/cover.service';
 
 export { HeaderMenuComponent };
 export { FooterMenuComponent };
@@ -70,6 +71,7 @@ export { RelatedComponent };
 export { FooterComponent };
 export { CoverImageComponent };
 export { LatestComponent };
+export { CoverService };
 export {
   NodePageContent,
   Menu,
@@ -144,6 +146,7 @@ export {
     RoutesManagerService,
     ContenfulContent,
     ContentfulService,
+    CoverService,
     RoutesGatewayGuard,
     MenuService
   ]
