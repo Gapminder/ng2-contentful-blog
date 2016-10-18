@@ -1,0 +1,33 @@
+<section *ngIf="articles">
+  <h2 class="post-head">Latest {{title}}</h2>
+  <section class="posts-list">
+    <div class="row">
+      <div *ngFor="let article of articles" class="blog-item col-md-4 col-xs-12 col-sm-6">
+        <a *ngIf="article.fields.url" [routerLink]="[routesManager.getRouteName(article.fields.url)]"
+           angulartics2On="click"
+           angularticsEvent="{{article.fields.title}}"
+           class="post-wrap-img" [gmContentfulSrcId]="article.fields.thumbnail.sys.id">
+
+        </a>
+        <div class="date-info">{{ article.fields.createdAt | gmToDate | date }}</div>
+        <a *ngIf="article.fields.url" [routerLink]="[routesManager.getRouteName(article.fields.url)]"
+           angulartics2On="click"
+           angularticsEvent="{{article.fields.title}}"
+           class="post-title">{{article.fields.title}}
+        </a>
+        <p class="post-p">
+          {{article.fields.description | slice:0:100}}<span *ngIf="article.fields.description.length >101">...
+            <a [routerLink]="[routesManager.getRouteName(article.fields.url)]">Read more&nbsp;»</a>
+          </span>
+        </p>
+      </div>
+    </div>
+  </section>
+  <div class="row text-center">
+    <a *ngIf="tag" [routerLink]="['/tag', tag]"
+            angulartics2On="click"
+            angularticsEvent="{{tag}}"
+            class="btn-yellow  margin-top-50">View All {{title}} &#187;</a>
+
+  </div>
+</section>

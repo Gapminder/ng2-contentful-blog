@@ -92,8 +92,7 @@ export class RoutesManagerService {
 
   private convertArticleToRawRoute(contentfulArticle: ContentfulNodePage): RawRoute {
     const article: NodePageContent = contentfulArticle.fields;
-    const cover = article.cover ? article.cover.sys.id : undefined;
-    return {path: article.url || article.slug, data: {name: article.title, cover}};
+    return {path: article.url || article.slug, data: {name: article.title}};
   }
 
   private _addRoutes(routes: Route[]): void {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationStart, Route } from '@angular/router';
+import { Router } from '@angular/router';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
+import { CoverService, CoverEvent } from './cover.service';
 
 @Component({
   selector: 'gm-cover',
@@ -12,20 +13,20 @@ export class CoverImageComponent implements OnInit {
   private router: Router;
   private cover: string;
   private routesManager: RoutesManagerService;
+  private coverService: CoverService;
 
   public constructor(router: Router,
+                     coverService: CoverService,
                      routesManager: RoutesManagerService) {
     this.router = router;
+    this.coverService = coverService;
     this.routesManager = routesManager;
   }
 
   public ngOnInit(): void {
-    this.router.events
-      .filter((value: any) => value instanceof NavigationStart)
-      .map((value: NavigationStart) => this.routesManager.findRouteByPath(value.url.replace('/', '')))
-      .subscribe((route: Route) => {
-        this.cover = route && route.data && (route.data as RouteData).cover;
-      });
+    this.coverService.cover$.subscribe((res: CoverEvent)=> {
+      this.cover = res.cover;
+    });
   }
 }
 

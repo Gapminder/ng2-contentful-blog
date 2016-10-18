@@ -100,7 +100,7 @@ export class ContenfulContent {
         this.contentfulTypeIds.NODE_PAGE_TYPE_ID,
         slug
       )
-      .include(1)
+      .include(2)
       .commit()
       .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
@@ -210,6 +210,20 @@ export class ContenfulContent {
       .commit()
       .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
 
+  }
+
+  public getLatestArticlesByTags(tagSysIds: string[], limit?: number): Observable<ContentfulNodePage[]> {
+    return this.contentfulService
+      .create()
+      .order('-sys.createdAt')
+      .searchEntries(this.contentfulTypeIds.NODE_PAGE_TYPE_ID, {
+        param: 'fields.tags.sys.id[all]',
+        value: _.join(tagSysIds)
+      })
+      .include(3)
+      .limit(limit)
+      .commit()
+      .map((response: any) => transformResponse<ContentfulNodePage>(response, 2));
   }
 
   public getArticleBySysId(sysId: string): Observable<ContentfulNodePage[]> {

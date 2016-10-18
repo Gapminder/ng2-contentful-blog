@@ -5,18 +5,21 @@ import { ContentfulNodePage } from '../contentful/aliases.structures';
 import { NodePageContent } from '../contentful/content-type.structures';
 import { RoutesManagerService } from './routes-manager.service';
 import * as _ from 'lodash';
-// import { appInjector } from '../contentful/app-injector.tool';
+import { Http, Response } from '@angular/http';
 
 @Injectable()
 export class RoutesGatewayGuard implements CanActivate {
   private router: Router;
   private routesManager: RoutesManagerService;
   private contentfulContent: ContenfulContent;
+  private http: Http;
 
   public constructor(router: Router,
+                     http: Http,
                      routesManager: RoutesManagerService,
                      contentfulContent: ContenfulContent) {
     this.router = router;
+    this.http = http;
     this.contentfulContent = contentfulContent;
     // FIXME: Using appInjector because of some kind of cyclic dependency in which RoutesManagerService is involved
     // this.routesManager = appInjector().get(RoutesManagerService);
@@ -48,8 +51,7 @@ export class RoutesGatewayGuard implements CanActivate {
           if (!_.isEmpty(contentfulNodePage)) {
             let article: NodePageContent = _.first(contentfulNodePage).fields;
 
-            const cover = article.cover ? article.cover.sys.id : undefined;
-            data.set(article.slug, {name: article.title, cover});
+            data.set(article.slug, {name: article.title});
             if (article.parent) {
 
               if (!slugs[lastSlugIndex - 1]) {
@@ -75,7 +77,8 @@ export class RoutesGatewayGuard implements CanActivate {
             return;
           }
           if (_.isEmpty(contentfulNodePage) || _.first(contentfulNodePage).fields.slug !== slugs.pop()) {
-            this.router.navigate(['/']);
+            const path = slugs.join('/');
+            this.checkArchive(path);
             return;
           }
         });
@@ -105,4 +108,22 @@ export class RoutesGatewayGuard implements CanActivate {
     });
     return collectedPaths;
   }
+
+  private checkArchive(url: string): any {
+    const encodedUrl = encodeURIComponent(url);
+
+    this.http.get(`/check-url?url=${encodedUrl}`)
+      .map((res: Response) => res.json())
+      .subscribe((res: ArchiveCheckResult) => {
+        if (res.statusCode === 200) {
+          window.location.href = `//archive.gapminder.org/${url}`;
+        } else {
+          this.router.navigate(['/']);
+        }
+      });
+  }
+}
+
+interface ArchiveCheckResult {
+  statusCode: number;
 }

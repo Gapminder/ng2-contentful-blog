@@ -4,6 +4,7 @@ import { Component, Input, OnInit, Inject } from '@angular/core';
   selector: 'gm-entries-view',
   template: `
     <div *ngFor="let entry of entries">
+      <gm-latest *ngIf="entry.isLatest" [tag]="entry.fields.tag.fields.slug" [title]="entry.fields.title" [limit]="3"></gm-latest>
       <gm-video-entry *ngIf="entry.isVideo" [entry]="entry"></gm-video-entry>
       <gm-html-entry *ngIf="entry.isHtml" [entry]="entry"></gm-html-entry>
       <gm-embedded-entry *ngIf="entry.isEmbedded" [entry]="entry"></gm-embedded-entry>
@@ -22,6 +23,7 @@ export class EntriesViewComponent implements OnInit {
 
   public ngOnInit(): void {
     for (let entry of this.entries) {
+      entry.isLatest = this.resolveType(entry, this.contentfulTypeIds.LATEST_POSTS_TYPE_ID);
       entry.isVideo = this.resolveType(entry, this.contentfulTypeIds.VIDEO_TYPE_ID);
       entry.isEmbedded = this.resolveType(entry, this.contentfulTypeIds.EMBEDDED_TYPE_ID);
       entry.isHtml = this.resolveType(entry, this.contentfulTypeIds.HTML_TYPE_ID);
