@@ -48,8 +48,7 @@ export class RoutesGatewayGuard implements CanActivate {
           if (!_.isEmpty(contentfulNodePage)) {
             let article: NodePageContent = _.first(contentfulNodePage).fields;
 
-            const cover = article.cover ? article.cover.sys.id : undefined;
-            data.set(article.slug, {name: article.title, cover});
+            data.set(article.slug, {name: article.title});
             if (article.parent) {
 
               if (!slugs[lastSlugIndex - 1]) {

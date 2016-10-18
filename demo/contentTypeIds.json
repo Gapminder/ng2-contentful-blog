@@ -9,5 +9,6 @@
   "HEADER_TYPE_ID": "header",
   "FOOTER_TYPE_ID": "footer",
   "VIZABI_TYPE_ID": "vizabi",
-  "IMAGE_TYPE_ID": "image"
+  "IMAGE_TYPE_ID": "image",
+  "LATEST_POSTS_TYPE_ID": "latestPosts"
 }
