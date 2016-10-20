@@ -23,11 +23,13 @@ export class EntriesViewComponent implements OnInit {
 
   public ngOnInit(): void {
     for (let entry of this.entries) {
-      entry.isLatest = this.resolveType(entry, this.contentfulTypeIds.LATEST_POSTS_TYPE_ID);
-      entry.isVideo = this.resolveType(entry, this.contentfulTypeIds.VIDEO_TYPE_ID);
-      entry.isEmbedded = this.resolveType(entry, this.contentfulTypeIds.EMBEDDED_TYPE_ID);
-      entry.isHtml = this.resolveType(entry, this.contentfulTypeIds.HTML_TYPE_ID);
-      entry.isVizabi = this.resolveType(entry, this.contentfulTypeIds.VIZABI_TYPE_ID);
+      if (entry.fields) {
+        entry.isLatest = this.resolveType(entry, this.contentfulTypeIds.LATEST_POSTS_TYPE_ID);
+        entry.isVideo = this.resolveType(entry, this.contentfulTypeIds.VIDEO_TYPE_ID);
+        entry.isEmbedded = this.resolveType(entry, this.contentfulTypeIds.EMBEDDED_TYPE_ID);
+        entry.isHtml = this.resolveType(entry, this.contentfulTypeIds.HTML_TYPE_ID);
+        entry.isVizabi = this.resolveType(entry, this.contentfulTypeIds.VIZABI_TYPE_ID);
+      }
     }
     return;
   }

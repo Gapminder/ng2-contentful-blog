@@ -4,7 +4,8 @@ import { NodePageContent } from '../../../components/contentful/content-type.str
 import {
   ContentfulNodePage,
   ContentfulTagPage,
-  ContentfulProfilePage
+  ContentfulProfilePage,
+  ContentfulCover
 } from '../../../components/contentful/aliases.structures';
 import { ContenfulContent } from '../../../components/contentful/contentful-content.service';
 import { BreadcrumbsService } from '../../../components/breadcrumbs/breadcrumbs.service';
@@ -68,13 +69,10 @@ export class DynamicContentDetailsComponent implements OnInit {
             .mergeMap((articles: ContentfulNodePage[]) => Observable.from(articles))
             .subscribe((article: ContentfulNodePage) => this.onArticleReceived(article));
         }
-
-        const homePageTag = _.get(this.activatedRoute.snapshot, 'data.tag') as string;
-
-        if (homePageTag) {
+        if (_.isEmpty(currentArticleSlug)) {
           this.isHomePage = true;
           this.contentfulContentService
-            .getTagsBySlug(homePageTag).subscribe((tags: ContentfulTagPage[]) => {
+            .getTagsBySlug(this.constants.HOME_TAG).subscribe((tags: ContentfulTagPage[]) => {
             const homeTagSysId = _.get(_.first(tags), 'sys.id') as string;
             this.contentfulContentService.getArticlesByTag(homeTagSysId)
               .subscribe((articles: ContentfulNodePage[])=> {
@@ -116,9 +114,9 @@ export class DynamicContentDetailsComponent implements OnInit {
         }
       });
     }
-    const cover = _.get(this.content.cover, 'sys.id') as string;
 
-    this.coverService.cover$.next({cover});
+    const cover = _.get(this.content, 'coverBlock') as ContentfulCover;
+    this.coverService.cover$.next({cover, show: !_.isEmpty(cover)});
 
     this.breadcrumbsService.breadcrumbs$.next({
       url: this.urlPath,
