@@ -6,6 +6,7 @@ import { ContenfulContent } from '../contentful/contentful-content.service';
 import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 import * as _ from 'lodash';
 import { Observable } from 'rxjs';
+import { CoverService } from '../cover-image/cover.service';
 
 @Component({
   selector: 'gm-tagged-articles',
@@ -23,14 +24,17 @@ export class TagComponent implements OnInit {
   protected activatedRoute: ActivatedRoute;
   private contentfulTypeIds: any;
   private constants: any;
+  private coverService: CoverService;
 
   public constructor(router: Router,
+                     coverService: CoverService,
                      activatedRoute: ActivatedRoute,
                      routesManager: RoutesManagerService,
                      contentfulContentService: ContenfulContent,
                      breadcrumbsService: BreadcrumbsService,
                      @Inject('Constants') constants: any,
                      @Inject('ContentfulTypeIds') contentfulTypeIds: any) {
+    this.coverService = coverService;
     this.activatedRoute = activatedRoute;
     this.contentfulContentService = contentfulContentService;
     this.router = router;
@@ -43,6 +47,7 @@ export class TagComponent implements OnInit {
   public ngOnInit(): void {
     this.activatedRoute.params.subscribe((param: Params) => {
       this.tag = (param as TagRouteParams).tag;
+      this.coverService.cover$.next({show: false});
 
       this.contentfulContentService.getTagsBySlug(this.tag)
         .map((contentTags: ContentfulTagPage[]) => _.first(contentTags))

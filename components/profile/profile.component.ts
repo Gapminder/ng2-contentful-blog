@@ -4,6 +4,7 @@ import { BreadcrumbsService } from '../breadcrumbs/breadcrumbs.service';
 import { ContentfulProfilePage } from '../contentful/aliases.structures';
 import { ContenfulContent } from '../contentful/contentful-content.service';
 import * as _ from 'lodash';
+import { CoverService } from '../cover-image/cover.service';
 
 @Component({
   template: require('./profile.html') as string,
@@ -18,12 +19,15 @@ export class ProfileComponent implements OnInit {
   private breadcrumbsService: BreadcrumbsService;
   private activatedRoute: ActivatedRoute;
   private taggedContentType: string;
+  private coverService: CoverService;
 
   public constructor(router: Router,
+                     coverService: CoverService,
                      activatedRoute: ActivatedRoute,
                      contentfulContentService: ContenfulContent,
                      breadcrumbsService: BreadcrumbsService,
                      @Inject('ContentfulTypeIds') contentfulTypeIds: any) {
+    this.coverService = coverService;
     this.activatedRoute = activatedRoute;
     this.contentfulContentService = contentfulContentService;
     this.router = router;
@@ -32,6 +36,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.coverService.cover$.next({show: false});
     this.activatedRoute.params
       .subscribe((params: Params) => {
         this.username = (params as ProfileRouteParams).userName;
