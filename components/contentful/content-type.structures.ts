@@ -1,6 +1,6 @@
 import {
   ContentfulNodePage, ContentfulSocial, ContentfulMenu,
-  ContentfulMedia, ContentfulTagPage
+  ContentfulMedia, ContentfulTagPage, ContentfulHtmlBlock, ContentfulCover
 } from './aliases.structures';
 export interface NodePageContent {
   parent?: ContentfulNodePage;
@@ -15,6 +15,7 @@ export interface NodePageContent {
   relatedLocation: boolean;
   entries?: any[];
   cover?: ContentfulMedia; // media
+  coverBlock?: ContentfulCover;
 }
 
 export interface Block {
@@ -31,6 +32,7 @@ export interface VideoBlock extends Block {
 
 export interface HtmlBlock extends Block {
   content: string;
+  fontColor: string;
 }
 
 export interface EmbeddedBlock extends Block {
@@ -115,4 +117,10 @@ export interface ProfilePage {
 export interface ContributionPage {
   description: string;
   article: NodePageContent[];
+}
+
+export interface Cover {
+  title: string;
+  background?: ContentfulMedia;
+  html?: ContentfulHtmlBlock;
 }

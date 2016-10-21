@@ -1,6 +1,36 @@
 .gm-cover
   width 100%
-  height 550px
-  max-height 550px
   background-position center
   background-size cover
+  padding-top 35%
+  position relative
+  
+  p
+    color inherit
+    a
+      background white
+      line-height 40px
+      color #374551
+      display inline-block
+      padding 0 15px
+      border-radius 2px;
+      border 1px solid #edf0f5;
+.wrap-html-block
+  position absolute
+  top 0
+  bottom 0
+  display flex
+
+  .html-block
+    align-self: center;
+
+@media screen and (max-width: 640px)
+  .gm-cover
+    padding-top 5%
+    min-height 200px;
+    &.mobile
+      padding-top 0
+  .wrap-html-block
+    position relative
+    padding 15px 0;
+

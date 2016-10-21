@@ -1,1 +1,12 @@
-<div class="text-center gm-cover" *ngIf="cover" [height]="550" [gmContentfulSrcId]="cover"></div>
+<div *ngIf="showCover" class="gm-cover"
+     [ngClass]="{'mobile': flagForMobile}"
+     [ngStyle]="{'background-color': backgroundColor}"
+     [gmContentfulSrcId]="imageSysId">
+  <div class="container" *ngIf="html">
+    <div class="wrap-html-block">
+
+      <div class="html-block" [ngStyle]="{'color': fontColor}"
+           [innerHTML]="html.content | gmMarkdown"></div>
+    </div>
+  </div>
+</div>

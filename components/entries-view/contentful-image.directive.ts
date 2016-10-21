@@ -2,6 +2,7 @@ import { Directive, Input, ElementRef, Renderer, OnChanges } from '@angular/core
 import { ContentfulService } from 'ng2-contentful';
 import { URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as _ from 'lodash';
 
 @Directive({
   selector: '[gmContentfulSrcId]'
@@ -36,6 +37,9 @@ export class ContentfulImageDirective implements OnChanges {
   }
 
   public ngOnChanges(): void {
+    if (_.isEmpty(this.gmContentfulSrcId)) {
+      return;
+    }
     this.contentfulService
       .create()
       .getAsset(this.gmContentfulSrcId)
@@ -50,8 +54,7 @@ export class ContentfulImageDirective implements OnChanges {
           if (tagName === 'img') {
             this.renderer.setElementProperty(this.element.nativeElement, 'src', imageUrl);
           }
-        }
-      );
+        });
   }
 
   private imageUrl(url: string): string {

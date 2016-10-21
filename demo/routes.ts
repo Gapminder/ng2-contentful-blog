@@ -7,7 +7,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { DynamicContentDetailsComponent } from './components/dynamic-content/dynamic-content-details.component';
 
 export const routes: Routes = [
-  {path: '', component: DynamicContentDetailsComponent, data: { tag: 'home' }},
+  {path: '', component: DynamicContentDetailsComponent},
   {path: 'tag/:tag', component: TagComponent},
   {path: 'profile/:userName', component: ProfileComponent},
   {path: '**', component: RoutesGatewayComponent, canActivate: [RoutesGatewayGuard]}

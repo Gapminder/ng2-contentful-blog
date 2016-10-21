@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { ContentfulCover } from '../contentful/aliases.structures';
 
 @Injectable()
 export class CoverService {
@@ -7,5 +8,6 @@ export class CoverService {
 }
 
 export interface CoverEvent {
-  cover: string;
+  cover?: ContentfulCover;
+  show: boolean;
 }

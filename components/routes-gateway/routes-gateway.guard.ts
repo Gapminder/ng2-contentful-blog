@@ -109,18 +109,27 @@ export class RoutesGatewayGuard implements CanActivate {
     return collectedPaths;
   }
 
-  private checkArchive(url: string): any {
+  private checkArchive(url: string): void {
     const encodedUrl = encodeURIComponent(url);
 
     this.http.get(`/check-url?url=${encodedUrl}`)
       .map((res: Response) => res.json())
       .subscribe((res: ArchiveCheckResult) => {
-        if (res.statusCode === 200) {
-          window.location.href = `//archive.gapminder.org/${url}`;
-        } else {
-          this.router.navigate(['/']);
-        }
+        this.shouldProceedToArchive(res, url)
       });
+  }
+
+  private shouldProceedToArchive(res: ArchiveCheckResult, url: string): void {
+    if (res.statusCode === 200 || res.statusCode === 301) {
+
+      // http in here is for a reason. We cannot use protocol
+      // agnostic url cause archive.gapminder.org
+      // has hardcoded http links which are not visible when
+      // someone tries to access archive via https
+      window.location.href = 'http://archive.gapminder.org/' + url;
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 }
 
