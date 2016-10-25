@@ -115,7 +115,7 @@ export class RoutesGatewayGuard implements CanActivate {
     this.http.get(`/check-url?url=${encodedUrl}`)
       .map((res: Response) => res.json())
       .subscribe((res: ArchiveCheckResult) => {
-        this.shouldProceedToArchive(res, url)
+        this.shouldProceedToArchive(res, url);
       });
   }
 
