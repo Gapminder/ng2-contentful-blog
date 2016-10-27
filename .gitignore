@@ -30,3 +30,9 @@ index.js
 index.d.ts
 index.js.map
 /logs
+
+
+factories
+
+/**/*.metadata.json
+/**/*.ngfactory.ts

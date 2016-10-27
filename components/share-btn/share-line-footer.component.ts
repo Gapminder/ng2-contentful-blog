@@ -5,8 +5,8 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-share-line-footer',
-  template: require('./share-footer-line.html') as string,
-  styles: [require('./share-footer.css') as string]
+  templateUrl: './share-footer-line.html',
+  styleUrls: ['./share-footer.css']
 })
 export class ShareFooterLineComponent implements OnInit {
   private imageInfo: ContentfulImage;

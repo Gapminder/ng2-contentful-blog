@@ -5,8 +5,8 @@ import { ContentfulNodePage } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-related',
-  template: require('./related.html') as string,
-  styles: [require('./related.css') as string]
+  templateUrl: './related.html',
+  styleUrls: ['./related.css']
 })
 export class RelatedComponent implements OnInit {
   @Input()

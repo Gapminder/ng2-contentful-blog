@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  template: require('./root-demo.html') as string
+  templateUrl: './root-demo.html'
 })
 
 export class RootDemoComponent {

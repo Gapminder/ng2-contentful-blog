@@ -8,8 +8,8 @@ import { ContentfulNodePage, ContentfulTagPage } from '../contentful/aliases.str
 
 @Component({
   selector: 'gm-latest',
-  template: require('./latest.html') as string,
-  styles: [require('./latest.css') as string]
+  templateUrl: './latest.html',
+  styleUrls: ['./latest.css']
 })
 export class LatestComponent implements OnInit {
   @Input()

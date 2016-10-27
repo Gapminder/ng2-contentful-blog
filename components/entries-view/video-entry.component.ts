@@ -7,7 +7,7 @@ import { VideoBlock } from '../contentful/content-type.structures';
 
 @Component({
   selector: 'gm-video-entry',
-  styles: [require('./video-entry.css') as string],
+  styleUrls: ['./video-entry.css'],
   template: `
     <div class="wrap-block" #backgroundOwner>
       <div class="video-wrapper" *ngIf="url">

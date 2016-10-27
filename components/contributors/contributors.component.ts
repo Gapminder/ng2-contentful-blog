@@ -6,8 +6,8 @@ import { ContentfulProfilePage } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-contributors',
-  template: require('./contributors.html') as string,
-  styles: [require('./contributors.css') as string]
+  templateUrl: './contributors.html',
+  styleUrls: ['./contributors.css']
 })
 
 export class ContributorsComponent {

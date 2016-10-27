@@ -5,8 +5,8 @@ import { ViewSocial } from '../../footer/footer.component';
 
 @Component({
   selector: 'gm-footer-menu',
-  template: require('./footer-menu.html') as string,
-  styles: [require('./footer-menu.css') as string]
+  templateUrl: './footer-menu.html',
+  styleUrls: ['./footer-menu.css']
 })
 export class FooterMenuComponent {
   /* tslint:disable:no-unused-variable */

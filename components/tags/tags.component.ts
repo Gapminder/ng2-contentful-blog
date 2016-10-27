@@ -4,8 +4,8 @@ import * as _ from 'lodash';
 
 @Component({
   selector: 'gm-tags',
-  template: require('./tags.html') as string,
-  styles: [require('./tags.css') as string]
+  templateUrl: './tags.html',
+  styleUrls: ['./tags.css']
 })
 export class TagsComponent implements OnInit {
   /* tslint:disable:no-unused-variable */

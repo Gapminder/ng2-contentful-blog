@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'gm-share',
-  template: require('./share.html') as string,
-  styles: [require('./share.css') as string]
+  templateUrl: './share.html',
+  styleUrls: ['./share.css']
 })
 export class ShareComponent implements OnInit {
   private twitter: string;

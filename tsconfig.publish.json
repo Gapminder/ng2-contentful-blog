@@ -28,5 +28,8 @@
   ],
   "files": [
     "index.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "genDir": "factories"
+  }
 }

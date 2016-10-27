@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Component, OnInit, ViewEncapsulation, HostListener, NgModule } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { Angulartics2, Angulartics2Module } from 'angulartics2';
-import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-google-analytics';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
@@ -14,6 +13,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BreadcrumbsService } from '../components/breadcrumbs/breadcrumbs.service';
 import { RootDemoComponent } from './components/root/root-demo';
 import { ContentfulService } from 'ng2-contentful';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/src/providers/angulartics2-ga';
 
 const Ng2ContentfulConfig = require('./contentful.cfg');
 
@@ -23,9 +23,7 @@ const Constants = require('./constants');
 @Component({
   selector: 'gm-app',
   encapsulation: ViewEncapsulation.None,
-  styles: [
-    require('./main.styl') as string
-  ],
+  styleUrls: ['./main.styl'],
   template: `
    <div class="page-wrap">
       <header>

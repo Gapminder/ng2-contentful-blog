@@ -5,8 +5,8 @@ import { RoutesManagerService } from '../../routes-gateway/routes-manager.servic
 
 @Component({
   selector: 'gm-header-menu',
-  template: require('./header-menu.html') as string,
-  styles: [require('./header-menu.css') as string]
+  templateUrl: './header-menu.html',
+  styleUrls: ['./header-menu.css']
 })
 export class HeaderMenuComponent implements OnInit {
   private menus: Menu[];

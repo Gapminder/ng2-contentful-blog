@@ -12,7 +12,7 @@ import * as _ from 'lodash';
   template: `
     <div class="block-entry" #backgroundOwner  [ngStyle]="{'color': fontColor}" [innerHTML]="entry.fields.content | gmMarkdown"></div>
   `,
-  styles: [require('./entries-html.css') as string]
+  styleUrls: ['./entries-html.css']
 })
 
 export class HtmlEntryComponent extends AbstractEntry implements AfterViewInit, OnInit {

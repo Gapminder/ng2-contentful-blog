@@ -8,8 +8,8 @@ import * as _ from 'lodash';
 @Component({
   selector: 'gm-cover',
   encapsulation: ViewEncapsulation.None,
-  template: require('./cover-image.html') as string,
-  styles: [require('./cover-image.css') as string]
+  templateUrl: './cover-image.html',
+  styleUrls: ['./cover-image.css']
 })
 export class CoverImageComponent implements OnInit {
 

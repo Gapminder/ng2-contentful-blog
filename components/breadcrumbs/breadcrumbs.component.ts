@@ -5,8 +5,8 @@ import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-breadcrumbs',
-  template: require('./breadcrumbs.html') as string,
-  styles: [require('./breadcrumbs.css') as string]
+  templateUrl: './breadcrumbs.html',
+  styleUrls: ['./breadcrumbs.css']
 })
 export class BreadcrumbsComponent implements OnInit {
   public type: string = 'Breadcrumbs Component';

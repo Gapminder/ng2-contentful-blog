@@ -5,7 +5,7 @@ import { ContentfulEmbeddedBlock } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-embedded-entry',
-  styles: [require('./video-entry.css')],
+  styleUrls: [ './video-entry.css'],
   template: `
     <div class="wrap-block" #backgroundOwner>
       <div class="video-wrapper">

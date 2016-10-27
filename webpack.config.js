@@ -59,16 +59,17 @@ const commonConfig = {
       },
       {test: /\.json$/, loader: 'json'},
       {
+        test: /\.html$/,
+        // test: /\.(html|css)$/,
+        loader: 'raw-loader'
+      },
+      {
         test: /\.ts$/,
-        loaders: ['ts-loader']
+        loaders: ['ts-loader', 'angular2-template-loader']
       },
       {
         test: /\.(styl|css)$/,
         loader: 'to-string!css!stylus?resolve url'
-      },
-      {
-        test: /\.html$/,
-        loader: 'raw'
       }
     ]
   },

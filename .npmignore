@@ -21,3 +21,5 @@ components/**/*.ts
 !components/**/*.css
 !components/**/*.js
 !index.js
+
+factories

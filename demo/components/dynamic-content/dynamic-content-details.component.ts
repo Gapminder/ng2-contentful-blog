@@ -16,8 +16,8 @@ import { CoverService } from '../../../components/cover-image/cover.service';
 
 @Component({
   selector: 'gm-dynamic-page',
-  template: require('./dynamic-content-details.component.html') as string,
-  styles: [require('./dynamic-content-details.component.styl') as string]
+  templateUrl: './dynamic-content-details.component.html',
+  styleUrls: ['./dynamic-content-details.component.styl']
 })
 
 export class DynamicContentDetailsComponent implements OnInit {

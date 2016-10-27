@@ -8,8 +8,8 @@ import { RoutesManagerService } from '../routes-gateway/routes-manager.service';
 
 @Component({
   selector: 'gm-footer',
-  template: require('./footer.html') as string,
-  styles: [require('./footer.css') as string]
+  templateUrl:  './footer.html',
+  styleUrls: [ './footer.css']
 })
 export class FooterComponent implements OnInit {
   private contentfulContentService: ContenfulContent;

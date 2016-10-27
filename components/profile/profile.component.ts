@@ -7,8 +7,8 @@ import * as _ from 'lodash';
 import { CoverService } from '../cover-image/cover.service';
 
 @Component({
-  template: require('./profile.html') as string,
-  styles: [require('./profile.css') as string]
+  templateUrl: './profile.html',
+  styleUrls: ['./profile.css']
 })
 export class ProfileComponent implements OnInit {
   @Input()

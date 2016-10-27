@@ -5,7 +5,7 @@ import { ContentfulVizabiBlock } from '../contentful/aliases.structures';
 
 @Component({
   selector: 'gm-vizabi-entry',
-  styles: [require('./video-entry.css')],
+  styleUrls: ['./video-entry.css'],
   template: `
     <div class="wrap-block" #backgroundOwner>
       <div class="video-wrapper">

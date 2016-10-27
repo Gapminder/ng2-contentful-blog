@@ -10,8 +10,8 @@ import { CoverService } from '../cover-image/cover.service';
 
 @Component({
   selector: 'gm-tagged-articles',
-  template: require('./tag.html') as string,
-  styles: [require('./tags.css') as string]
+  templateUrl: './tag.html',
+  styleUrls: ['./tags.css']
 })
 export class TagComponent implements OnInit {
   @Input()
